@@ -26,9 +26,17 @@ class Database extends Config
      */
     public array $default = [
         'DSN'          => '',
-        'hostname'     => 'localhost',
-        'username'     => 'root',
-        'password'     => '',
+
+
+        // 'hostname'     => 'localhost',
+        // 'username'     => 'root',
+        // 'password'     => '',
+
+
+        'username'     => 'bhavicreations',
+        'password'     => 'd8Az75YlgmyBnVM',
+
+
         'database'     => 'samhita_stock_managment',
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',
