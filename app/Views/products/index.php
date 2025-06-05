@@ -13,7 +13,7 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>S.No</th> <!-- Changed from ID -->
                     <th>Name</th>
                     <th>Description</th>
                     <th>Unit</th>
@@ -25,19 +25,20 @@
                     <tr>
                         <td colspan="5" class="text-center">No products found.</td>
                     </tr>
+                <?php else: ?>
+                    <?php $i = 1; foreach ($products as $p): ?>
+                        <tr>
+                            <td><?= $i++ ?></td>
+                            <td><?= esc($p['name']) ?></td>
+                            <td><?= esc($p['description']) ?></td>
+                            <td><?= esc($p['unit_name']) ?></td>
+                            <td>
+                                <a href="<?= base_url('products/edit/' . $p['id']) ?>" class="btn btn-sm btn-warning">Edit</a>
+                                <a href="<?= base_url('products/delete/' . $p['id']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Delete this product?')">Delete</a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
                 <?php endif; ?>
-                <?php foreach ($products as $p): ?>
-                    <tr>
-                        <td><?= esc($p['id']) ?></td>
-                        <td><?= esc($p['name']) ?></td>
-                        <td><?= esc($p['description']) ?></td>
-                        <td><?= esc($p['unit_name']) ?></td>
-                        <td>
-                            <a href="<?= base_url('products/edit/' . $p['id']) ?>" class="btn btn-sm btn-warning">Edit</a>
-                            <a href="<?= base_url('products/delete/' . $p['id']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Delete this product?')">Delete</a>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
             </tbody>
         </table>
     </div>
