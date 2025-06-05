@@ -1,0 +1,686 @@
+DEBUG - 2025-06-05 04:02:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-06-05 04:02:22 --> ErrorException: Undefined variable $row
+[Method: GET, Route: marketing-distribution]
+in APPPATH\Views\marketing_distribution\index.php on line 31.
+ 1 APPPATH\Views\marketing_distribution\index.php(31): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $row', 'C:\\xampp\\htdocs\\samhita_ci4\\app\\Views\\marketing_distribution\\index.php', 31)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita_ci4\\app\\Views\\marketing_distribution\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('marketing_distribution/index', [], true)
+ 5 APPPATH\Controllers\MarketingDistribution.php(32): view('marketing_distribution/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\MarketingDistribution->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MarketingDistribution))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(63): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-06-05 04:06:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-06-05 04:06:59 --> ErrorException: Undefined variable $row
+[Method: GET, Route: marketing-distribution]
+in APPPATH\Views\marketing_distribution\index.php on line 31.
+ 1 APPPATH\Views\marketing_distribution\index.php(31): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $row', 'C:\\xampp\\htdocs\\samhita_ci4\\app\\Views\\marketing_distribution\\index.php', 31)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita_ci4\\app\\Views\\marketing_distribution\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('marketing_distribution/index', [], true)
+ 5 APPPATH\Controllers\MarketingDistribution.php(32): view('marketing_distribution/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\MarketingDistribution->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MarketingDistribution))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(63): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-06-05 04:18:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-06-05 04:18:07 --> ErrorException: Undefined variable $products
+[Method: GET, Route: marketing-distribution]
+in APPPATH\Views\marketing_distribution\index.php on line 17.
+ 1 APPPATH\Views\marketing_distribution\index.php(17): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $products', 'C:\\xampp\\htdocs\\samhita_ci4\\app\\Views\\marketing_distribution\\index.php', 17)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita_ci4\\app\\Views\\marketing_distribution\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('marketing_distribution/index', [], true)
+ 5 APPPATH\Controllers\MarketingDistribution.php(32): view('marketing_distribution/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\MarketingDistribution->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MarketingDistribution))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(63): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-06-05 04:21:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 04:21:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 04:21:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 04:21:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 04:21:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 04:22:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 04:22:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 04:22:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 04:22:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 04:22:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 04:23:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 04:23:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 04:25:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 04:25:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 04:25:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 04:25:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 04:26:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 04:26:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 04:28:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 04:28:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-06-05 04:31:49 --> mysqli_sql_exception: Unknown column 'stock_in.quantity' in 'field list' in C:\xampp\htdocs\samhita_ci4\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\samhita_ci4\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `marketi...', 0)
+#1 C:\xampp\htdocs\samhita_ci4\system\Database\BaseConnection.php(738): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `marketi...')
+#2 C:\xampp\htdocs\samhita_ci4\system\Database\BaseConnection.php(652): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `marketi...')
+#3 C:\xampp\htdocs\samhita_ci4\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `marketi...', Array, false)
+#4 C:\xampp\htdocs\samhita_ci4\app\Controllers\MarketingDistribution.php(38): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\samhita_ci4\system\CodeIgniter.php(933): App\Controllers\MarketingDistribution->index()
+#6 C:\xampp\htdocs\samhita_ci4\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MarketingDistribution))
+#7 C:\xampp\htdocs\samhita_ci4\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\samhita_ci4\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\samhita_ci4\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\samhita_ci4\index.php(63): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+CRITICAL - 2025-06-05 04:31:49 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'stock_in.quantity' in 'field list'
+[Method: GET, Route: marketing-distribution]
+in SYSTEMPATH\Database\BaseConnection.php on line 692.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`', [], false)
+ 2 APPPATH\Controllers\MarketingDistribution.php(38): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\MarketingDistribution->index()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MarketingDistribution))
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(63): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-06-05 04:31:49 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'stock_in.quantity' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(738): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`')
+ 2 SYSTEMPATH\Database\BaseConnection.php(652): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`', [], false)
+ 4 APPPATH\Controllers\MarketingDistribution.php(38): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\MarketingDistribution->index()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MarketingDistribution))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(63): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-06-05 04:31:49 --> [Caused by] mysqli_sql_exception: Unknown column 'stock_in.quantity' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(738): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`')
+ 3 SYSTEMPATH\Database\BaseConnection.php(652): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`', [], false)
+ 5 APPPATH\Controllers\MarketingDistribution.php(38): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\MarketingDistribution->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MarketingDistribution))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(63): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-06-05 04:32:15 --> mysqli_sql_exception: Unknown column 'stock_in.quantity' in 'field list' in C:\xampp\htdocs\samhita_ci4\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\samhita_ci4\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `marketi...', 0)
+#1 C:\xampp\htdocs\samhita_ci4\system\Database\BaseConnection.php(738): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `marketi...')
+#2 C:\xampp\htdocs\samhita_ci4\system\Database\BaseConnection.php(652): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `marketi...')
+#3 C:\xampp\htdocs\samhita_ci4\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `marketi...', Array, false)
+#4 C:\xampp\htdocs\samhita_ci4\app\Controllers\MarketingDistribution.php(38): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\samhita_ci4\system\CodeIgniter.php(933): App\Controllers\MarketingDistribution->index()
+#6 C:\xampp\htdocs\samhita_ci4\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MarketingDistribution))
+#7 C:\xampp\htdocs\samhita_ci4\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\samhita_ci4\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\samhita_ci4\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\samhita_ci4\index.php(63): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+CRITICAL - 2025-06-05 04:32:15 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'stock_in.quantity' in 'field list'
+[Method: GET, Route: marketing-distribution]
+in SYSTEMPATH\Database\BaseConnection.php on line 692.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`', [], false)
+ 2 APPPATH\Controllers\MarketingDistribution.php(38): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\MarketingDistribution->index()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MarketingDistribution))
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(63): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-06-05 04:32:15 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'stock_in.quantity' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(738): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`')
+ 2 SYSTEMPATH\Database\BaseConnection.php(652): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`', [], false)
+ 4 APPPATH\Controllers\MarketingDistribution.php(38): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\MarketingDistribution->index()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MarketingDistribution))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(63): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-06-05 04:32:15 --> [Caused by] mysqli_sql_exception: Unknown column 'stock_in.quantity' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(738): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`')
+ 3 SYSTEMPATH\Database\BaseConnection.php(652): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`', [], false)
+ 5 APPPATH\Controllers\MarketingDistribution.php(38): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\MarketingDistribution->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MarketingDistribution))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(63): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-06-05 04:32:16 --> mysqli_sql_exception: Unknown column 'stock_in.quantity' in 'field list' in C:\xampp\htdocs\samhita_ci4\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\samhita_ci4\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `marketi...', 0)
+#1 C:\xampp\htdocs\samhita_ci4\system\Database\BaseConnection.php(738): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `marketi...')
+#2 C:\xampp\htdocs\samhita_ci4\system\Database\BaseConnection.php(652): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `marketi...')
+#3 C:\xampp\htdocs\samhita_ci4\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `marketi...', Array, false)
+#4 C:\xampp\htdocs\samhita_ci4\app\Controllers\MarketingDistribution.php(38): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\samhita_ci4\system\CodeIgniter.php(933): App\Controllers\MarketingDistribution->index()
+#6 C:\xampp\htdocs\samhita_ci4\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MarketingDistribution))
+#7 C:\xampp\htdocs\samhita_ci4\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\samhita_ci4\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\samhita_ci4\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\samhita_ci4\index.php(63): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+CRITICAL - 2025-06-05 04:32:16 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'stock_in.quantity' in 'field list'
+[Method: GET, Route: marketing-distribution]
+in SYSTEMPATH\Database\BaseConnection.php on line 692.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`', [], false)
+ 2 APPPATH\Controllers\MarketingDistribution.php(38): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\MarketingDistribution->index()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MarketingDistribution))
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(63): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-06-05 04:32:16 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'stock_in.quantity' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(738): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`')
+ 2 SYSTEMPATH\Database\BaseConnection.php(652): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`', [], false)
+ 4 APPPATH\Controllers\MarketingDistribution.php(38): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\MarketingDistribution->index()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MarketingDistribution))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(63): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-06-05 04:32:16 --> [Caused by] mysqli_sql_exception: Unknown column 'stock_in.quantity' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(738): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`')
+ 3 SYSTEMPATH\Database\BaseConnection.php(652): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`', [], false)
+ 5 APPPATH\Controllers\MarketingDistribution.php(38): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\MarketingDistribution->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MarketingDistribution))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(63): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-06-05 04:32:17 --> mysqli_sql_exception: Unknown column 'stock_in.quantity' in 'field list' in C:\xampp\htdocs\samhita_ci4\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\samhita_ci4\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `marketi...', 0)
+#1 C:\xampp\htdocs\samhita_ci4\system\Database\BaseConnection.php(738): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `marketi...')
+#2 C:\xampp\htdocs\samhita_ci4\system\Database\BaseConnection.php(652): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `marketi...')
+#3 C:\xampp\htdocs\samhita_ci4\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `marketi...', Array, false)
+#4 C:\xampp\htdocs\samhita_ci4\app\Controllers\MarketingDistribution.php(38): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\samhita_ci4\system\CodeIgniter.php(933): App\Controllers\MarketingDistribution->index()
+#6 C:\xampp\htdocs\samhita_ci4\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MarketingDistribution))
+#7 C:\xampp\htdocs\samhita_ci4\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\samhita_ci4\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\samhita_ci4\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\samhita_ci4\index.php(63): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+CRITICAL - 2025-06-05 04:32:17 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'stock_in.quantity' in 'field list'
+[Method: GET, Route: marketing-distribution]
+in SYSTEMPATH\Database\BaseConnection.php on line 692.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`', [], false)
+ 2 APPPATH\Controllers\MarketingDistribution.php(38): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\MarketingDistribution->index()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MarketingDistribution))
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(63): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-06-05 04:32:17 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'stock_in.quantity' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(738): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`')
+ 2 SYSTEMPATH\Database\BaseConnection.php(652): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`', [], false)
+ 4 APPPATH\Controllers\MarketingDistribution.php(38): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\MarketingDistribution->index()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MarketingDistribution))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(63): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-06-05 04:32:17 --> [Caused by] mysqli_sql_exception: Unknown column 'stock_in.quantity' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(738): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`')
+ 3 SYSTEMPATH\Database\BaseConnection.php(652): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`', [], false)
+ 5 APPPATH\Controllers\MarketingDistribution.php(38): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\MarketingDistribution->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MarketingDistribution))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(63): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-06-05 04:32:24 --> mysqli_sql_exception: Unknown column 'stock_in.quantity' in 'field list' in C:\xampp\htdocs\samhita_ci4\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\samhita_ci4\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `marketi...', 0)
+#1 C:\xampp\htdocs\samhita_ci4\system\Database\BaseConnection.php(738): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `marketi...')
+#2 C:\xampp\htdocs\samhita_ci4\system\Database\BaseConnection.php(652): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `marketi...')
+#3 C:\xampp\htdocs\samhita_ci4\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `marketi...', Array, false)
+#4 C:\xampp\htdocs\samhita_ci4\app\Controllers\MarketingDistribution.php(38): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\samhita_ci4\system\CodeIgniter.php(933): App\Controllers\MarketingDistribution->index()
+#6 C:\xampp\htdocs\samhita_ci4\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MarketingDistribution))
+#7 C:\xampp\htdocs\samhita_ci4\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\samhita_ci4\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\samhita_ci4\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\samhita_ci4\index.php(63): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+CRITICAL - 2025-06-05 04:32:24 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'stock_in.quantity' in 'field list'
+[Method: GET, Route: marketing-distribution]
+in SYSTEMPATH\Database\BaseConnection.php on line 692.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`', [], false)
+ 2 APPPATH\Controllers\MarketingDistribution.php(38): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\MarketingDistribution->index()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MarketingDistribution))
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(63): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-06-05 04:32:24 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'stock_in.quantity' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(738): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`')
+ 2 SYSTEMPATH\Database\BaseConnection.php(652): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`', [], false)
+ 4 APPPATH\Controllers\MarketingDistribution.php(38): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\MarketingDistribution->index()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MarketingDistribution))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(63): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-06-05 04:32:24 --> [Caused by] mysqli_sql_exception: Unknown column 'stock_in.quantity' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(738): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`')
+ 3 SYSTEMPATH\Database\BaseConnection.php(652): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `marketing_distribution`.*, `products`.`name` as `product_name`, `units`.`name` as `unit_name`, `marketing_persons`.`name` as `person_name`, `marketing_persons`.`custom_id`, (SELECT IFNULL(SUM(stock_in.quantity), 0) - 
+                              IFNULL((SELECT SUM(quantity_issued) 
+                                      FROM marketing_distribution AS md 
+                                      WHERE md.product_id = products.id), 0)) AS available_stock
+FROM `marketing_distribution`
+JOIN `products` ON `products`.`id` = `marketing_distribution`.`product_id`
+JOIN `units` ON `units`.`id` = `products`.`unit_id`
+JOIN `marketing_persons` ON `marketing_persons`.`id` = `marketing_distribution`.`marketing_person_id`', [], false)
+ 5 APPPATH\Controllers\MarketingDistribution.php(38): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\MarketingDistribution->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MarketingDistribution))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(63): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-06-05 04:37:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 04:42:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 04:42:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 04:42:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 04:42:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 04:42:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 04:42:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 06:04:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 06:05:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 06:05:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 06:05:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 06:44:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 06:44:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 06:44:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 06:45:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 06:45:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 06:46:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 06:46:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 06:52:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 06:52:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 07:08:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 07:08:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 07:08:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 07:08:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 07:14:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 07:15:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 07:16:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 07:16:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 07:18:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 07:19:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 07:19:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 07:19:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 07:20:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 07:20:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 07:20:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 07:20:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 07:20:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 07:20:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 07:21:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 07:21:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 07:21:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 07:21:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 07:22:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 07:22:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 07:22:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 07:23:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 07:23:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 07:23:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 07:23:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 07:23:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 07:23:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 07:23:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 07:23:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 07:24:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 07:24:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 07:42:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-06-05 09:10:41 --> ErrorException: Undefined variable $persons
+[Method: GET, Route: reports/person-stock]
+in APPPATH\Views\reports\person_stock.php on line 13.
+ 1 APPPATH\Views\reports\person_stock.php(13): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $persons', 'C:\\xampp\\htdocs\\samhita_ci4\\app\\Views\\reports\\person_stock.php', 13)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita_ci4\\app\\Views\\reports\\person_stock.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('reports/person_stock', [], true)
+ 5 APPPATH\Controllers\Reports.php(77): view('reports/person_stock', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Reports->marketingPersonStock()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Reports))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(63): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-06-05 09:45:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 09:45:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 09:45:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 09:45:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 09:45:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 09:46:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 09:46:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 09:46:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 09:46:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 09:46:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 09:46:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 09:46:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 09:47:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 09:49:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 09:52:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 10:11:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 10:11:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 10:11:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 10:11:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 10:11:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-05 10:11:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
