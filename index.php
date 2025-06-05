@@ -39,12 +39,19 @@ if (getcwd() . DIRECTORY_SEPARATOR !== FCPATH) {
  */
 
 // Manually load Composer's autoloader
-require_once FCPATH . 'vendor/autoload.php';
+// require_once FCPATH . 'vendor/autoload.php';
 
 // Load custom Paths config (modified to allow root-based index.php)
-require_once FCPATH . 'app/Config/Paths.php';
+// require_once FCPATH . 'app/Config/Paths.php';
 
-$paths = new Paths();
+// $paths = new Paths();
+
+
+require_once FCPATH . 'vendor/autoload.php';
+
+// Use the fully qualified class name (autoloaded by Composer)
+$paths = new \Config\Paths();
+
 
 // Manually fix the system path if necessary
 $systemDir = rtrim($paths->systemDirectory, '/\\');
