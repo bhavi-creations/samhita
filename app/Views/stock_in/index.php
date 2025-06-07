@@ -11,27 +11,35 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>#</th>
+                <th>S.No.</th>
                 <th>Product</th>
                 <th>Quantity</th>
                 <th>Unit</th>
+                <th>Vendor</th>
+                <th>Purchase Price</th>
+                <th>Selling Price</th>
                 <th>Date Received</th>
                 <th>Notes</th>
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($stock_entries as $in): ?>
+            <?php $i = 1;
+            foreach ($stock_entries as $in): ?>
                 <tr>
-                    <td><?= esc($in['id']) ?></td>
+                    <td><?= $i++ ?></td>
                     <td><?= esc($in['product_name']) ?></td>
                     <td><?= esc($in['quantity']) ?></td>
                     <td><?= esc($in['unit_name']) ?></td>
+                    <td><?= esc($in['vendor_agency_name']) ?> (<?= esc($in['vendor_name']) ?>)</td>
+                    <td>₹<?= number_format($in['purchase_price'], 2) ?></td>
+                    <td>₹<?= number_format($in['selling_price'], 2) ?></td>
                     <td><?= esc($in['date_received']) ?></td>
                     <td><?= esc($in['notes']) ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
+
 
 </div>
 <?= $this->endSection() ?>

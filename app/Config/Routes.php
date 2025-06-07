@@ -111,3 +111,15 @@ $routes->get('sales/export-pdf', 'Sales::exportPDF');
 $routes->get('reports/person-stock', 'Reports::marketingPersonStock');
 
 
+// Vendoers 
+
+$routes->get('vendors', 'Vendors::index');
+$routes->get('vendors/create', 'Vendors::create');
+$routes->post('vendors/store', 'Vendors::store');
+$routes->get('vendors/edit/(:num)', 'Vendors::edit/$1');
+$routes->post('vendors/update/(:num)', 'Vendors::update/$1');
+$routes->get('vendors/delete/(:num)', 'Vendors::delete/$1');
+$routes->get('vendors/vendorReport', 'Vendors::vendorReport');
+$routes->get('vendors/vendorReportExport', 'Vendors::vendorReportExport');
+$routes->get('reports/vendor-report-pdf', 'Vendors::vendorReportPDF');
+

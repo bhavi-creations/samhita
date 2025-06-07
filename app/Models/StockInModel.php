@@ -8,6 +8,14 @@ class StockInModel extends Model
 {
     protected $table = 'stock_in';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['product_id', 'quantity', 'date_received', 'notes'];
-    protected $useTimestamps = false; // You don't have created_at or updated_at
+    protected $allowedFields = [
+        'product_id',
+        'quantity',
+        'vendor_id',
+        'purchase_price',
+        'selling_price',
+        'date_received',
+        'notes'
+    ];
+    protected $useTimestamps = false;
 }

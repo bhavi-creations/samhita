@@ -28,6 +28,19 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url('vendors') ?>">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>Vendors</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url('vendors/vendorReport') ?>">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Vendor Report</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
                     <a href="<?= base_url('units') ?>" class="nav-link <?= uri_string() == 'units' ? 'active' : '' ?>">
                         <i class="nav-icon fas fa-cubes"></i>
                         <p>Units</p>

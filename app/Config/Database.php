@@ -28,13 +28,13 @@ class Database extends Config
         'DSN'          => '',
 
 
-        // 'hostname'     => 'localhost',
-        // 'username'     => 'root',
-        // 'password'     => '',
+        'hostname'     => 'localhost',
+        'username'     => 'root',
+        'password'     => '',
 
 
-        'username'     => 'bhavicreations',
-        'password'     => 'd8Az75YlgmyBnVM',
+        // 'username'     => 'bhavicreations',
+        // 'password'     => 'd8Az75YlgmyBnVM',
 
 
         'database'     => 'samhita',
