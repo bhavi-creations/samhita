@@ -29,12 +29,15 @@ class Database extends Config
 
 
         'hostname'     => 'localhost',
-        'username'     => 'root',
-        'password'     => '',
 
 
-        // 'username'     => 'bhavicreations',
-        // 'password'     => 'd8Az75YlgmyBnVM',
+
+        // 'username'     => 'root',
+        // 'password'     => '',
+
+
+        'username'     => 'bhavicreations',
+        'password'     => 'd8Az75YlgmyBnVM',
 
 
         'database'     => 'samhita',
