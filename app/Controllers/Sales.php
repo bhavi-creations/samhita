@@ -118,27 +118,27 @@ class Sales extends BaseController
         // --- FETCH SELLING PRICE FROM stock_in ---
         // Get the latest selling price for the product from stock_in
         $priceQuery = $db->table('stock_in')
-                         ->select('selling_price')
-                         ->where('product_id', $productId)
-                         ->orderBy('id', 'DESC') // Assuming higher ID means more recent entry
-                         ->limit(1)
-                         ->get();
+            ->select('selling_price')
+            ->where('product_id', $productId)
+            ->orderBy('id', 'DESC') // Assuming higher ID means more recent entry
+            ->limit(1)
+            ->get();
         $priceRow = $priceQuery->getRow();
         $pricePerUnit = $priceRow ? $priceRow->selling_price : 0;
 
         // Calculate remaining stock based on marketing_distribution and sales
         $issuedQuery = $db->table('marketing_distribution')
-                          ->selectSum('quantity_issued', 'total_issued') // Alias for clarity
-                          ->where('product_id', $productId)
-                          ->where('marketing_person_id', $personId)
-                          ->get();
+            ->selectSum('quantity_issued', 'total_issued') // Alias for clarity
+            ->where('product_id', $productId)
+            ->where('marketing_person_id', $personId)
+            ->get();
         $totalIssued = (int)($issuedQuery->getRow()->total_issued ?? 0); // Use aliased column
 
         $soldQuery = $db->table('sales')
-                        ->selectSum('quantity_sold', 'total_sold') // Alias for clarity
-                        ->where('product_id', $productId)
-                        ->where('marketing_person_id', $personId)
-                        ->get();
+            ->selectSum('quantity_sold', 'total_sold') // Alias for clarity
+            ->where('product_id', $productId)
+            ->where('marketing_person_id', $personId)
+            ->get();
         $totalSold = (int)($soldQuery->getRow()->total_sold ?? 0); // Use aliased column
 
         $remaining = $totalIssued - $totalSold;
@@ -238,13 +238,298 @@ class Sales extends BaseController
             // 4. If loop completes without errors, commit the transaction
             $db->transCommit();
             return redirect()->to('/sales/create')->with('success', 'All sales entries saved successfully!');
-
         } catch (\Exception $e) {
             // 5. If any error occurred, rollback the transaction
             $db->transRollback();
             return redirect()->back()->withInput()->with('error', $e->getMessage());
         }
     }
+
+    public function view($id)
+    {
+        $request = \Config\Services::request();
+        $filterProductId = $request->getGet('product_id');
+
+        $specificSale = $this->salesModel
+                             ->select('sales.*, products.name as product_name, marketing_persons.name as person_name, marketing_persons.custom_id')
+                             ->join('products', 'products.id = sales.product_id')
+                             ->join('marketing_persons', 'marketing_persons.id = sales.marketing_person_id')
+                             ->find($id);
+
+        if (empty($specificSale)) {
+            return redirect()->to(base_url('sales'))->with('error', 'Sale record not found.');
+        }
+
+        $marketingPersonId = $specificSale['marketing_person_id'];
+
+        // --- Fetch all sales for this specific marketing person (with optional product filter) ---
+        $salesQuery = $this->salesModel
+                           ->select('sales.*, products.name as product_name, marketing_persons.name as person_name, marketing_persons.custom_id')
+                           ->join('products', 'products.id = sales.product_id')
+                           ->join('marketing_persons', 'marketing_persons.id = sales.marketing_person_id')
+                           ->where('sales.marketing_person_id', $marketingPersonId);
+
+        if ($filterProductId) {
+            $salesQuery->where('sales.product_id', $filterProductId);
+        }
+
+        $allSalesOfPerson = $salesQuery
+                                ->orderBy('sales.date_sold', 'DESC')
+                                ->orderBy('sales.id', 'DESC')
+                                ->findAll();
+
+        // --- Calculate Summary Totals (Qty Issued, Qty Sold, Remaining, Discount, Total Price) ---
+        $db = \Config\Database::connect();
+
+        // 1. Total Quantity Sold, Discount, and Overall Total Price from 'sales' table
+        $salesSummaryQuery = $db->table('sales')
+                                ->selectSum('quantity_sold', 'total_quantity_sold')
+                                ->selectSum('discount', 'total_discount')
+                                ->selectSum('total_price', 'overall_total_price')
+                                ->where('marketing_person_id', $marketingPersonId);
+
+        if ($filterProductId) {
+            $salesSummaryQuery->where('product_id', $filterProductId);
+        }
+        $salesSummaryResult = $salesSummaryQuery->get()->getRowArray();
+
+        // 2. Total Quantity Issued from 'marketing_distribution' table (CORRECTED TABLE NAME)
+        $distributionSummaryQuery = $db->table('marketing_distribution') // <--- CORRECTED TABLE NAME
+                                       ->selectSum('quantity_issued', 'total_qty_issued') // <--- CORRECTED COLUMN NAME
+                                       ->where('marketing_person_id', $marketingPersonId);
+
+        if ($filterProductId) {
+            $distributionSummaryQuery->where('product_id', $filterProductId);
+        }
+        $distributionSummaryResult = $distributionSummaryQuery->get()->getRowArray();
+
+
+        // Combine and calculate final summary
+        $totalQtyIssued = $distributionSummaryResult['total_qty_issued'] ?? 0;
+        $totalQtySold = $salesSummaryResult['total_quantity_sold'] ?? 0;
+        $totalDiscount = $salesSummaryResult['total_discount'] ?? 0;
+        $overallTotalPrice = $salesSummaryResult['overall_price'] ?? 0; // Ensure 'overall_price' is correct or use 'overall_total_price'
+        $totalRemaining = $totalQtyIssued - $totalQtySold;
+
+        $summary = [
+            'total_qty_issued' => $totalQtyIssued,
+            'total_quantity_sold' => $totalQtySold,
+            'total_remaining' => $totalRemaining,
+            'total_discount' => $totalDiscount,
+            'overall_total_price' => $overallTotalPrice, // Use the correct alias from selectSum
+        ];
+
+        // ... (rest of the view($id) method, fetching productsForFilter and preparing $data) ...
+
+        $productsForFilter = $this->productModel->findAll();
+
+        $data = [
+            'marketingPersonName' => $specificSale['person_name'],
+            'marketingPersonCustomId' => $specificSale['custom_id'],
+            'marketingPersonId' => $marketingPersonId,
+            'allSalesOfPerson' => $allSalesOfPerson,
+            'specificSaleId' => $id,
+            'summary' => $summary,
+            'productsForFilter' => $productsForFilter,
+            'selectedProductId' => $filterProductId
+        ];
+
+        return view('sales/view_details', $data);
+    }
+
+    // ... (Your export methods also need the same table/column name corrections if they use marketing_distribution data) ...
+
+    /**
+     * Exports sales of a specific marketing person to Excel.
+     * Optional product filter can be applied.
+     * This needs PhpOffice/PhpSpreadsheet installed (composer require phpoffice/phpspreadsheet)
+     * @param int $marketingPersonId
+     */
+    public function exportPersonSalesExcel($marketingPersonId)
+    {
+        $request = \Config\Services::request();
+        $filterProductId = $request->getGet('product_id');
+
+        $salesQuery = $this->salesModel
+                           ->select('sales.*, products.name as product_name, marketing_persons.name as person_name, marketing_persons.custom_id')
+                           ->join('products', 'products.id = sales.product_id')
+                           ->join('marketing_persons', 'marketing_persons.id = sales.marketing_person_id')
+                           ->where('sales.marketing_person_id', $marketingPersonId);
+
+        if ($filterProductId) {
+            $salesQuery->where('sales.product_id', $filterProductId);
+        }
+
+        $salesData = $salesQuery->orderBy('sales.date_sold', 'DESC')->orderBy('sales.id', 'DESC')->findAll();
+
+        // --- Fetch summary data for Excel (if you want to include it in the Excel) ---
+        $db = \Config\Database::connect();
+        $salesSummaryQuery = $db->table('sales')
+                                ->selectSum('quantity_sold', 'total_quantity_sold')
+                                ->selectSum('discount', 'total_discount')
+                                ->selectSum('total_price', 'overall_total_price')
+                                ->where('marketing_person_id', $marketingPersonId);
+        if ($filterProductId) {
+            $salesSummaryQuery->where('product_id', $filterProductId);
+        }
+        $salesSummaryResult = $salesSummaryQuery->get()->getRowArray();
+
+        $distributionSummaryQuery = $db->table('marketing_distribution') // <--- CORRECTED TABLE NAME
+                                       ->selectSum('quantity_issued', 'total_qty_issued') // <--- CORRECTED COLUMN NAME
+                                       ->where('marketing_person_id', $marketingPersonId);
+        if ($filterProductId) {
+            $distributionSummaryQuery->where('product_id', $filterProductId);
+        }
+        $distributionSummaryResult = $distributionSummaryQuery->get()->getRowArray();
+
+        $totalQtyIssued = $distributionSummaryResult['total_qty_issued'] ?? 0;
+        $totalQtySold = $salesSummaryResult['total_quantity_sold'] ?? 0;
+        $totalRemaining = $totalQtyIssued - $totalQtySold;
+        $overallTotalPriceSummary = $salesSummaryResult['overall_total_price'] ?? 0;
+        // --- End summary fetch for Excel ---
+
+
+        // Load Spreadsheet library
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Set Headers for the list
+        $sheet->setCellValue('A1', 'S.No.');
+        $sheet->setCellValue('B1', 'Sale Date');
+        $sheet->setCellValue('C1', 'Product');
+        $sheet->setCellValue('D1', 'Quantity Sold');
+        $sheet->setCellValue('E1', 'Price/Unit');
+        $sheet->setCellValue('F1', 'Discount');
+        $sheet->setCellValue('G1', 'Total Price');
+        $sheet->setCellValue('H1', 'Customer Name');
+        $sheet->setCellValue('I1', 'Customer Phone');
+        $sheet->setCellValue('J1', 'Customer Address');
+        $sheet->setCellValue('K1', 'Marketing Person');
+        $sheet->setCellValue('L1', 'Marketing Person ID');
+
+        $row = 2; // Start data from row 2
+        $s_no = 1;
+        foreach ($salesData as $sale) {
+            $sheet->setCellValue('A' . $row, $s_no++);
+            $sheet->setCellValue('B' . $row, $sale['date_sold']);
+            $sheet->setCellValue('C' . $row, $sale['product_name']);
+            $sheet->setCellValue('D' . $row, $sale['quantity_sold']);
+            $sheet->setCellValue('E' . $row, $sale['price_per_unit']);
+            $sheet->setCellValue('F' . $row, $sale['discount']);
+            $sheet->setCellValue('G' . $row, $sale['total_price']);
+            $sheet->setCellValue('H' . $row, $sale['customer_name']);
+            $sheet->setCellValue('I' . $row, $sale['customer_phone']);
+            $sheet->setCellValue('J' . $row, $sale['customer_address']);
+            $sheet->setCellValue('K' . $row, $sale['person_name']);
+            $sheet->setCellValue('L' . $row, $sale['custom_id']);
+            $row++;
+        }
+
+        // Add a summary row at the end if there's data
+        if (!empty($salesData)) {
+            $row++; // Add a blank row for separation
+            $sheet->setCellValue('C' . $row, 'TOTAL');
+            $sheet->setCellValue('D' . $row, $totalQtySold);
+            // No specific column for total price/unit in summary.
+            // No specific column for total discount in summary table, but it's calculated.
+            $sheet->setCellValue('G' . $row, $overallTotalPriceSummary);
+            // You might want to add total_qty_issued and total_remaining here too
+            // Example: $sheet->setCellValue('B' . $row, 'Total Qty Issued: ' . $totalQtyIssued);
+            // $sheet->setCellValue('C' . $row, 'Total Remaining: ' . $totalRemaining);
+        }
+
+        // Set auto size for columns
+        foreach (range('A', 'L') as $column) {
+            $sheet->getColumnDimension($column)->setAutoSize(true);
+        }
+
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $fileName = 'Sales_by_' . url_title($salesData[0]['person_name'] ?? 'MarketingPerson', '-', true) . '_' . date('Ymd_His') . '.xlsx';
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="' . $fileName . '"');
+        $writer->save('php://output');
+        exit();
+    }
+
+
+    /**
+     * Exports sales of a specific marketing person to PDF.
+     * Optional product filter can be applied.
+     * This needs dompdf/dompdf installed (composer require dompdf/dompdf)
+     * @param int $marketingPersonId
+     */
+    public function exportPersonSalesPDF($marketingPersonId)
+    {
+        $request = \Config\Services::request();
+        $filterProductId = $request->getGet('product_id');
+
+        $salesQuery = $this->salesModel
+                           ->select('sales.*, products.name as product_name, marketing_persons.name as person_name, marketing_persons.custom_id')
+                           ->join('products', 'products.id = sales.product_id')
+                           ->join('marketing_persons', 'marketing_persons.id = sales.marketing_person_id')
+                           ->where('sales.marketing_person_id', $marketingPersonId);
+
+        if ($filterProductId) {
+            $salesQuery->where('sales.product_id', $filterProductId);
+        }
+
+        $salesData = $salesQuery->orderBy('sales.date_sold', 'DESC')->orderBy('sales.id', 'DESC')->findAll();
+
+        // --- Fetch summary data for PDF ---
+        $db = \Config\Database::connect();
+        $salesSummaryQuery = $db->table('sales')
+                                ->selectSum('quantity_sold', 'total_quantity_sold')
+                                ->selectSum('discount', 'total_discount')
+                                ->selectSum('total_price', 'overall_total_price')
+                                ->where('marketing_person_id', $marketingPersonId);
+        if ($filterProductId) {
+            $salesSummaryQuery->where('product_id', $filterProductId);
+        }
+        $salesSummaryResult = $salesSummaryQuery->get()->getRowArray();
+
+        $distributionSummaryQuery = $db->table('marketing_distribution') // <--- CORRECTED TABLE NAME
+                                       ->selectSum('quantity_issued', 'total_qty_issued') // <--- CORRECTED COLUMN NAME
+                                       ->where('marketing_person_id', $marketingPersonId);
+        if ($filterProductId) {
+            $distributionSummaryQuery->where('product_id', $filterProductId);
+        }
+        $distributionSummaryResult = $distributionSummaryQuery->get()->getRowArray();
+
+        $summaryPdf = [
+            'total_qty_issued' => $distributionSummaryResult['total_qty_issued'] ?? 0,
+            'total_quantity_sold' => $salesSummaryResult['total_quantity_sold'] ?? 0,
+            'total_remaining' => ($distributionSummaryResult['total_qty_issued'] ?? 0) - ($salesSummaryResult['total_quantity_sold'] ?? 0),
+            'overall_total_price' => $salesSummaryResult['overall_total_price'] ?? 0,
+        ];
+        // --- End summary fetch for PDF ---
+
+
+        $marketingPersonName = $salesData[0]['person_name'] ?? 'Unknown Person';
+        $marketingPersonCustomId = $salesData[0]['custom_id'] ?? 'N/A';
+        $filterProductName = '';
+        if ($filterProductId && !empty($this->productModel->find($filterProductId)['name'])) {
+             $filterProductName = ' for Product: ' . $this->productModel->find($filterProductId)['name'];
+        }
+
+        $html = view('sales/pdf_template_person_sales', [
+            'salesData' => $salesData,
+            'marketingPersonName' => $marketingPersonName,
+            'marketingPersonCustomId' => $marketingPersonCustomId,
+            'filterProductName' => $filterProductName,
+            'summary' => $summaryPdf, // Pass summary data to PDF template
+        ]);
+
+        $dompdf = new \Dompdf\Dompdf();
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'landscape');
+        $dompdf->render();
+
+        $fileName = 'Sales_by_' . url_title($marketingPersonName, '-', true) . $filterProductName . '_' . date('Ymd_His') . '.pdf';
+        $dompdf->stream($fileName, array("Attachment" => true));
+        exit();
+    }
+
 
 
     public function edit($id)
