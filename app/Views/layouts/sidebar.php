@@ -2,7 +2,7 @@
     <div class="sidebar-brand">
         <a href="<?= base_url('/') ?>" class="brand-link">
             <img src="<?= base_url('assets/img/credit/samhita logo.jpg') ?>" alt="Samhita Logo" class="brand-image opacity-75 shadow" />
-            <span class="brand-text font-weight-light">Samhita HMS</span>
+            <span class="brand-text font-weight-light">Samhita  </span>
         </a>
     </div>
 

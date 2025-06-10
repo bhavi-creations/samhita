@@ -91,20 +91,23 @@ $routes->get('marketing-persons/delete/(:num)', 'MarketingPersons::delete/$1');
 
 
 
-// SALES
+// ... other routes you might have ...
 
+// SALES ROUTES
 $routes->get('sales', 'Sales::index');
 $routes->get('sales/create', 'Sales::create');
-$routes->post('sales/store', 'Sales::store');
+// $routes->post('sales/store', 'Sales::store'); // REMOVE this if you're not using a Sales::store() method anymore
+$routes->post('sales/store-multiple', 'Sales::storeMultiple');
 $routes->get('sales/edit/(:num)', 'Sales::edit/$1');
 $routes->post('sales/update/(:num)', 'Sales::update/$1');
 $routes->get('sales/delete/(:num)', 'Sales::delete/$1');
-$routes->get('sales/remaining-stock', 'Sales::getRemainingStock');
-
+// $routes->get('sales/remaining-stock', 'Sales::getRemainingStock'); // REMOVE this if you're not using a Sales::getRemainingStock() method anymore
+$routes->get('sales/product-details', 'Sales::productDetails');
 // Export Routes
 $routes->get('sales/export-excel', 'Sales::exportExcel');
 $routes->get('sales/export-pdf', 'Sales::exportPDF');
 
+// ... rest of your routes ...
 
 // REPORTS 
 
