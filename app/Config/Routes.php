@@ -75,7 +75,7 @@ $routes->group('stock-in', function ($routes) {
     $routes->get('export-pdf/(:num)', 'StockIn::exportToPdf/$1');
 
 
-     $routes->post('payment/store', 'StockIn::storePayment'); // For adding new payments
+    $routes->post('payment/store', 'StockIn::storePayment'); // For adding new payments
     $routes->get('payment/edit/(:num)', 'StockIn::editPayment/$1'); // For displaying edit payment form
     $routes->put('payment/update/(:num)', 'StockIn::updatePayment/$1'); // For updating payment
     $routes->delete('payment/delete/(:num)', 'StockIn::deletePayment/$1');
@@ -100,14 +100,23 @@ $routes->get('marketing-distribution/delete/(:num)', 'MarketingDistribution::del
 // Marketing Persons
 
 
-$routes->get('marketing-persons', 'MarketingPersons::index');
-$routes->get('marketing-persons/create', 'MarketingPersons::create');
-$routes->post('marketing-persons/store', 'MarketingPersons::store');
-$routes->get('marketing-persons/edit/(:num)', 'MarketingPersons::edit/$1');
-$routes->post('marketing-persons/update/(:num)', 'MarketingPersons::update/$1');
-$routes->get('marketing-persons/delete/(:num)', 'MarketingPersons::delete/$1');
+// In app/Config/Routes.php
 
+$routes->group('marketing-persons', function ($routes) {
+    $routes->get('/', 'MarketingPersons::index');
+    $routes->get('create', 'MarketingPersons::create');
+    $routes->post('store', 'MarketingPersons::store');
+    $routes->get('edit/(:num)', 'MarketingPersons::edit/$1');
+    $routes->put('update/(:num)', 'MarketingPersons::update/$1'); // Use PUT for update
+    $routes->delete('delete/(:num)', 'MarketingPersons::delete/$1'); // Use DELETE for delete
 
+    // New routes for Marketing Persons
+    $routes->get('view/(:num)', 'MarketingPersons::view/$1'); // New view route
+    $routes->get('export-all-excel', 'MarketingPersons::exportAllExcel'); // Export all Excel
+    $routes->get('export-all-pdf', 'MarketingPersons::exportAllPdf');     // Export all PDF
+    $routes->get('export-excel/(:num)', 'MarketingPersons::exportExcel/$1'); // Export single Excel
+    $routes->get('export-pdf/(:num)', 'MarketingPersons::exportPdf/$1');     // Export single PDF
+});
 
 
 // ... other routes you might have ...
