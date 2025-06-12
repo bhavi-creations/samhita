@@ -43,7 +43,6 @@ $routes->post('units/delete/(:num)', 'Units::delete/$1');
 
 
 
-
 // PRODUCTS 
 
 $routes->get('products', 'Products::index');
@@ -83,6 +82,12 @@ $routes->group('stock-in', function ($routes) {
 });
 
 
+
+
+
+$routes->get('api/products/available-stock/(:num)', 'Products::getAvailableStock/$1');
+$routes->put('marketing-distribution/update/(:num)', 'MarketingDistribution::update/$1');
+ 
 // Marketing Distribution
 
 
@@ -90,7 +95,8 @@ $routes->get('marketing-distribution', 'MarketingDistribution::index');
 $routes->get('marketing-distribution/create', 'MarketingDistribution::create');
 $routes->post('marketing-distribution/store', 'MarketingDistribution::store');
 $routes->get('marketing-distribution/edit/(:num)', 'MarketingDistribution::edit/$1');
-$routes->post('marketing-distribution/update/(:num)', 'MarketingDistribution::update/$1');
+// $routes->post('marketing-distribution/update/(:num)', 'MarketingDistribution::update/$1');
+$routes->put('marketing-distribution/update/(:num)', 'MarketingDistribution::update/$1');
 $routes->get('marketing-distribution/delete/(:num)', 'MarketingDistribution::delete/$1');
 
 
