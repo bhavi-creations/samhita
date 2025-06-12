@@ -2,7 +2,7 @@
     <div class="sidebar-brand">
         <a href="<?= base_url('/') ?>" class="brand-link">
             <img src="<?= base_url('assets/img/credit/samhita logo.jpg') ?>" alt="Samhita Logo" class="brand-image opacity-75 shadow" />
-            <span class="brand-text font-weight-light">Samhita  </span>
+            <span class="brand-text font-weight-light">Samhita </span>
         </a>
     </div>
 
@@ -50,6 +50,14 @@
                     <a href="<?= base_url('stock-in') ?>" class="nav-link <?= uri_string() == 'stock-in' ? 'active' : '' ?>">
                         <i class="nav-icon fas fa-arrow-down"></i>
                         <p>Stock In</p>
+                    </a>
+                </li>
+                <!-- Tax Settings -->
+                <li class="nav-header">TAX SETTINGS</li>
+                <li class="nav-item">
+                    <a href="<?= base_url('gst-rates') ?>" class="nav-link <?= uri_string() == 'gst-rates' ? 'active' : '' ?>">
+                        <i class="nav-icon bi bi-percent"></i>
+                        <p>GST Rates</p>
                     </a>
                 </li>
 

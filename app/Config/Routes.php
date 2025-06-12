@@ -57,11 +57,30 @@ $routes->get('products/delete/(:segment)', 'Products::delete/$1');
 
 // STOCK_IN 
 
-$routes->get('stock-in', 'StockIn::index');
-$routes->get('stock-in/create', 'StockIn::create');
-$routes->post('stock-in/store', 'StockIn::store');
 
 
+$routes->group('stock-in', function ($routes) {
+    $routes->get('/', 'StockIn::index'); // Display all stock in entries
+    $routes->get('create', 'StockIn::create'); // Show the form to add new stock
+    $routes->post('store', 'StockIn::store'); // Process the form submission for new stock
+
+    // Routes for View, Edit, and Delete actions
+    $routes->get('view/(:num)', 'StockIn::view/$1');    // Show details of a specific entry
+    $routes->get('edit/(:num)', 'StockIn::edit/$1');    // Show the form to edit an entry
+    $routes->post('update/(:num)', 'StockIn::update/$1'); // Process the form submission for updating an entry (can be PUT, but POST is common for forms)
+    $routes->delete('delete/(:num)', 'StockIn::delete/$1'); // Handle deletion of an entry
+
+
+    $routes->get('export-excel/(:num)', 'StockIn::exportToExcel/$1');
+    $routes->get('export-pdf/(:num)', 'StockIn::exportToPdf/$1');
+
+
+     $routes->post('payment/store', 'StockIn::storePayment'); // For adding new payments
+    $routes->get('payment/edit/(:num)', 'StockIn::editPayment/$1'); // For displaying edit payment form
+    $routes->put('payment/update/(:num)', 'StockIn::updatePayment/$1'); // For updating payment
+    $routes->delete('payment/delete/(:num)', 'StockIn::deletePayment/$1');
+    $routes->post('add-payment/(:num)', 'StockIn::addPayment/$1');
+});
 
 
 // Marketing Distribution
@@ -116,6 +135,18 @@ $routes->get('sales/export-pdf', 'Sales::exportPDF');
 // REPORTS 
 
 $routes->get('reports/person-stock', 'Reports::marketingPersonStock');
+
+
+// GST Rates Management
+
+$routes->group('gst-rates', function ($routes) {
+    $routes->get('/', 'GstRates::index');
+    $routes->get('create', 'GstRates::create');
+    $routes->post('store', 'GstRates::store');
+    $routes->get('edit/(:num)', 'GstRates::edit/$1');
+    $routes->put('update/(:num)', 'GstRates::update/$1'); // Using POST for update, will use _method PUT in form
+    $routes->get('delete/(:num)', 'GstRates::delete/$1'); // Simple GET delete for now
+});
 
 
 // Vendoers 
