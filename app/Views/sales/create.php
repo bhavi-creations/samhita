@@ -1,4 +1,7 @@
+<?php // Path: app/Views/sales/create.php ?>
+
 <?= $this->extend('layouts/main') ?>
+
 <?= $this->section('content') ?>
 
 <div class="container mt-4">
@@ -21,8 +24,6 @@
         <?= csrf_field() ?>
 
         <div class="row mb-4">
-
-
             <div class="mb-3 col-4">
                 <label for="product_id" class="form-label">Product</label>
                 <select class="form-select" id="product_id" name="product_id" required>
@@ -35,7 +36,7 @@
                 </select>
             </div>
 
-            <div class="mb-3  col-4">
+            <div class="mb-3 col-4">
                 <label for="marketing_person_id" class="form-label">Marketing Person</label>
                 <select class="form-select" id="marketing_person_id" name="marketing_person_id" required>
                     <option value="">Select Marketing Person</option>
@@ -47,14 +48,13 @@
                 </select>
             </div>
 
-            <div id="overallRemainingQtyDisplay" class="alert alert-info    col-4">
-                <strong>Overall Remaining Stock for Selected Product/Person: <span id="currentOverallRemainingQty">0</span></strong>
+            <div id="overallRemainingQtyDisplay" class="alert alert-info col-4 d-flex align-items-center justify-content-center">
+                <strong>Overall Remaining Stock for Selected Product/Person: <span id="currentOverallRemainingQty" class="ms-2">0</span></strong>
             </div>
-
         </div>
 
         <div id="saleEntriesContainer">
-        </div>
+            </div>
 
         <button type="button" class="btn btn-primary mb-3" id="addSaleEntryBtn">Add Sale Entry</button>
         <br>
@@ -68,6 +68,7 @@
 <script>
     let saleEntryCount = 0; // Initialize a counter for unique IDs/names
     let initialDbRemainingStock = 0; // Stores the stock fetched from the database for the selected product/person
+    let currentProductSellingPrice = 0; // Stores the selling price for the selected product
 
     // Function to calculate total quantity sold across all entries in the form
     const getTotalQuantitiesSoldInForm = () => {
@@ -84,15 +85,13 @@
         const currentRemaining = initialDbRemainingStock - totalSoldInForm;
         document.getElementById('currentOverallRemainingQty').textContent = currentRemaining;
 
-        // Simple client-side validation for overall quantity
+        // Visual feedback for stock
+        const overallDisplay = document.getElementById('overallRemainingQtyDisplay');
+        overallDisplay.classList.remove('alert-info', 'alert-danger'); // Clean existing classes
         if (currentRemaining < 0) {
-            document.getElementById('overallRemainingQtyDisplay').classList.remove('alert-info');
-            document.getElementById('overallRemainingQtyDisplay').classList.add('alert-danger');
-            // You might want a less intrusive warning here, or prevent submission
-            // alert('Warning: Total quantity sold across all entries exceeds remaining stock!');
+            overallDisplay.classList.add('alert-danger');
         } else {
-            document.getElementById('overallRemainingQtyDisplay').classList.remove('alert-danger');
-            document.getElementById('overallRemainingQtyDisplay').classList.add('alert-info');
+            overallDisplay.classList.add('alert-info');
         }
     };
 
@@ -100,7 +99,7 @@
     // Function to calculate and display prices for a single entry
     const calculateAndDisplayEntryTotals = (entryDiv) => {
         const quantitySold = parseFloat(entryDiv.querySelector('.quantity-sold').value) || 0;
-        const pricePerUnit = parseFloat(entryDiv.querySelector('.price-per-unit').value) || 0; // Ensure this is read
+        const pricePerUnit = parseFloat(entryDiv.querySelector('.price-per-unit').value) || 0;
         const discount = parseFloat(entryDiv.querySelector('.discount').value) || 0;
 
         const totalNoDiscount = quantitySold * pricePerUnit;
@@ -116,7 +115,7 @@
         const saleEntryHtml = `
             <div class="sale-entry row g-3 align-items-end border p-3 mb-3" data-index="${index}">
                 <div class="row mt-3"> 
-                    <h4> Enter Sale Details</h4>
+                    <h4>Sale Entry #<span class="entry-number">${index + 1}</span></h4>
 
                     <div class="col-md-2">
                         <label for="date_sold_${index}" class="form-label">Date Sold</label>
@@ -144,7 +143,7 @@
                     </div>
                 </div>
                 <div class="row mt-4 mb-2"> 
-                    <h4> Enter Coustmer Details</h4>
+                    <h4>Customer Details</h4>
                     <div class="col-md-3">
                         <label for="customer_name_${index}" class="form-label">Customer Name</label>
                         <input type="text" class="form-control" id="customer_name_${index}" name="sales[${index}][customer_name]" placeholder="Customer Name" required>
@@ -157,39 +156,54 @@
                         <label for="customer_address_${index}" class="form-label">Customer Address</label>
                         <textarea class="form-control" id="customer_address_${index}" name="sales[${index}][customer_address]" placeholder="Customer Address" rows="1"></textarea>
                     </div>
-                    <div class="col-md-1 mt-4">
-                        <button type="button" class="btn btn-danger remove-sale-entry"><i class="fas fa-minus-circle"></i></button>
+                    <div class="col-md-2 d-flex align-items-end justify-content-end">
+                        <button type="button" class="btn btn-danger remove-sale-entry"><i class="fas fa-minus-circle"></i> Remove</button>
                     </div>
                 </div>
-
-                 
             </div>
         `;
-        document.getElementById('saleEntriesContainer').insertAdjacentHTML('beforeend', saleEntryHtml);
+        const container = document.getElementById('saleEntriesContainer');
+        container.insertAdjacentHTML('beforeend', saleEntryHtml);
 
         // Get reference to the newly added entry div
-        const newEntryDiv = document.querySelector(`.sale-entry[data-index="${index}"]`);
+        const newEntryDiv = container.lastElementChild;
 
+        // Set the price_per_unit for the new entry based on the currently selected product
+        newEntryDiv.querySelector('.price-per-unit').value = currentProductSellingPrice.toFixed(2);
+        
         // Attach event listeners for calculations
         newEntryDiv.querySelector('.quantity-sold').addEventListener('input', () => {
             calculateAndDisplayEntryTotals(newEntryDiv);
             updateOverallRemainingDisplay(); // Update overall remaining when quantity changes
         });
+        newEntryDiv.querySelector('.price-per-unit').addEventListener('input', () => { // Even if readonly, add for robustness
+            calculateAndDisplayEntryTotals(newEntryDiv);
+        });
         newEntryDiv.querySelector('.discount').addEventListener('input', () => {
             calculateAndDisplayEntryTotals(newEntryDiv);
         });
 
-        // *** IMPORTANT FIX: Call updateProductDetails here to ensure price_per_unit is set for the new entry ***
-        // This will also re-calculate totals for ALL entries, ensuring consistency.
-        updateProductDetails(); // This function already iterates through all .sale-entry divs
+        calculateAndDisplayEntryTotals(newEntryDiv); // Initial calculation for the new entry
+        updateOverallRemainingDisplay(); // Update overall remaining display after adding a new entry
 
         saleEntryCount++; // Increment for the next entry
+        updateEntryNumbers(); // Re-number entries
+    };
+
+    // Function to re-number sale entries after add/remove
+    const updateEntryNumbers = () => {
+        document.querySelectorAll('.sale-entry').forEach((entryDiv, index) => {
+            entryDiv.querySelector('.entry-number').textContent = index + 1;
+        });
     };
 
     // Add first entry on page load
     document.addEventListener('DOMContentLoaded', () => {
-        addSaleEntry();
-        // Initial update for overall remaining stock (this will also populate price_per_unit for the first entry)
+        // Only add an initial entry if there are none (e.g., not after a validation error where entries are repopulated)
+        if (document.querySelectorAll('.sale-entry').length === 0) {
+            addSaleEntry();
+        }
+        // Initial fetch for overall remaining stock and product price
         updateMainDropdowns();
     });
 
@@ -199,70 +213,81 @@
     // Event listener for removing entries (delegated)
     document.getElementById('saleEntriesContainer').addEventListener('click', (event) => {
         if (event.target.classList.contains('remove-sale-entry') || event.target.closest('.remove-sale-entry')) {
-            // Prevent removing the last entry
+            const entryDiv = event.target.closest('.sale-entry');
             if (document.querySelectorAll('.sale-entry').length > 1) {
-                event.target.closest('.sale-entry').remove();
+                entryDiv.remove();
                 updateOverallRemainingDisplay(); // Update overall remaining after removing
+                updateEntryNumbers(); // Re-number entries
             } else {
                 alert('At least one sales entry is required.');
             }
         }
     });
 
-    // Function to fetch product details and update fields (now also updates global stock)
-    const updateProductDetails = async () => {
+    // Function to fetch product details and update fields (now also updates global stock and price)
+    const updateProductDetailsAndStock = async () => {
         const productId = document.getElementById('product_id').value;
         const marketingPersonId = document.getElementById('marketing_person_id').value;
 
         if (productId && marketingPersonId) {
             try {
-                const response = await fetch(`<?= base_url('sales/product-details') ?>?product_id=${productId}&marketing_person_id=${marketingPersonId}`);
+                // IMPORTANT: Ensure this URL correctly points to your new 'getRemainingStock' method
+                const response = await fetch(`<?= base_url('sales/get-remaining-stock') ?>?product_id=${productId}&marketing_person_id=${marketingPersonId}`);
                 const data = await response.json();
 
-                // Update the global initial stock
-                initialDbRemainingStock = data.remaining_qty || 0;
+                if (data.status === 'success') {
+                    initialDbRemainingStock = data.remaining_qty;
+                    currentProductSellingPrice = data.price_per_unit; // This will now fetch the price
 
-                // Update price for ALL existing entries and recalculate their totals
-                document.querySelectorAll('.sale-entry').forEach(entryDiv => {
-                    entryDiv.querySelector(`.price-per-unit`).value = data.price_per_unit || 0; // Set price_per_unit here
-                    calculateAndDisplayEntryTotals(entryDiv); // Recalculate totals for this entry
-                });
-
-                updateOverallRemainingDisplay(); // Update the overall remaining display
+                    // Update price for ALL existing entries and recalculate their totals
+                    document.querySelectorAll('.sale-entry').forEach(entryDiv => {
+                        entryDiv.querySelector(`.price-per-unit`).value = currentProductSellingPrice.toFixed(2);
+                        calculateAndDisplayEntryTotals(entryDiv); // Recalculate totals for this entry
+                    });
+                } else {
+                    console.error('Error fetching product details:', data.message);
+                    initialDbRemainingStock = 0;
+                    currentProductSellingPrice = 0;
+                    document.querySelectorAll('.sale-entry').forEach(entryDiv => {
+                        entryDiv.querySelector(`.price-per-unit`).value = 0;
+                        calculateAndDisplayEntryTotals(entryDiv);
+                    });
+                    alert(data.message || 'Error fetching product/stock details.'); // Show a user-friendly alert
+                }
             } catch (error) {
-                console.error('Error fetching product details:', error);
-                initialDbRemainingStock = 0; // Reset on error
+                console.error('Network or parsing error fetching product details:', error);
+                initialDbRemainingStock = 0;
+                currentProductSellingPrice = 0;
                 document.querySelectorAll('.sale-entry').forEach(entryDiv => {
-                    entryDiv.querySelector(`.price-per-unit`).value = 0; // Reset price_per_unit on error
+                    entryDiv.querySelector(`.price-per-unit`).value = 0;
                     calculateAndDisplayEntryTotals(entryDiv);
                 });
-                updateOverallRemainingDisplay();
+                alert('Could not fetch product details or stock. Please try again.');
             }
         } else {
             // If product or person is not selected, reset everything
             initialDbRemainingStock = 0;
+            currentProductSellingPrice = 0;
             document.querySelectorAll('.sale-entry').forEach(entryDiv => {
-                entryDiv.querySelector(`.price-per-unit`).value = 0; // Reset price_per_unit
+                entryDiv.querySelector(`.price-per-unit`).value = 0;
                 calculateAndDisplayEntryTotals(entryDiv);
             });
-            updateOverallRemainingDisplay();
         }
+        updateOverallRemainingDisplay(); // Always update display
     };
 
     // Consolidated function to call when main dropdowns change
     const updateMainDropdowns = () => {
-        updateProductDetails();
+        updateProductDetailsAndStock();
     };
 
     // Event listener for changes in Product or Marketing Person selects
     document.getElementById('product_id').addEventListener('change', updateMainDropdowns);
     document.getElementById('marketing_person_id').addEventListener('change', updateMainDropdowns);
 
-    // Initial update on page load if selects have pre-selected values (e.g., after validation error)
+    // Initial update on page load (important if there are pre-selected values from set_select)
     document.addEventListener('DOMContentLoaded', () => {
-        updateMainDropdowns(); // This ensures product details (including price) are fetched and set for initial entries
-        // No need for a separate loop here, as updateMainDropdowns calls updateProductDetails
-        // which already iterates and calls calculateAndDisplayEntryTotals for all entries.
+        updateMainDropdowns();
     });
 </script>
 <?= $this->endSection() ?>

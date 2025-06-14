@@ -17,6 +17,10 @@ class Feature extends BaseConfig
     /**
      * Use filter execution order in 4.4 or before.
      */
+
+      public bool $translateUriToCamelCase = true;
+
+      
     public bool $oldFilterOrder = false;
 
     /**

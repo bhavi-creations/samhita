@@ -87,7 +87,7 @@ $routes->group('stock-in', function ($routes) {
 
 $routes->get('api/products/available-stock/(:num)', 'Products::getAvailableStock/$1');
 $routes->put('marketing-distribution/update/(:num)', 'MarketingDistribution::update/$1');
- 
+
 // Marketing Distribution
 
 
@@ -128,24 +128,39 @@ $routes->group('marketing-persons', function ($routes) {
 // ... other routes you might have ...
 
 // SALES ROUTES
-$routes->get('sales', 'Sales::index');
-$routes->get('sales/create', 'Sales::create');
-// $routes->post('sales/store', 'Sales::store'); // REMOVE this if you're not using a Sales::store() method anymore
-$routes->post('sales/store-multiple', 'Sales::storeMultiple');
-$routes->get('sales/edit/(:num)', 'Sales::edit/$1');
-$routes->get('sales/view/(:num)', 'Sales::view/$1');
-$routes->post('sales/update/(:num)', 'Sales::update/$1');
-$routes->get('sales/delete/(:num)', 'Sales::delete/$1');
-// $routes->get('sales/remaining-stock', 'Sales::getRemainingStock'); // REMOVE this if you're not using a Sales::getRemainingStock() method anymore
-$routes->get('sales/product-details', 'Sales::productDetails');
-// Export Routes
-$routes->get('sales/export-person-sales-excel/(:num)', 'Sales::exportPersonSalesExcel/$1');
-$routes->get('sales/export-person-sales-pdf/(:num)', 'Sales::exportPersonSalesPDF/$1');
 
-$routes->get('sales/export-excel', 'Sales::exportExcel');
-$routes->get('sales/export-pdf', 'Sales::exportPDF');
 
-// ... rest of your routes ...
+
+
+$routes->group('sales', function ($routes) {
+    $routes->get('/', 'Sales::index');
+    $routes->get('create', 'Sales::create');
+    $routes->post('store-multiple', 'Sales::storeMultiple');
+    $routes->get('view/(:num)', 'Sales::view/$1');
+    $routes->get('edit/(:num)', 'Sales::edit/$1');
+    $routes->put('update/(:num)', 'Sales::update/$1');
+    $routes->get('delete/(:num)', 'Sales::delete/$1');
+    $routes->get('remitPayment/(:num)', 'Sales::remitPayment/$1');
+    $routes->post('processRemittance/(:num)', 'Sales::processRemittance/$1');
+    $routes->get('product-details', 'Sales::productDetails');
+
+    $routes->get('export-person-sales-excel/(:num)', 'Sales::exportPersonSalesExcel/$1');
+    $routes->get('export-person-sales-pdf/(:num)', 'Sales::exportPersonSalesPDF/$1');
+
+    $routes->get('export-excel', 'Sales::exportExcel');
+    $routes->get('export-pdf', 'Sales::exportPDF');
+    $routes->get('get-remaining-stock', 'Sales::getRemainingStock');
+
+
+    $routes->get('record-sale-payment-form/(:num)', 'Sales::recordSalePaymentForm/$1');
+    $routes->post('record-sale-payment', 'Sales::recordSalePayment');
+    $routes->get('payment-history/(:num)', 'Sales::viewSalePaymentHistory/$1');
+
+    $routes->get('export-sale-payments-excel/(:num)', 'Sales::exportSalePaymentsExcel/$1');
+    $routes->get('export-sale-payments-pdf/(:num)', 'Sales::exportSalePaymentsPDF/$1');
+    // $routes->get('product-details/(:num)', 'Sales::getProductDetails/$1'); // Remove or comment this if getRemainingStock replaces it
+});
+
 
 // REPORTS 
 

@@ -43,34 +43,57 @@
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
-                    <th>S.No.</th>
+                    <th>ID</th>
                     <th>Product</th>
                     <th>Marketing Person</th>
-                    <th>Quantity</th>
+                    <th>Quantity Sold</th>
                     <th>Price/Unit</th>
                     <th>Discount</th>
                     <th>Total Price</th>
-                    <th>Date</th>
+                    <th>Amount Remitted</th>
+                    <th>Balance Due</th>
+                    <th>Payment Status</th>
+                    <th>Date Sold</th>
+                    <th>Customer Name</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <?php if (!empty($sales)): ?>
                     <?php $s_no = 1; ?>
-                    <?php foreach ($sales as $s): ?>
+                    <?php foreach ($sales as $sale): ?>
                         <tr>
-                            <td><?= $s_no++ ?></td>
-                            <td><?= esc($s['product_name']) ?></td>
-                            <td><?= esc($s['custom_id']) ?> - <?= esc($s['person_name']) ?></td>
-                            <td><?= esc($s['quantity_sold']) ?></td>
-                            <td>₹<?= number_format($s['price_per_unit'], 2) ?></td>
-                            <td>₹<?= number_format($s['discount'], 2) ?></td>
-                            <td>₹<?= number_format($s['total_price'], 2) ?></td>
-                            <td><?= esc($s['date_sold']) ?></td>
+                            <td><?= esc($sale['id']) ?></td>
+                            <td><?= esc($sale['product_name']) ?></td>
+                            <td><?= esc($sale['person_name']) ?></td>
+                            <td><?= esc($sale['quantity_sold']) ?></td>
+                            <td><?= number_format($sale['price_per_unit'], 2) ?></td>
+                            <td><?= number_format($sale['discount'], 2) ?></td>
+                            <td><?= number_format($sale['total_price'], 2) ?></td>
+                            <td class="text-info"><?= number_format($sale['amount_received_from_person'], 2) ?></td>
+                            <td class="text-danger"><?= number_format($sale['balance_from_person'], 2) ?></td>
                             <td>
-                                <a href="<?= base_url('sales/view/' . $s['id']) ?>" class="btn btn-sm btn-info me-1" title="View Details">View</a>
-                                <a href="<?= base_url('sales/edit/' . $s['id']) ?>" class="btn btn-sm btn-warning me-1" title="Edit Sale">Edit</a>
-                                <a href="<?= base_url('sales/delete/' . $s['id']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this sale entry?')">Delete</a>
+                                <?php
+                                $statusClass = '';
+                                if ($sale['payment_status_from_person'] == 'Paid') {
+                                    $statusClass = 'badge bg-success';
+                                } elseif ($sale['payment_status_from_person'] == 'Partial') {
+                                    $statusClass = 'badge bg-warning text-dark';
+                                } else {
+                                    $statusClass = 'badge bg-danger';
+                                }
+                                ?>
+                                <span class="<?= $statusClass ?>"><?= esc($sale['payment_status_from_person']) ?></span>
+                            </td>
+                            <td><?= esc($sale['date_sold']) ?></td>
+                            <td><?= esc($sale['customer_name']) ?></td>
+                            <td>
+                                <a href="<?= base_url('sales/view/' . $sale['id']) ?>" class="btn btn-info btn-sm">View</a>
+                                <a href="<?= base_url('sales/edit/' . $sale['id']) ?>" class="btn btn-warning btn-sm">Edit</a>
+                                <?php if ($sale['payment_status_from_person'] != 'Paid'): ?>
+                                    <a href="<?= base_url('sales/remitPayment/' . $sale['id']) ?>" class="btn btn-primary btn-sm">Remit</a>
+                                <?php endif; ?>
+                                <a href="<?= base_url('sales/delete/' . $sale['id']) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this sale?');">Delete</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
