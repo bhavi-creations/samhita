@@ -23,9 +23,7 @@ $routes->get('/', 'Home::index');
 
 
 $routes->get('dashboard', 'Dashboard::index');
-$routes->get('products', 'Products::index');
-$routes->get('stock/incoming', 'Stock::incoming');
-$routes->get('stock/outgoing', 'Stock::outgoing');
+
 
 
 
@@ -42,15 +40,23 @@ $routes->post('units/delete/(:num)', 'Units::delete/$1');
 
 
 
-
+// In app/Config/Routes.php
+$routes->group('products', function ($routes) {
+    $routes->get('/', 'Products::index');
+    $routes->get('create', 'Products::create');
+    $routes->post('store', 'Products::store');
+    $routes->get('edit/(:segment)', 'Products::edit/$1');
+    $routes->post('update/(:segment)', 'Products::update/$1');
+    $routes->get('delete/(:segment)', 'Products::delete/$1');
+    $routes->get('stock-overview', 'Products::stockOverview');
+    // Product Price Management Routes
+    $routes->get('manage-prices', 'Products::managePrices'); // Displays the list
+    $routes->get('edit-price/(:num)', 'Products::editPrice/$1'); // Displays the edit form
+    $routes->post('update-price/(:num)', 'Products::updatePrice/$1'); // Handles form submission
+});
 // PRODUCTS 
 
-$routes->get('products', 'Products::index');
-$routes->get('products/create', 'Products::create');
-$routes->post('products/store', 'Products::store');
-$routes->get('products/edit/(:segment)', 'Products::edit/$1');
-$routes->post('products/update/(:segment)', 'Products::update/$1');
-$routes->get('products/delete/(:segment)', 'Products::delete/$1');
+
 
 
 

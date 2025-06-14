@@ -21,10 +21,27 @@
 
                 <!-- Stock Management -->
                 <li class="nav-header">STOCK MANAGEMENT</li>
+                <li class="nav-item mt-3">
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
+                        <span>Product Pricing</span>
+                    </h6>
+                </li>
                 <li class="nav-item">
                     <a href="<?= base_url('products') ?>" class="nav-link <?= uri_string() == 'products' ? 'active' : '' ?>">
                         <i class="nav-icon fas fa-box"></i>
-                        <p>Products</p>
+                        <p> Products List</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url('products/stock-overview') ?>">
+                        <i class="nav-icon fas fa-boxes"></i> <p>Available Stock</p>   
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url('products/manage-prices') ?>">
+                        <i class="nav-icon  fas fa-dollar-sign"></i>
+                        <p> Manage Prices </p>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -35,8 +52,8 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<?= base_url('vendors/vendorReport') ?>">
-                        <i class="fas fa-file-alt"></i>
-                        <span>Vendor Report</span>
+                        <i class="nav-icon fas fa-file-alt"></i>
+                        <p>Vendor Report</p>
                     </a>
                 </li>
 

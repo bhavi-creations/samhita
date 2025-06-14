@@ -43,8 +43,7 @@
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Product</th>
+                    <th>S.No.</th> <th>Product</th>
                     <th>Marketing Person</th>
                     <th>Quantity Sold</th>
                     <th>Price/Unit</th>
@@ -60,11 +59,9 @@
             </thead>
             <tbody>
                 <?php if (!empty($sales)): ?>
-                    <?php $s_no = 1; ?>
-                    <?php foreach ($sales as $sale): ?>
+                    <?php $s_no = 1; ?> <?php foreach ($sales as $sale): ?>
                         <tr>
-                            <td><?= esc($sale['id']) ?></td>
-                            <td><?= esc($sale['product_name']) ?></td>
+                            <td><?= $s_no++ ?></td> <td><?= esc($sale['product_name']) ?></td>
                             <td><?= esc($sale['person_name']) ?></td>
                             <td><?= esc($sale['quantity_sold']) ?></td>
                             <td><?= number_format($sale['price_per_unit'], 2) ?></td>
@@ -99,7 +96,7 @@
                     <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="9" class="text-center">No sales records found.</td>
+                        <td colspan="13" class="text-center">No sales records found.</td>
                     </tr>
                 <?php endif; ?>
             </tbody>
