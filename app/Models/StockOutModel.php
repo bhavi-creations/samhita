@@ -25,20 +25,20 @@ class StockOutModel extends Model
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
 
-    protected $validationRules = [
-        'product_id'        => 'required|integer|is_not_unique[products.id]',
-        'quantity_out'      => 'required|integer|greater_than[0]',
-        'transaction_type'  => 'required|max_length[50]',
-        'transaction_id'    => 'required|integer',
-        'issued_date'       => 'required|valid_date',
-    ];
+    // protected $validationRules = [
+    //     'product_id'        => 'required|integer|is_not_unique[products.id]',
+    //     'quantity_out'      => 'required|integer|greater_than[0]',
+    //     'transaction_type'  => 'required|max_length[50]',
+    //     'transaction_id'    => 'required|integer',
+    //     'issued_date'       => 'required|valid_date',
+    // ];
 
-    protected $validationMessages = [
-        'product_id' => [
-            'is_not_unique' => 'The product ID for stock out is invalid.',
-        ],
-        'quantity_out' => [
-            'greater_than' => 'The quantity out must be a positive number.',
-        ],
-    ];
+    // protected $validationMessages = [
+    //     'product_id' => [
+    //         'is_not_unique' => 'The product ID for stock out is invalid.',
+    //     ],
+    //     'quantity_out' => [
+    //         'greater_than' => 'The quantity out must be a positive number.',
+    //     ],
+    // ];
 }

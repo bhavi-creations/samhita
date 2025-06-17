@@ -74,8 +74,8 @@
 
                     <div class="col-md-6 mb-3">
                         <label for="gst_amount" class="form-label">GST Amount:</label>
-                        <input type="text" id="gst_amount" class="form-control bg-light" value="<?= number_format($stock_entry['gst_amount'] ?? 0, 2) ?>" readonly>
-                        <input type="hidden" name="gst_amount" id="gst_amount_hidden" value="<?= esc($stock_entry['gst_amount'] ?? 0) ?>">
+                        <input type="text" id="gst_amount" name="gst_amount" class="form-control bg-light" value="<?= number_format($stock_entry['gst_amount'] ?? 0, 2) ?>" readonly>
+                        <input type="hidden" name="gst_amount_hidden" id="gst_amount_hidden" value="<?= esc($stock_entry['gst_amount'] ?? 0) ?>">
                     </div>
                 </div>
 

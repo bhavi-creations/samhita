@@ -19,8 +19,7 @@ class ProductModel extends Model
         'selling_price',         // <--- Added for managing product unit price
         'default_selling_price', // <--- Included as it's in your DB, even if its use is unclear for now
         'current_stock',         // <--- Included as it's in your DB
-        'unit_id',
-        // 'created_at' is managed automatically by useTimestamps, no need here
+        'unit_id',               // 'created_at' is managed automatically by useTimestamps, no need here
         'updated_at',            // <--- Important: Allow this field to be updated automatically by useTimestamps
     ];
 

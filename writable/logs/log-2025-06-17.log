@@ -1,0 +1,678 @@
+DEBUG - 2025-06-17 03:55:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-17 04:26:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-17 04:26:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-17 04:27:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-17 04:27:08 --> StockOut::store - Database transaction begun.
+ERROR - 2025-06-17 04:27:08 --> mysqli_sql_exception: Column 'transaction_id' cannot be null in C:\xampp\htdocs\samhita\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\samhita\system\Database\MySQLi\Connection.php(327): mysqli->query('INSERT INTO `st...', 0)
+#1 C:\xampp\htdocs\samhita\system\Database\BaseConnection.php(738): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `st...')
+#2 C:\xampp\htdocs\samhita\system\Database\BaseConnection.php(652): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `st...')
+#3 C:\xampp\htdocs\samhita\system\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `st...', Array, false)
+#4 C:\xampp\htdocs\samhita\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\xampp\htdocs\samhita\system\BaseModel.php(843): CodeIgniter\Model->doInsert(Array)
+#6 C:\xampp\htdocs\samhita\system\Model.php(800): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\xampp\htdocs\samhita\app\Controllers\StockOut.php(219): CodeIgniter\Model->insert(Array)
+#8 C:\xampp\htdocs\samhita\system\CodeIgniter.php(933): App\Controllers\StockOut->store()
+#9 C:\xampp\htdocs\samhita\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockOut))
+#10 C:\xampp\htdocs\samhita\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\samhita\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\samhita\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\samhita\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+DEBUG - 2025-06-17 04:27:08 --> StockOut::store - Stock Out Insert attempt. Result: Failed
+ERROR - 2025-06-17 04:27:08 --> StockOut::store - Failed to insert stock out record. DB Error: {"code":0,"message":""}, Data: {"product_id":"3","quantity_out":"13","transaction_type":"Sample","transaction_id":null,"issued_date":"2025-06-17","notes":""}
+DEBUG - 2025-06-17 04:27:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-17 04:28:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-17 04:50:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-17 04:50:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-17 04:50:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-17 04:50:35 --> StockOut::store - Database transaction begun.
+DEBUG - 2025-06-17 04:50:35 --> StockOut::store - Stock Out Insert attempt. Result: Success (ID: 10)
+DEBUG - 2025-06-17 04:50:35 --> StockOut::store - Product Stock Update attempt. Result: Success, New Stock: 815
+DEBUG - 2025-06-17 04:50:35 --> StockOut::store - Transaction Committed Successfully.
+DEBUG - 2025-06-17 04:50:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-17 04:54:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-17 04:55:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-06-17 04:55:04 --> mysqli_sql_exception: Table 'samhita.customers' doesn't exist in C:\xampp\htdocs\samhita\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\samhita\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `sales`....', 0)
+#1 C:\xampp\htdocs\samhita\system\Database\BaseConnection.php(738): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `sales`....')
+#2 C:\xampp\htdocs\samhita\system\Database\BaseConnection.php(652): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `sales`....')
+#3 C:\xampp\htdocs\samhita\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `sales`....', Array, false)
+#4 C:\xampp\htdocs\samhita\system\Model.php(210): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\samhita\system\BaseModel.php(613): CodeIgniter\Model->doFind(true, '14')
+#6 C:\xampp\htdocs\samhita\app\Controllers\StockOut.php(285): CodeIgniter\BaseModel->find('14')
+#7 C:\xampp\htdocs\samhita\system\CodeIgniter.php(933): App\Controllers\StockOut->view(8)
+#8 C:\xampp\htdocs\samhita\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockOut))
+#9 C:\xampp\htdocs\samhita\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\samhita\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\samhita\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\samhita\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+CRITICAL - 2025-06-17 04:55:04 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'samhita.customers' doesn't exist
+[Method: GET, Route: stock-out/view/8]
+in SYSTEMPATH\Database\BaseConnection.php on line 692.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `sales`.*, `customers`.`name` as `customer_name`, `marketing_persons`.`name` as `marketing_person_name`, `marketing_persons`.`phone` as `marketing_person_phone`
+FROM `sales`
+LEFT JOIN `customers` ON `customers`.`id` = `sales`.`customer_id`
+LEFT JOIN `marketing_persons` ON `marketing_persons`.`id` = `sales`.`marketing_person_id`
+WHERE `sales`.`id` = :sales.id:', [...], false)
+ 2 SYSTEMPATH\Model.php(210): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(613): CodeIgniter\Model->doFind(true, '14')
+ 4 APPPATH\Controllers\StockOut.php(285): CodeIgniter\BaseModel->find('14')
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockOut->view(8)
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockOut))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-06-17 04:55:04 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'samhita.customers' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(738): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `sales`.*, `customers`.`name` as `customer_name`, `marketing_persons`.`name` as `marketing_person_name`, `marketing_persons`.`phone` as `marketing_person_phone`
+FROM `sales`
+LEFT JOIN `customers` ON `customers`.`id` = `sales`.`customer_id`
+LEFT JOIN `marketing_persons` ON `marketing_persons`.`id` = `sales`.`marketing_person_id`
+WHERE `sales`.`id` = \'14\'')
+ 2 SYSTEMPATH\Database\BaseConnection.php(652): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `sales`.*, `customers`.`name` as `customer_name`, `marketing_persons`.`name` as `marketing_person_name`, `marketing_persons`.`phone` as `marketing_person_phone`
+FROM `sales`
+LEFT JOIN `customers` ON `customers`.`id` = `sales`.`customer_id`
+LEFT JOIN `marketing_persons` ON `marketing_persons`.`id` = `sales`.`marketing_person_id`
+WHERE `sales`.`id` = \'14\'')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `sales`.*, `customers`.`name` as `customer_name`, `marketing_persons`.`name` as `marketing_person_name`, `marketing_persons`.`phone` as `marketing_person_phone`
+FROM `sales`
+LEFT JOIN `customers` ON `customers`.`id` = `sales`.`customer_id`
+LEFT JOIN `marketing_persons` ON `marketing_persons`.`id` = `sales`.`marketing_person_id`
+WHERE `sales`.`id` = :sales.id:', [...], false)
+ 4 SYSTEMPATH\Model.php(210): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(613): CodeIgniter\Model->doFind(true, '14')
+ 6 APPPATH\Controllers\StockOut.php(285): CodeIgniter\BaseModel->find('14')
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockOut->view(8)
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockOut))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-06-17 04:55:04 --> [Caused by] mysqli_sql_exception: Table 'samhita.customers' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `sales`.*, `customers`.`name` as `customer_name`, `marketing_persons`.`name` as `marketing_person_name`, `marketing_persons`.`phone` as `marketing_person_phone`
+FROM `sales`
+LEFT JOIN `customers` ON `customers`.`id` = `sales`.`customer_id`
+LEFT JOIN `marketing_persons` ON `marketing_persons`.`id` = `sales`.`marketing_person_id`
+WHERE `sales`.`id` = \'14\'', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(738): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `sales`.*, `customers`.`name` as `customer_name`, `marketing_persons`.`name` as `marketing_person_name`, `marketing_persons`.`phone` as `marketing_person_phone`
+FROM `sales`
+LEFT JOIN `customers` ON `customers`.`id` = `sales`.`customer_id`
+LEFT JOIN `marketing_persons` ON `marketing_persons`.`id` = `sales`.`marketing_person_id`
+WHERE `sales`.`id` = \'14\'')
+ 3 SYSTEMPATH\Database\BaseConnection.php(652): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `sales`.*, `customers`.`name` as `customer_name`, `marketing_persons`.`name` as `marketing_person_name`, `marketing_persons`.`phone` as `marketing_person_phone`
+FROM `sales`
+LEFT JOIN `customers` ON `customers`.`id` = `sales`.`customer_id`
+LEFT JOIN `marketing_persons` ON `marketing_persons`.`id` = `sales`.`marketing_person_id`
+WHERE `sales`.`id` = \'14\'')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `sales`.*, `customers`.`name` as `customer_name`, `marketing_persons`.`name` as `marketing_person_name`, `marketing_persons`.`phone` as `marketing_person_phone`
+FROM `sales`
+LEFT JOIN `customers` ON `customers`.`id` = `sales`.`customer_id`
+LEFT JOIN `marketing_persons` ON `marketing_persons`.`id` = `sales`.`marketing_person_id`
+WHERE `sales`.`id` = :sales.id:', [...], false)
+ 5 SYSTEMPATH\Model.php(210): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(613): CodeIgniter\Model->doFind(true, '14')
+ 7 APPPATH\Controllers\StockOut.php(285): CodeIgniter\BaseModel->find('14')
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockOut->view(8)
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockOut))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-06-17 04:55:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-17 04:55:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-17 04:55:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-17 04:56:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-17 04:56:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-17 04:56:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-17 04:56:25 --> StockOut::store - Database transaction begun.
+DEBUG - 2025-06-17 04:56:25 --> StockOut::store - Stock Out Insert attempt. Result: Success (ID: 11)
+DEBUG - 2025-06-17 04:56:25 --> StockOut::store - Product Stock Update attempt. Result: Success, New Stock: 8878
+DEBUG - 2025-06-17 04:56:25 --> StockOut::store - Transaction Committed Successfully.
+DEBUG - 2025-06-17 04:56:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-17 04:56:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-17 04:56:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-17 04:56:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-17 04:56:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-17 04:56:47 --> StockOut::store - Database transaction begun.
+DEBUG - 2025-06-17 04:56:47 --> StockOut::store - Stock Out Insert attempt. Result: Success (ID: 12)
+DEBUG - 2025-06-17 04:56:47 --> StockOut::store - Product Stock Update attempt. Result: Success, New Stock: 51
+DEBUG - 2025-06-17 04:56:47 --> StockOut::store - Transaction Committed Successfully.
+DEBUG - 2025-06-17 04:56:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-17 04:56:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-17 04:57:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-17 04:57:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-17 04:57:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-17 04:57:08 --> StockOut::store - Database transaction begun.
+DEBUG - 2025-06-17 04:57:08 --> StockOut::store - Stock Out Insert attempt. Result: Success (ID: 13)
+DEBUG - 2025-06-17 04:57:08 --> StockOut::store - Product Stock Update attempt. Result: Success, New Stock: 1312
+DEBUG - 2025-06-17 04:57:08 --> StockOut::store - Transaction Committed Successfully.
+DEBUG - 2025-06-17 04:57:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-17 04:57:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-17 04:58:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-17 05:11:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-17 05:15:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-17 05:15:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-17 05:16:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 64.
+ 1 APPPATH\Views\stock_in\index.php(64): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 64.
+ 1 APPPATH\Views\stock_in\index.php(64): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 66.
+ 1 APPPATH\Views\stock_in\index.php(66): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 68.
+ 1 APPPATH\Views\stock_in\index.php(68): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 66.
+ 1 APPPATH\Views\stock_in\index.php(66): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 68.
+ 1 APPPATH\Views\stock_in\index.php(68): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 66.
+ 1 APPPATH\Views\stock_in\index.php(66): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 68.
+ 1 APPPATH\Views\stock_in\index.php(68): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 66.
+ 1 APPPATH\Views\stock_in\index.php(66): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 68.
+ 1 APPPATH\Views\stock_in\index.php(68): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 66.
+ 1 APPPATH\Views\stock_in\index.php(66): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 68.
+ 1 APPPATH\Views\stock_in\index.php(68): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 66.
+ 1 APPPATH\Views\stock_in\index.php(66): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 68.
+ 1 APPPATH\Views\stock_in\index.php(68): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 66.
+ 1 APPPATH\Views\stock_in\index.php(66): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 68.
+ 1 APPPATH\Views\stock_in\index.php(68): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 66.
+ 1 APPPATH\Views\stock_in\index.php(66): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 68.
+ 1 APPPATH\Views\stock_in\index.php(68): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 66.
+ 1 APPPATH\Views\stock_in\index.php(66): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 68.
+ 1 APPPATH\Views\stock_in\index.php(68): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 64.
+ 1 APPPATH\Views\stock_in\index.php(64): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 66.
+ 1 APPPATH\Views\stock_in\index.php(66): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 68.
+ 1 APPPATH\Views\stock_in\index.php(68): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 61.
+ 1 APPPATH\Views\stock_in\index.php(61): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 64.
+ 1 APPPATH\Views\stock_in\index.php(64): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 66.
+ 1 APPPATH\Views\stock_in\index.php(66): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 68.
+ 1 APPPATH\Views\stock_in\index.php(68): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 61.
+ 1 APPPATH\Views\stock_in\index.php(61): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 64.
+ 1 APPPATH\Views\stock_in\index.php(64): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 66.
+ 1 APPPATH\Views\stock_in\index.php(66): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 68.
+ 1 APPPATH\Views\stock_in\index.php(68): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 61.
+ 1 APPPATH\Views\stock_in\index.php(61): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 64.
+ 1 APPPATH\Views\stock_in\index.php(64): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 66.
+ 1 APPPATH\Views\stock_in\index.php(66): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 68.
+ 1 APPPATH\Views\stock_in\index.php(68): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 61.
+ 1 APPPATH\Views\stock_in\index.php(61): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 64.
+ 1 APPPATH\Views\stock_in\index.php(64): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 66.
+ 1 APPPATH\Views\stock_in\index.php(66): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 68.
+ 1 APPPATH\Views\stock_in\index.php(68): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 61.
+ 1 APPPATH\Views\stock_in\index.php(61): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 64.
+ 1 APPPATH\Views\stock_in\index.php(64): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 66.
+ 1 APPPATH\Views\stock_in\index.php(66): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-17 05:16:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\stock_in\index.php on line 68.
+ 1 APPPATH\Views\stock_in\index.php(68): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\stock_in\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('stock_in/index', [], true)
+ 5 APPPATH\Controllers\StockIn.php(60): view('stock_in/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\StockIn->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StockIn))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-06-17 05:16:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.

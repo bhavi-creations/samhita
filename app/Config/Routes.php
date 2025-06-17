@@ -54,12 +54,23 @@ $routes->group('products', function ($routes) {
     $routes->get('edit-price/(:num)', 'Products::editPrice/$1'); // Displays the edit form
     $routes->post('update-price/(:num)', 'Products::updatePrice/$1'); // Handles form submission
 });
-// PRODUCTS 
+ 
 
-
-
-
-
+// --- Stock Out Routes ---
+$routes->group('stock-out', function ($routes) {
+    // List Stock Out Records (with filters)
+    $routes->get('/', 'StockOut::index');
+    // Display form for issuing new stock out
+    $routes->get('issue', 'StockOut::issue');
+    // Handle submission for storing new stock out
+    $routes->post('store', 'StockOut::store');
+    // Display details of a single stock out record
+    $routes->get('view/(:num)', 'StockOut::view/$1'); // :num ensures it's a number ID
+    // Export Stock Out records to Excel (CSV for now)
+    $routes->get('export-excel', 'StockOut::exportExcel');
+    // Export Stock Out records to PDF
+    $routes->get('export-pdf', 'StockOut::exportPdf');
+});
 // STOCK_IN 
 
 
@@ -196,3 +207,17 @@ $routes->get('vendors/delete/(:num)', 'Vendors::delete/$1');
 $routes->get('vendors/vendorReport', 'Vendors::vendorReport');
 $routes->get('vendors/vendorReportExport', 'Vendors::vendorReportExport');
 $routes->get('reports/vendor-report-pdf', 'Vendors::vendorReportPDF');
+
+
+
+
+
+// In app/Config/Routes.php
+
+// Distributor Routes
+$routes->group('distributors', function($routes) {
+    $routes->get('/', 'Distributor::index'); // Shows list of distributors
+    $routes->get('add', 'Distributor::add'); // Shows form to add new distributor
+    $routes->post('store', 'Distributor::store'); // Handles form submission for adding
+    // Add more routes here as you build out functionality (e.g., edit, delete)
+});

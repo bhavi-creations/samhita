@@ -34,13 +34,15 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<?= base_url('products/stock-overview') ?>">
-                        <i class="nav-icon fas fa-boxes"></i> <p>Available Stock</p>   
+                        <i class="nav-icon fas fa-boxes"></i>
+                        <p>Available Stock</p>
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link" href="<?= base_url('products/manage-prices') ?>">
-                        <i class="nav-icon  fas fa-dollar-sign"></i>
+
+                        <i class=" nav-icon fa-solid fa-indian-rupee-sign"></i>
                         <p> Manage Prices </p>
                     </a>
                 </li>
@@ -67,6 +69,13 @@
                     <a href="<?= base_url('stock-in') ?>" class="nav-link <?= uri_string() == 'stock-in' ? 'active' : '' ?>">
                         <i class="nav-icon fas fa-arrow-down"></i>
                         <p>Stock In</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url('stock-out') ?>">
+                        <i class="nav-icon fas fa-truck-moving"></i>
+                        <p> Stock Out </p>
                     </a>
                 </li>
                 <!-- Tax Settings -->
