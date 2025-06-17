@@ -10,6 +10,12 @@
         <nav class="mt-2">
             <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
 
+
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url('distributors') ?>">
+                        <i class="bi bi-truck-flatbed"></i> Distributors
+                    </a>
+                </li>
                 <!-- Dashboard -->
                 <li class="nav-header">MAIN</li>
                 <li class="nav-item">
