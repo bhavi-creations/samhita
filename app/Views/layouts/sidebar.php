@@ -11,11 +11,7 @@
             <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
 
 
-                <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('distributors') ?>">
-                        <i class="bi bi-truck-flatbed"></i> Distributors
-                    </a>
-                </li>
+
                 <!-- Dashboard -->
                 <li class="nav-header">MAIN</li>
                 <li class="nav-item">
@@ -25,8 +21,14 @@
                     </a>
                 </li>
 
+
                 <!-- Stock Management -->
                 <li class="nav-header">STOCK MANAGEMENT</li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url('distributors') ?>">
+                        <i class="bi bi-truck-flatbed"></i> Distributors
+                    </a>
+                </li>
                 <li class="nav-item mt-3">
                     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
                         <span>Product Pricing</span>

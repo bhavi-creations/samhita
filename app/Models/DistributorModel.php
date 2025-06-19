@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
-use CodeIgniter\Validation\Validation;
 
 class DistributorModel extends Model
 {
@@ -14,9 +13,17 @@ class DistributorModel extends Model
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
-        'custom_id', 'agency_name', 'owner_name', 'owner_phone',
-        'agent_name', 'agent_phone', 'agency_gst_number', 'gmail',
-        'agency_address', 'status', 'notes'
+        'custom_id',
+        'agency_name',
+        'owner_name',
+        'owner_phone',
+        'agent_name',
+        'agent_phone',
+        'agency_gst_number',
+        'gmail',
+        'agency_address',
+        'status',
+        'notes'
     ];
 
     // Dates
@@ -24,12 +31,12 @@ class DistributorModel extends Model
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
+    protected $deletedField  = 'deleted_at'; // For soft deletes if enabled
 
     // Callbacks
     protected $allowCallbacks = true;
-    // Keep this line commented out for this test to isolate the DB connection issue
-    protected $beforeInsert   = []; // Temporarily disabled for debugging
+    // This callback will run BEFORE an insert operation
+    protected $beforeInsert   = ['generateCustomIdValue'];
     protected $afterInsert    = [];
     protected $beforeUpdate   = [];
     protected $afterUpdate    = [];
@@ -38,131 +45,146 @@ class DistributorModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    // CRITICAL FIX: Explicitly declare the $errors property to avoid deprecation warning
-    protected $errors = []; // Initialize as an empty array
-
     /**
-     * NEW DEBUGGING CONSTRUCTOR
-     * This will run when the DistributorModel is first created.
-     */
-    public function __construct()
-    {
-        parent::__construct(); // Call the parent Model's constructor first
-
-        // --- DEBUGGING: Check the database connection status immediately ---
-        echo '<pre style="background-color: #ffcccc; padding: 10px; border: 1px solid red;">';
-        echo 'DEBUG: Database Connection Object Status (inside DistributorModel\'s __construct()):<br>';
-
-        // $this->db->connID holds the raw database connection resource
-        if (is_object($this->db->connID)) {
-            echo "Connection is an object (OK).<br>";
-            echo "Hostname: " . $this->db->getHostname() . "<br>";
-            echo "Database: " . $this->db->getDatabase() . "<br>";
-            // Attempt a simple query to further test
-            try {
-                $testQuery = $this->db->query("SELECT 1+1 AS test");
-                if ($testQuery) {
-                    echo "Simple test query successful (result: " . $testQuery->getRow()->test . ")!<br>";
-                } else {
-                    echo "Simple test query FAILED.<br>";
-                }
-            } catch (\Exception $e) {
-                echo "Exception during test query: " . $e->getMessage() . "<br>";
-            }
-        } else {
-            echo "Connection is NOT an object.<br>";
-            echo "Type: " . gettype($this->db->connID) . "<br>";
-            // If it's boolean false, this is where the connection itself failed
-            echo "MySQLi Connect Error Message: " . mysqli_connect_error() . "<br>";
-            echo "MySQLi Connect Error Number: " . mysqli_connect_errno() . "<br>";
-            echo "This indicates a fundamental database connection issue (credentials, server not running, etc.).<br>";
-        }
-        echo '</pre>';
-        // If the above reports issues, you might uncomment exit; to stop further execution and see the debug output clearly
-        // exit;
-    }
-
-
-    /**
-     * Generates a custom distributor ID before inserting a new record.
-     * This callback is only for INSERT operations.
-     * (Currently disabled by `protected $beforeInsert = [];` above)
+     * Generates a custom distributor ID using the 'sequences' table.
+     * This callback runs automatically before an insert operation.
      */
     protected function generateCustomIdValue(array $data)
     {
-        // This method's code remains as is, but it won't be called for now.
+        // Only generate custom_id if it's an insert operation and custom_id is not already set
+        // The !isset($data['id']) check ensures it's an insert (updates will have an ID)
         if (!isset($data['id']) && (!isset($data['data']['custom_id']) || empty($data['data']['custom_id']))) {
-            $builder = $this->db->table('sequences');
 
-            $this->db->transStart();
+            // Get the database connection
+            $db = \Config\Database::connect();
+            $builder = $db->table('sequences');
 
+            // Start a transaction to ensure atomic update of sequence number
+            $db->transStart();
+
+            // Get the current sequence value with a row lock to prevent race conditions
+            // For MySQL, 'FOR UPDATE' locks the selected row
             $sequence = $builder->where('name', 'distributor_custom_id')->get()->getRow();
+
+            $currentValue = 0;
 
             if ($sequence) {
                 $currentValue = $sequence->current_value + 1;
                 $builder->where('name', 'distributor_custom_id')->update(['current_value' => $currentValue, 'updated_at' => date('Y-m-d H:i:s')]);
             } else {
+                // This fallback creates the sequence if it doesn't exist, though it should ideally be created by migration.
                 $currentValue = 1;
                 $builder->insert(['name' => 'distributor_custom_id', 'current_value' => $currentValue, 'updated_at' => date('Y-m-d H:i:s')]);
             }
 
-            $this->db->transComplete();
+            $db->transComplete(); // Complete the transaction
 
-            if ($this->db->transStatus() === false) {
+            if ($db->transStatus() === false) {
+                // Transaction failed, log error and do not generate custom ID
                 log_message('error', 'DistributorModel::generateCustomIdValue - Failed to update distributor_custom_id sequence transactionally.');
+                // You might want to throw an exception or return an error here to stop the insert
+                return $data; // Return original data to potentially cause a database error
             } else {
-                $datePart = date('ymd');
-                $paddedId = sprintf('%04d', $currentValue);
+                // Transaction successful, generate and set the custom ID
+                $datePart = date('ymd'); // YYMMDD
+                $paddedId = sprintf('%04d', $currentValue); // Pad with leading zeros to 4 digits
                 $customId = 'DSSS-' . $datePart . '-' . $paddedId;
+
+                // Add the generated custom_id to the data that will be inserted
                 $data['data']['custom_id'] = $customId;
             }
         }
-        return $data;
+
+        return $data; // Always return the data array
     }
+
+    /**
+     * Define validation rules for distributor data.
+     * This method dynamically adjusts unique rules for updates.
+     * Note: Since 'UNIQUE' constraints were removed from DB for these fields,
+     * application-level validation becomes even more important.
+     */
+    protected $validationRules = []; // Initialize as empty, will be set by getValidationRules()
 
     public function getValidationRules(array $data = []): array
     {
-        // Keep the 'max_length[1]' on agency_name to force a validation error for testing purposes.
-        $ownerPhoneRules       = 'required|exact_length[10]|numeric';
-        $agencyGstNumberRules  = 'permit_empty|max_length[15]';
-        $gmailRules            = 'permit_empty|valid_email|max_length[255]';
+        $ownerPhoneRules        = 'required|exact_length[10]|numeric';
+        $agencyGstNumberRules   = 'permit_empty|max_length[15]';
+        $gmailRules             = 'permit_empty|valid_email|max_length[255]';
 
+        // Adjust 'is_unique' rules based on whether it's an update or insert
+        if (isset($data['id']) && !empty($data['id'])) {
+            // For updates, allow the current record's value to be non-unique against itself
+            $id = (int) $data['id'];
+            $ownerPhoneRules      .= '|is_unique[distributors.owner_phone,id,' . $id . ']';
+            $agencyGstNumberRules .= '|is_unique[distributors.agency_gst_number,id,' . $id . ']';
+            $gmailRules           .= '|is_unique[distributors.gmail,id,' . $id . ']';
+        } else {
+            // For new inserts, all fields must be unique
+            $ownerPhoneRules      .= '|is_unique[distributors.owner_phone]';
+            $agencyGstNumberRules .= '|is_unique[distributors.agency_gst_number]';
+            $gmailRules           .= '|is_unique[distributors.gmail]';
+        }
+
+        // Now define the full $rules array, incorporating the constructed rule strings
         $rules = [
-            'agency_name'       => 'required|min_length[3]|max_length[255]|max_length[1]', // Keep max_length[1] here
+            'agency_name'       => 'required|min_length[3]|max_length[255]',
             'owner_name'        => 'required|min_length[3]|max_length[255]',
             'owner_phone'       => [
                 'label'  => 'Owner Phone',
                 'rules'  => $ownerPhoneRules,
                 'errors' => [
                     'exact_length' => 'The {field} field must be exactly 10 digits long.',
-                    'numeric'      => 'The {field} field must contain only numbers.'
+                    'numeric'      => 'The {field} field must contain only numbers.',
+                    'is_unique'    => 'The {field} is already registered.'
                 ]
             ],
             'agency_address'    => 'required|min_length[5]|max_length[1000]',
             'status'            => 'required|in_list[Active,Inactive,On Hold]',
             'agent_name'        => 'permit_empty|min_length[3]|max_length[255]',
             'agent_phone'       => 'permit_empty|exact_length[10]|numeric',
-            'agency_gst_number' => $agencyGstNumberRules,
-            'gmail'             => $gmailRules,
+            'agency_gst_number' => [
+                'label'  => 'Agency GST Number',
+                'rules'  => $agencyGstNumberRules,
+                'errors' => [
+                    'is_unique' => 'The {field} is already registered.'
+                ]
+            ],
+            'gmail'             => [
+                'label'  => 'Gmail',
+                'rules'  => $gmailRules,
+                'errors' => [
+                    'is_unique' => 'The {field} is already registered.'
+                ]
+            ],
             'notes'             => 'permit_empty|max_length[1000]',
         ];
 
         return $rules;
     }
 
-    public function validate($row): bool
+    /**
+     * Override the validate method to use our dynamic rules.
+     * Correctly uses the Validation service instance and sets model errors.
+     */
+    public function validate($data): bool
     {
-        $rules = $this->getValidationRules($row);
+        // If it's an update, ensure 'id' is in the data so 'is_unique' rule can exclude current record
+        $rules = $this->getValidationRules($data);
+
+        /** @var \CodeIgniter\Validation\Validation $validation */
         $validation = \Config\Services::validation();
+
         $validation->setRules($rules);
-        $isValid = $validation->run($row);
+
+        $isValid = $validation->run($data);
 
         if ($isValid === false) {
-            // Keep these debugging lines for now.
-            echo '<pre>DEBUG: Validation Errors (inside model\'s validate method):<br>';
-            var_dump($validation->getErrors());
-            echo '</pre>';
-            $this->errors = $validation->getErrors();
+            // REMOVE the line that caused the error:
+            // $this->setValidationErrors($validation->getErrors()); // THIS LINE IS GONE
+            log_message('error', 'DistributorModel::validate - Validation FAILED. Errors: ' . json_encode($validation->getErrors())); // Log directly from $validation
+        } else {
+            log_message('debug', 'DistributorModel::validate - Validation PASSED.');
         }
 
         return $isValid;

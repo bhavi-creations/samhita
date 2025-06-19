@@ -1,0 +1,550 @@
+DEBUG - 2025-06-19 04:13:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 04:13:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 04:13:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 04:14:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 04:14:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 04:14:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 04:49:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 04:49:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 04:49:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 04:49:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 04:50:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 05:12:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 05:12:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 05:13:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 05:13:13 --> Distributor::store - Received Post Data: {"csrf_test_name":"62ce387f454bb9c3c3eefdff96905977","agency_name":"varsha greens","owner_name":"varun","owner_phone":"9876045643","agent_name":"raj","agent_phone":"0909090909","agency_gst_number":"Gatekj4334bt34k","gmail":"varun@gmail.com","agency_address":"kkf","status":"Active","notes":""}
+ERROR - 2025-06-19 05:13:13 --> Distributor::store - Validation failed. Errors: []
+DEBUG - 2025-06-19 05:13:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 05:13:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 05:13:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-06-19 05:16:20 --> Error: Cannot call constructor
+[Method: GET, Route: distributors/add]
+in APPPATH\Controllers\Distributor.php on line 18.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Distributor->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-06-19 05:23:05 --> Error: Cannot call constructor
+[Method: GET, Route: distributors/add]
+in APPPATH\Controllers\Distributor.php on line 18.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Distributor->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-06-19 05:23:08 --> Error: Cannot call constructor
+[Method: GET, Route: distributors]
+in APPPATH\Controllers\Distributor.php on line 18.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Distributor->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-06-19 05:23:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 05:23:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-06-19 05:23:15 --> Error: Cannot call constructor
+[Method: GET, Route: distributors]
+in APPPATH\Controllers\Distributor.php on line 18.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Distributor->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-06-19 05:23:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-06-19 05:23:26 --> Error: Cannot call constructor
+[Method: GET, Route: distributors]
+in APPPATH\Controllers\Distributor.php on line 18.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Distributor->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-06-19 05:23:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-06-19 05:23:40 --> Error: Cannot call constructor
+[Method: GET, Route: distributors]
+in APPPATH\Controllers\Distributor.php on line 18.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Distributor->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-06-19 05:27:09 --> Error: Cannot call constructor
+[Method: GET, Route: distributors/add]
+in APPPATH\Controllers\Distributor.php on line 18.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Distributor->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-06-19 05:45:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 05:45:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 05:56:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 05:56:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-06-19 05:57:29 --> Error: Cannot call constructor
+[Method: GET, Route: distributors]
+in APPPATH\Controllers\Distributor.php on line 20.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Distributor->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-06-19 05:57:44 --> Error: Cannot call constructor
+[Method: GET, Route: distributors]
+in APPPATH\Controllers\Distributor.php on line 20.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Distributor->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-06-19 05:57:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 05:57:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-06-19 05:57:47 --> Error: Cannot call constructor
+[Method: GET, Route: distributors]
+in APPPATH\Controllers\Distributor.php on line 20.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Distributor->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-06-19 05:58:02 --> Error: Cannot call constructor
+[Method: GET, Route: distributors]
+in APPPATH\Controllers\Distributor.php on line 20.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Distributor->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-06-19 05:58:03 --> Error: Cannot call constructor
+[Method: GET, Route: distributors]
+in APPPATH\Controllers\Distributor.php on line 20.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Distributor->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-06-19 05:58:07 --> Error: Cannot call constructor
+[Method: GET, Route: distributors/add]
+in APPPATH\Controllers\Distributor.php on line 20.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Distributor->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-06-19 05:58:17 --> Error: Cannot call constructor
+[Method: GET, Route: distributors]
+in APPPATH\Controllers\Distributor.php on line 20.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Distributor->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-06-19 05:59:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 05:59:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-06-19 05:59:26 --> Error: Cannot call constructor
+[Method: GET, Route: distributors]
+in APPPATH\Controllers\Distributor.php on line 20.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Distributor->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-06-19 05:59:55 --> Error: Cannot call constructor
+[Method: GET, Route: distributors]
+in APPPATH\Controllers\Distributor.php on line 20.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Distributor->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-06-19 06:00:07 --> Error: Cannot call constructor
+[Method: GET, Route: distributors]
+in APPPATH\Controllers\Distributor.php on line 20.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Distributor->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-06-19 06:01:41 --> Error: Cannot call constructor
+[Method: GET, Route: distributors]
+in APPPATH\Controllers\Distributor.php on line 20.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Distributor->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-06-19 06:09:14 --> Error: Cannot call constructor
+[Method: GET, Route: distributors]
+in APPPATH\Controllers\Distributor.php on line 20.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Distributor->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-06-19 06:11:25 --> Error: Cannot call constructor
+[Method: GET, Route: distributors]
+in APPPATH\Controllers\Distributor.php on line 20.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Distributor->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-06-19 06:19:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:19:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:19:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:19:52 --> Distributor::store - Received Post Data: {"csrf_test_name":"21e48603c87859dfbae44b9bc981158c","agency_name":"mohan pesticides","owner_name":"mohan","owner_phone":"9898989898","agent_name":"raja","agent_phone":"9090909090","agency_gst_number":"GSTIne28402vnkdj ","gmail":"moFhanoesticides@gmail.com","agency_address":"df","status":"Active","notes":""}
+WARNING - 2025-06-19 06:19:52 --> [DEPRECATED] Creation of dynamic property App\Models\DistributorModel::$errors is deprecated in APPPATH\Models\DistributorModel.php on line 175.
+ 1 APPPATH\Controllers\Distributor.php(64): App\Models\DistributorModel->validate([...])
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Distributor->store()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Distributor))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-06-19 06:19:52 --> Distributor::store - Validation failed. Errors: []
+DEBUG - 2025-06-19 06:19:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:21:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:22:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:22:12 --> Distributor::store - Received Post Data: {"agency_name":"mohan pesticides","owner_name":"mohan","owner_phone":"9898989898","agency_address":"kkd","status":"Active","agent_name":"raja","agent_phone":"9090909090","agency_gst_number":"GSTIne28402vn","gmail":"mohanoesticides@gmail.com","notes":""}
+WARNING - 2025-06-19 06:22:12 --> [DEPRECATED] Creation of dynamic property App\Models\DistributorModel::$errors is deprecated in APPPATH\Models\DistributorModel.php on line 175.
+ 1 APPPATH\Controllers\Distributor.php(64): App\Models\DistributorModel->validate([...])
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Distributor->store()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Distributor))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-06-19 06:22:12 --> Distributor::store - Validation failed. Errors: []
+DEBUG - 2025-06-19 06:22:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:22:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:22:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:23:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:23:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:23:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:24:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:24:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:25:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:31:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:31:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:31:40 --> Distributor::store - Received Post Data: {"agency_name":"mohan pesticides","owner_name":"mohan","owner_phone":"9898989398","agency_address":"kkd","status":"Active","agent_name":"raja","agent_phone":"9090909090","agency_gst_number":"GSTIne28402v ","gmail":"mohanoesticides@gmail.com","notes":""}
+WARNING - 2025-06-19 06:31:40 --> [DEPRECATED] Creation of dynamic property App\Models\DistributorModel::$errors is deprecated in APPPATH\Models\DistributorModel.php on line 175.
+ 1 APPPATH\Controllers\Distributor.php(64): App\Models\DistributorModel->validate([...])
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Distributor->store()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Distributor))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-06-19 06:31:40 --> Distributor::store - Validation failed. Errors: []
+DEBUG - 2025-06-19 06:31:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:34:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:34:19 --> Distributor::store - Received Post Data: {"agency_name":"mohan pesticides","owner_name":"mohan","owner_phone":"9898989398","agency_address":"kkd","status":"Active","agent_name":"raja","agent_phone":"9090909090","agency_gst_number":"GSTIne28402v ","gmail":"mohanoesticides@gmail.com","notes":""}
+WARNING - 2025-06-19 06:34:19 --> [DEPRECATED] Creation of dynamic property App\Models\DistributorModel::$errors is deprecated in APPPATH\Models\DistributorModel.php on line 175.
+ 1 APPPATH\Controllers\Distributor.php(64): App\Models\DistributorModel->validate([...])
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Distributor->store()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Distributor))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-06-19 06:34:19 --> Distributor::store - Validation failed. Errors: []
+DEBUG - 2025-06-19 06:34:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:35:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:35:39 --> Distributor::store - Received Post Data: {"agency_name":"mohan pesticides","owner_name":"mohan","owner_phone":"9898989398","agency_address":"kkd","status":"Active","agent_name":"raja","agent_phone":"9090909090","agency_gst_number":"GSTIne28402v ","gmail":"mohanoesticides@gmail.com","notes":""}
+WARNING - 2025-06-19 06:35:39 --> [DEPRECATED] Creation of dynamic property App\Models\DistributorModel::$errors is deprecated in APPPATH\Models\DistributorModel.php on line 175.
+ 1 APPPATH\Controllers\Distributor.php(64): App\Models\DistributorModel->validate([...])
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Distributor->store()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Distributor))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-06-19 06:35:39 --> Distributor::store - Validation failed. Errors: []
+DEBUG - 2025-06-19 06:35:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:35:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:35:42 --> Distributor::store - Received Post Data: {"agency_name":"mohan pesticides","owner_name":"mohan","owner_phone":"9898989398","agency_address":"kkd","status":"Active","agent_name":"raja","agent_phone":"9090909090","agency_gst_number":"GSTIne28402v ","gmail":"mohanoesticides@gmail.com","notes":""}
+WARNING - 2025-06-19 06:35:42 --> [DEPRECATED] Creation of dynamic property App\Models\DistributorModel::$errors is deprecated in APPPATH\Models\DistributorModel.php on line 175.
+ 1 APPPATH\Controllers\Distributor.php(64): App\Models\DistributorModel->validate([...])
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Distributor->store()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Distributor))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-06-19 06:35:42 --> Distributor::store - Validation failed. Errors: []
+DEBUG - 2025-06-19 06:35:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:35:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:38:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:38:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:38:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:38:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:38:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:38:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:38:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:38:58 --> Distributor::store - Received Post Data: {"agency_name":"mohan pesticides","owner_name":"mohan","owner_phone":"9898989898","agency_address":"ww","status":"Active","agent_name":"raja","agent_phone":"9090909090","agency_gst_number":"Gar34ernlknl","gmail":"mohanoesticides@gmail.com","notes":""}
+CRITICAL - 2025-06-19 06:38:58 --> CodeIgniter\Exceptions\BadMethodCallException: Call to undefined method App\Models\DistributorModel::setValidationErrors
+[Method: POST, Route: distributors/store]
+in SYSTEMPATH\Model.php on line 930.
+ 1 APPPATH\Models\DistributorModel.php(175): CodeIgniter\Model->__call('setValidationErrors', [...])
+ 2 APPPATH\Controllers\Distributor.php(64): App\Models\DistributorModel->validate([...])
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Distributor->store()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Distributor))
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-06-19 06:43:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:43:14 --> Distributor::store - Received Post Data: {"agency_name":"mohan pesticides","owner_name":"mohan","owner_phone":"9898989898","agency_address":"ww","status":"Active","agent_name":"raja","agent_phone":"9090909090","agency_gst_number":"Gar34ernlknl","gmail":"mohanoesticides@gmail.com","notes":""}
+ERROR - 2025-06-19 06:43:14 --> DistributorModel::validate - Validation FAILED. Errors: {"agency_address":"The agency_address field must be at least 5 characters in length."}
+ERROR - 2025-06-19 06:43:14 --> Distributor::store - Validation failed. Errors: {"agency_address":"The agency_address field must be at least 5 characters in length."}
+DEBUG - 2025-06-19 06:43:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:43:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:43:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:43:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:43:37 --> Distributor::store - Received Post Data: {"agency_name":"mohan pesticides","owner_name":"mohan","owner_phone":"9898989898","agency_address":"sg","status":"Active","agent_name":"raja","agent_phone":"9090909090","agency_gst_number":"GSTIne28402vn","gmail":"mohanoesticides@gmail.com","notes":""}
+ERROR - 2025-06-19 06:43:37 --> DistributorModel::validate - Validation FAILED. Errors: {"agency_address":"The agency_address field must be at least 5 characters in length."}
+ERROR - 2025-06-19 06:43:37 --> Distributor::store - Validation failed. Errors: {"agency_address":"The agency_address field must be at least 5 characters in length."}
+DEBUG - 2025-06-19 06:43:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:43:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:43:59 --> Distributor::store - Received Post Data: {"agency_name":"mohan pesticides","owner_name":"mohan","owner_phone":"9898989898","agency_address":"sgsdde","status":"Active","agent_name":"raja","agent_phone":"9090909090","agency_gst_number":"GSTIne28402vn","gmail":"mohanoesticides@gmail.com","notes":""}
+DEBUG - 2025-06-19 06:43:59 --> DistributorModel::validate - Validation PASSED.
+DEBUG - 2025-06-19 06:43:59 --> DistributorModel::validate - Validation PASSED.
+DEBUG - 2025-06-19 06:43:59 --> Distributor::store - New distributor added successfully.
+DEBUG - 2025-06-19 06:43:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:44:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:44:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:44:25 --> Distributor::store - Received Post Data: {"agency_name":"reddy farming","owner_name":"mohan","owner_phone":"9898989398","agency_address":"ewfae","status":"Inactive","agent_name":"raja","agent_phone":"998889988","agency_gst_number":"GSTIne28402v ","gmail":"reddy@gmail.com","notes":""}
+ERROR - 2025-06-19 06:44:25 --> DistributorModel::validate - Validation FAILED. Errors: {"agent_phone":"The agent_phone field must be exactly 10 characters in length."}
+ERROR - 2025-06-19 06:44:25 --> Distributor::store - Validation failed. Errors: {"agent_phone":"The agent_phone field must be exactly 10 characters in length."}
+DEBUG - 2025-06-19 06:44:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:44:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:44:43 --> Distributor::store - Received Post Data: {"agency_name":"reddy farming","owner_name":"mohan","owner_phone":"9898989398","agency_address":"ewfae","status":"Inactive","agent_name":"raja","agent_phone":"9988899883","agency_gst_number":"GSTIne28402v ","gmail":"reddy@gmail.com","notes":""}
+DEBUG - 2025-06-19 06:44:43 --> DistributorModel::validate - Validation PASSED.
+DEBUG - 2025-06-19 06:44:43 --> DistributorModel::validate - Validation PASSED.
+DEBUG - 2025-06-19 06:44:43 --> Distributor::store - New distributor added successfully.
+DEBUG - 2025-06-19 06:44:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:44:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:45:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:45:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:45:07 --> Distributor::update - Received Post Data for ID: 1 -> {"id":"1","agency_name":"mohan pesticidesr","owner_name":"mohan","owner_phone":"9898989898","agency_address":"sgsdde","status":"Active","agent_name":"raja","agent_phone":"9090909090","agency_gst_number":"GSTIne28402vn","gmail":"mohanoesticides@gmail.com","notes":""}
+DEBUG - 2025-06-19 06:45:07 --> DistributorModel::validate - Validation PASSED.
+DEBUG - 2025-06-19 06:45:07 --> DistributorModel::validate - Validation PASSED.
+DEBUG - 2025-06-19 06:45:07 --> Distributor::update - Distributor ID 1 updated successfully.
+DEBUG - 2025-06-19 06:45:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:46:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:46:02 --> Distributor::delete - Distributor ID 1 deleted successfully.
+DEBUG - 2025-06-19 06:46:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:46:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:46:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:46:13 --> Distributor::update - Received Post Data for ID: 2 -> {"id":"2","agency_name":"reddy farmings","owner_name":"mohan","owner_phone":"9898989398","agency_address":"ewfae","status":"Inactive","agent_name":"raja","agent_phone":"9988899883","agency_gst_number":"GSTIne28402v ","gmail":"reddy@gmail.com","notes":""}
+DEBUG - 2025-06-19 06:46:13 --> DistributorModel::validate - Validation PASSED.
+DEBUG - 2025-06-19 06:46:13 --> DistributorModel::validate - Validation PASSED.
+DEBUG - 2025-06-19 06:46:13 --> Distributor::update - Distributor ID 2 updated successfully.
+DEBUG - 2025-06-19 06:46:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:46:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:46:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:46:25 --> Distributor::update - Received Post Data for ID: 2 -> {"id":"2","agency_name":"reddy farmings","owner_name":"mohan","owner_phone":"9898989399","agency_address":"ewfae","status":"Inactive","agent_name":"raja","agent_phone":"9988899889","agency_gst_number":"GSTIne28402v ","gmail":"reddy@gmail.com","notes":""}
+DEBUG - 2025-06-19 06:46:25 --> DistributorModel::validate - Validation PASSED.
+DEBUG - 2025-06-19 06:46:25 --> DistributorModel::validate - Validation PASSED.
+DEBUG - 2025-06-19 06:46:25 --> Distributor::update - Distributor ID 2 updated successfully.
+DEBUG - 2025-06-19 06:46:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:46:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:46:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:46:34 --> Distributor::update - Received Post Data for ID: 2 -> {"id":"2","agency_name":"reddy farmings","owner_name":"mohan","owner_phone":"9898989399","agency_address":"ewfae","status":"Inactive","agent_name":"raja","agent_phone":"9988899889","agency_gst_number":"GSTIne28402vv","gmail":"reddy@gmail.com","notes":""}
+DEBUG - 2025-06-19 06:46:34 --> DistributorModel::validate - Validation PASSED.
+DEBUG - 2025-06-19 06:46:34 --> DistributorModel::validate - Validation PASSED.
+DEBUG - 2025-06-19 06:46:34 --> Distributor::update - Distributor ID 2 updated successfully.
+DEBUG - 2025-06-19 06:46:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:46:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:46:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:49:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:49:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:49:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:49:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:49:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:49:27 --> Distributor::update - Received Post Data for ID: 2 -> {"id":"2","agency_name":"reddy farmings","owner_name":"mohan","owner_phone":"9898989399","agency_address":"ewfae","status":"On Hold","agent_name":"raja","agent_phone":"9988899889","agency_gst_number":"GSTIne28402vv","gmail":"reddy@gmail.com","notes":""}
+DEBUG - 2025-06-19 06:49:27 --> DistributorModel::validate - Validation PASSED.
+DEBUG - 2025-06-19 06:49:27 --> DistributorModel::validate - Validation PASSED.
+DEBUG - 2025-06-19 06:49:27 --> Distributor::update - Distributor ID 2 updated successfully.
+DEBUG - 2025-06-19 06:49:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:49:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:49:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:49:40 --> Distributor::update - Received Post Data for ID: 2 -> {"id":"2","agency_name":"reddy farmings","owner_name":"mohan","owner_phone":"9898989399","agency_address":"ewfae","status":"Active","agent_name":"raja","agent_phone":"9988899889","agency_gst_number":"GSTIne28402vv","gmail":"reddy@gmail.com","notes":""}
+DEBUG - 2025-06-19 06:49:40 --> DistributorModel::validate - Validation PASSED.
+DEBUG - 2025-06-19 06:49:40 --> DistributorModel::validate - Validation PASSED.
+DEBUG - 2025-06-19 06:49:40 --> Distributor::update - Distributor ID 2 updated successfully.
+DEBUG - 2025-06-19 06:49:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:49:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:52:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:52:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:54:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:54:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:58:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:58:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 06:59:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-06-19 06:59:08 --> Error: Class "App\Controllers\Spreadsheet" not found
+[Method: GET, Route: distributors/exportExcel]
+in APPPATH\Controllers\Distributor.php on line 198.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Distributor->exportExcel()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Distributor))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-06-19 07:00:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-06-19 07:00:09 --> Error: Class "App\Controllers\Spreadsheet" not found
+[Method: GET, Route: distributors/exportExcel]
+in APPPATH\Controllers\Distributor.php on line 199.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Distributor->exportExcel()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Distributor))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-06-19 07:00:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 07:00:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 07:00:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-06-19 07:00:12 --> Error: Class "App\Controllers\Spreadsheet" not found
+[Method: GET, Route: distributors/exportExcel]
+in APPPATH\Controllers\Distributor.php on line 199.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Distributor->exportExcel()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Distributor))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-06-19 07:00:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-06-19 07:00:51 --> Error: Class "App\Controllers\Spreadsheet" not found
+[Method: GET, Route: distributors/exportExcel]
+in APPPATH\Controllers\Distributor.php on line 199.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Distributor->exportExcel()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Distributor))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-06-19 07:00:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-06-19 07:00:52 --> Error: Class "App\Controllers\Spreadsheet" not found
+[Method: GET, Route: distributors/exportExcel]
+in APPPATH\Controllers\Distributor.php on line 199.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Distributor->exportExcel()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Distributor))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-06-19 07:00:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-06-19 07:00:53 --> Error: Class "App\Controllers\Spreadsheet" not found
+[Method: GET, Route: distributors/exportExcel]
+in APPPATH\Controllers\Distributor.php on line 199.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Distributor->exportExcel()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Distributor))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-06-19 07:03:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 07:03:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 07:03:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 07:03:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 07:03:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 07:04:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 07:04:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 07:05:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 07:05:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 07:05:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 07:05:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 07:06:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 07:07:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 07:08:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 07:08:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 07:08:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 07:09:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 07:10:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 07:11:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 07:11:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 07:11:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 07:11:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 07:13:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-19 07:13:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+WARNING - 2025-06-19 07:13:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\sales\index.php on line 69.
+ 1 APPPATH\Views\sales\index.php(69): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\sales\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('sales/index', [], true)
+ 5 APPPATH\Controllers\Sales.php(70): view('sales/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Sales->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Sales))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-19 07:13:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\sales\index.php on line 69.
+ 1 APPPATH\Views\sales\index.php(69): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\sales\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('sales/index', [], true)
+ 5 APPPATH\Controllers\Sales.php(70): view('sales/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Sales->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Sales))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-19 07:13:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\sales\index.php on line 69.
+ 1 APPPATH\Views\sales\index.php(69): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\sales\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('sales/index', [], true)
+ 5 APPPATH\Controllers\Sales.php(70): view('sales/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Sales->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Sales))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-19 07:13:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\sales\index.php on line 69.
+ 1 APPPATH\Views\sales\index.php(69): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\sales\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('sales/index', [], true)
+ 5 APPPATH\Controllers\Sales.php(70): view('sales/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Sales->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Sales))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+WARNING - 2025-06-19 07:13:06 --> [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated in APPPATH\Views\sales\index.php on line 69.
+ 1 APPPATH\Views\sales\index.php(69): number_format(null, 2)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\samhita\\app\\Views\\sales\\index.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('sales/index', [], true)
+ 5 APPPATH\Controllers\Sales.php(70): view('sales/index', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Sales->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Sales))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(46): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-06-19 07:19:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.

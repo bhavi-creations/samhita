@@ -54,7 +54,7 @@ $routes->group('products', function ($routes) {
     $routes->get('edit-price/(:num)', 'Products::editPrice/$1'); // Displays the edit form
     $routes->post('update-price/(:num)', 'Products::updatePrice/$1'); // Handles form submission
 });
- 
+
 
 // --- Stock Out Routes ---
 $routes->group('stock-out', function ($routes) {
@@ -212,14 +212,20 @@ $routes->get('reports/vendor-report-pdf', 'Vendors::vendorReportPDF');
 
 
 // Distributor
- 
- 
-$routes->group('distributors', function($routes) {
-    $routes->get('/', 'Distributor::index');
-    $routes->get('add', 'Distributor::add');
-    $routes->post('store', 'Distributor::store');
-    $routes->get('view/(:num)', 'Distributor::view/$1');
-    // Routes for editing and updating
-    $routes->get('edit/(:num)', 'Distributor::edit/$1');    // Show the edit form
-    $routes->post('update/(:num)', 'Distributor::update/$1'); // Handle the form submission for updates
+
+
+$routes->group('distributors', function ($routes) {
+    $routes->get('/', 'Distributor::index'); // List all distributors
+    $routes->get('add', 'Distributor::add'); // Show add form
+    $routes->post('store', 'Distributor::store'); // Handle add form submission
+    $routes->get('view/(:num)', 'Distributor::view/$1'); // View details of a specific distributor by ID
+    $routes->get('edit/(:num)', 'Distributor::edit/$1'); // Show edit form for a specific distributor by ID
+    $routes->post('update/(:num)', 'Distributor::update/$1'); // Handle edit form submission for a specific distributor by ID
+    $routes->get('delete/(:num)', 'Distributor::delete/$1'); // Delete a specific distributor by ID
+    $routes->get('exportExcel', 'Distributor::exportExcel');
+    $routes->get('exportPdf', 'Distributor::exportPdf');
+
+     $routes->get('exportSingleExcel/(:num)', 'Distributor::exportSingleExcel/$1');
+    $routes->get('exportSinglePdf/(:num)', 'Distributor::exportSinglePdf/$1');
+   
 });

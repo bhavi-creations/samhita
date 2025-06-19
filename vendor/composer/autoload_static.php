@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit58024d93bcd7cb560cea7daaab0aee79
+class ComposerStaticInitaa30580804bab53876081b3a3db25215
 {
     public static $files = array (
         'ad155f8f1cf0d418fe49e248db8c661b' => __DIR__ . '/..' . '/react/promise/src/functions_include.php',
@@ -5163,7 +5163,6 @@ class ComposerStaticInit58024d93bcd7cb560cea7daaab0aee79
         'Symfony\\Component\\String\\Inflector\\InflectorInterface' => __DIR__ . '/..' . '/symfony/string/Inflector/InflectorInterface.php',
         'Symfony\\Component\\String\\Inflector\\SpanishInflector' => __DIR__ . '/..' . '/symfony/string/Inflector/SpanishInflector.php',
         'Symfony\\Component\\String\\LazyString' => __DIR__ . '/..' . '/symfony/string/LazyString.php',
-        'Symfony\\Component\\String\\Resources\\WcswidthDataGenerator' => __DIR__ . '/..' . '/symfony/string/Resources/WcswidthDataGenerator.php',
         'Symfony\\Component\\String\\Slugger\\AsciiSlugger' => __DIR__ . '/..' . '/symfony/string/Slugger/AsciiSlugger.php',
         'Symfony\\Component\\String\\Slugger\\SluggerInterface' => __DIR__ . '/..' . '/symfony/string/Slugger/SluggerInterface.php',
         'Symfony\\Component\\String\\TruncateMode' => __DIR__ . '/..' . '/symfony/string/TruncateMode.php',
@@ -5250,10 +5249,10 @@ class ComposerStaticInit58024d93bcd7cb560cea7daaab0aee79
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit58024d93bcd7cb560cea7daaab0aee79::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit58024d93bcd7cb560cea7daaab0aee79::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit58024d93bcd7cb560cea7daaab0aee79::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit58024d93bcd7cb560cea7daaab0aee79::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitaa30580804bab53876081b3a3db25215::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitaa30580804bab53876081b3a3db25215::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitaa30580804bab53876081b3a3db25215::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitaa30580804bab53876081b3a3db25215::$classMap;
 
         }, null, ClassLoader::class);
     }

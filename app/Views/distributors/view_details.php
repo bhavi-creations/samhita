@@ -1,127 +1,95 @@
 <?= $this->extend('layouts/main') ?>
-<?= $this->section('content') ?>
 
-<div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2><?= esc($title) ?></h2>
-        <a href="<?= base_url('distributors') ?>" class="btn btn-secondary">Back to Distributors List</a>
-    </div>
+<?= $this->section('content') ?>
+<div class="container mt-5">
+    <h2><?= esc($title) ?></h2>
 
     <div class="card shadow-sm">
-        <div class="card-header bg-primary text-white">
-            <h5 class="mb-0">Distributor: <?= esc($distributor['agency_name']) ?> (<?= esc($distributor['custom_id']) ?>)</h5>
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h5>Distributor Details - <?= esc($distributor['agency_name']) ?></h5>
+            <div class="btn-group" role="group" aria-label="Export options">
+                <a href="<?= base_url('distributors/exportSingleExcel/' . $distributor['id']) ?>" class="btn btn-success btn-sm me-2">Export to Excel</a>
+                <a href="<?= base_url('distributors/exportSinglePdf/' . $distributor['id']) ?>" class="btn btn-danger btn-sm">Export to PDF</a>
+            </div>
         </div>
         <div class="card-body">
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <strong>Custom ID:</strong>
+                    <p class="mb-1"><strong>Custom ID:</strong> <span class="text-primary fw-bold"><?= esc($distributor['custom_id']) ?></span></p>
                 </div>
                 <div class="col-md-6">
-                    <?= esc($distributor['custom_id']) ?>
+                    <p class="mb-1">
+                        <strong>Status:</strong>
+                        <?php
+                        // Logic for status badge color, similar to index page
+                        $status_class = '';
+                        switch ($distributor['status']) {
+                            case 'Active':
+                                $status_class = 'bg-success'; // Green for Active
+                                break;
+                            case 'Inactive':
+                                $status_class = 'bg-danger'; // Red for Inactive
+                                break;
+                            case 'On Hold':
+                                $status_class = 'bg-warning text-dark'; // Yellow for On Hold, with dark text
+                                break;
+                            default:
+                                $status_class = 'bg-secondary'; // Grey for any other status
+                                break;
+                        }
+                        ?>
+                        <span class="badge <?= $status_class ?>"><?= esc($distributor['status']) ?></span>
+                    </p>
                 </div>
             </div>
-            <div class="row mb-3">
+
+            <hr class="my-4">
+
+            <div class="row">
                 <div class="col-md-6">
-                    <strong>Agency Name:</strong>
+                    <h6 class="text-primary mb-3">Owner & Contact Information</h6>
+                    <p class="mb-1"><strong>Owner Name:</strong> <?= esc($distributor['owner_name']) ?></p>
+                    <p class="mb-1"><strong>Owner Phone:</strong> <?= esc($distributor['owner_phone']) ?></p>
+                    <p class="mb-1"><strong>Gmail:</strong> <?= esc($distributor['gmail']) ?: 'N/A' ?></p>
                 </div>
                 <div class="col-md-6">
-                    <?= esc($distributor['agency_name']) ?>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <strong>Owner Name:</strong>
-                </div>
-                <div class="col-md-6">
-                    <?= esc($distributor['owner_name']) ?>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <strong>Owner Phone:</strong>
-                </div>
-                <div class="col-md-6">
-                    <?= esc($distributor['owner_phone']) ?>
+                    <h6 class="text-primary mb-3">Agency Details</h6>
+                    <p class="mb-1"><strong>Agency Name:</strong> <?= esc($distributor['agency_name']) ?></p>
+                    <p class="mb-1"><strong>Agency Address:</strong> <?= nl2br(esc($distributor['agency_address'])) ?></p>
+                    <p class="mb-1"><strong>Agency GST Number:</strong> <?= esc($distributor['agency_gst_number']) ?: 'N/A' ?></p>
                 </div>
             </div>
-            <div class="row mb-3">
+
+            <hr class="my-4">
+
+            <div class="row">
                 <div class="col-md-6">
-                    <strong>Agent Name:</strong>
+                    <h6 class="text-primary mb-3">Agent Information</h6>
+                    <p class="mb-1"><strong>Agent Name:</strong> <?= esc($distributor['agent_name']) ?: 'N/A' ?></p>
+                    <p class="mb-1"><strong>Agent Phone:</strong> <?= esc($distributor['agent_phone']) ?: 'N/A' ?></p>
                 </div>
                 <div class="col-md-6">
-                    <?= esc($distributor['agent_name'] ?? 'N/A') ?>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <strong>Agent Phone:</strong>
-                </div>
-                <div class="col-md-6">
-                    <?= esc($distributor['agent_phone'] ?? 'N/A') ?>
+                    <h6 class="text-primary mb-3">Additional Notes</h6>
+                    <p class="mb-1"><strong>Notes:</strong> <?= nl2br(esc($distributor['notes'])) ?: 'N/A' ?></p>
                 </div>
             </div>
-            <div class="row mb-3">
+
+            <hr class="my-4">
+
+            <div class="row">
                 <div class="col-md-6">
-                    <strong>Agency GST Number:</strong>
+                    <p class="card-text"><small class="text-muted">Created At: <?= esc($distributor['created_at']) ?></small></p>
                 </div>
                 <div class="col-md-6">
-                    <?= esc($distributor['agency_gst_number'] ?? 'N/A') ?>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <strong>Gmail:</strong>
-                </div>
-                <div class="col-md-6">
-                    <?= esc($distributor['gmail'] ?? 'N/A') ?>
+                    <p class="card-text"><small class="text-muted">Last Updated At: <?= esc($distributor['updated_at']) ?></small></p>
                 </div>
             </div>
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <strong>Agency Address:</strong>
-                </div>
-                <div class="col-md-6">
-                    <?= nl2br(esc($distributor['agency_address'])) ?>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <strong>Status:</strong>
-                </div>
-                <div class="col-md-6">
-                    <span class="badge bg-<?= ($distributor['status'] == 'Active') ? 'success' : (($distributor['status'] == 'Inactive') ? 'danger' : 'warning') ?>"><?= esc($distributor['status']) ?></span>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <strong>Notes:</strong>
-                </div>
-                <div class="col-md-6">
-                    <?= nl2br(esc($distributor['notes'] ?? 'N/A')) ?>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <strong>Created At:</strong>
-                </div>
-                <div class="col-md-6">
-                    <?= esc($distributor['created_at']) ?>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <strong>Last Updated At:</strong>
-                </div>
-                <div class="col-md-6">
-                    <?= esc($distributor['updated_at']) ?>
-                </div>
-            </div>
+
         </div>
-        <div class="card-footer text-end">
-            <a href="<?= base_url('distributors/edit/' . $distributor['id']) ?>" class="btn btn-warning me-2">Edit Distributor</a>
-            <a href="<?= base_url('distributors/delete/' . $distributor['id']) ?>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this distributor?');">Delete Distributor</a>
+        <div class="card-footer d-flex justify-content-end">
+            <a href="<?= base_url('distributors/edit/' . $distributor['id']) ?>" class="btn btn-warning me-2">Edit</a>
+            <a href="<?= base_url('distributors') ?>" class="btn btn-secondary">Back to List</a>
         </div>
     </div>
 </div>
-
 <?= $this->endSection() ?>
