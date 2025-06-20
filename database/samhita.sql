@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 17, 2025 at 02:35 PM
+-- Generation Time: Jun 20, 2025 at 11:39 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -28,30 +28,128 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `distributors` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `custom_id` varchar(50) NOT NULL COMMENT 'A unique human-readable ID for the distributor (e.g., DIST001)',
+  `id` int(11) NOT NULL,
+  `custom_id` varchar(20) DEFAULT NULL,
   `agency_name` varchar(255) NOT NULL,
   `owner_name` varchar(255) NOT NULL,
-  `owner_phone` varchar(20) NOT NULL,
-  `agent_name` varchar(255) DEFAULT NULL COMMENT 'Name of the primary contact agent if different from owner',
-  `agent_phone` varchar(20) DEFAULT NULL,
-  `agency_gst_number` varchar(15) DEFAULT NULL COMMENT 'GST Identification Number (GSTIN) - 15 characters',
-  `agency_address` text NOT NULL,
+  `owner_phone` varchar(15) NOT NULL,
+  `agent_name` varchar(255) DEFAULT NULL,
+  `agent_phone` varchar(15) DEFAULT NULL,
+  `agency_gst_number` varchar(15) DEFAULT NULL,
   `gmail` varchar(255) DEFAULT NULL,
+  `agency_address` text NOT NULL,
   `status` enum('Active','Inactive','On Hold') NOT NULL DEFAULT 'Active',
+  `notes` text DEFAULT NULL,
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `distributors`
+--
+
+INSERT INTO `distributors` (`id`, `custom_id`, `agency_name`, `owner_name`, `owner_phone`, `agent_name`, `agent_phone`, `agency_gst_number`, `gmail`, `agency_address`, `status`, `notes`, `created_at`, `updated_at`) VALUES
+(2, 'DSSS-250619-0002', 'reddy farmings', 'mohan', '9898989399', 'raja', '9988899889', 'GSTIne28402vv', 'reddy@gmail.com', 'ewfae', 'Active', '', '2025-06-19 06:44:43', '2025-06-19 06:49:40'),
+(3, 'DSSS-250619-0003', 'mohan pesticides', 'mohan', '9898989898', 'raja', '9090909090', 'Gar34ernlknl', 'moeanoesticides@gmail.com', 'gsddfger', 'Active', '', '2025-06-19 11:08:14', '2025-06-19 11:08:14');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `distributor_payments`
+--
+
+CREATE TABLE `distributor_payments` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `distributor_sales_order_id` int(11) UNSIGNED NOT NULL,
+  `payment_date` date NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
+  `payment_method` varchar(50) DEFAULT NULL,
+  `transaction_id` varchar(100) DEFAULT NULL,
   `notes` text DEFAULT NULL,
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `distributors`
+-- Dumping data for table `distributor_payments`
 --
 
-INSERT INTO `distributors` (`id`, `custom_id`, `agency_name`, `owner_name`, `owner_phone`, `agent_name`, `agent_phone`, `agency_gst_number`, `agency_address`, `gmail`, `status`, `notes`, `created_at`, `updated_at`) VALUES
-(1, 'DSSS-250617-0002', 'mohan pesticides', 'mohan', '9898989898', 'raja', '9090909090', 'GSTIne28402 ', 'ww', 'mohanoesticides@gmail.com', 'Active', '', '2025-06-17 07:45:57', '2025-06-17 07:45:57'),
-(2, 'DSSS-250617-0003', 'reddy farming', 'reddy ', '838382883', 'rao', '9123456789', 'Gar34ernlknl', 'DFN', 'reddy@gmail.com', 'Active', '', '2025-06-17 07:47:08', '2025-06-17 07:47:08'),
-(3, 'DSSS-250617-0004', 'green forver', 'sathish', '9837493291', 'mani', '998889988', 'Gsterkjne4ib', 'dfn', 'Green@gmail.com', 'On Hold', '', '2025-06-17 07:49:31', '2025-06-17 07:49:31');
+INSERT INTO `distributor_payments` (`id`, `distributor_sales_order_id`, `payment_date`, `amount`, `payment_method`, `transaction_id`, `notes`, `created_at`, `updated_at`) VALUES
+(2, 2, '2025-06-19', 100.00, 'Cash', '', '', '2025-06-19 12:16:33', '2025-06-19 12:16:33'),
+(3, 3, '2025-06-19', 300.00, 'Credit', '', '', '2025-06-19 12:17:02', '2025-06-19 12:17:02'),
+(4, 2, '2025-06-19', 855.94, 'cash', '', '', '2025-06-19 12:23:27', '2025-06-19 12:23:27'),
+(5, 2, '2025-06-19', 3000.00, 'UPI', '', '', '2025-06-19 12:30:27', '2025-06-19 12:30:27'),
+(6, 4, '2025-06-20', 100.00, 'Cash', '14', 'weee', '2025-06-20 06:31:36', '2025-06-20 06:31:36'),
+(9, 7, '2025-06-20', 200.00, 'Cash', '', '', '2025-06-20 07:17:11', '2025-06-20 07:17:11'),
+(10, 9, '2025-06-20', 50.00, 'Cash', '', '', '2025-06-20 07:21:01', '2025-06-20 07:21:01'),
+(11, 9, '2025-06-20', 50.18, '', '', '', '2025-06-20 07:22:25', '2025-06-20 07:22:25');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `distributor_sales_orders`
+--
+
+CREATE TABLE `distributor_sales_orders` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `distributor_id` int(11) NOT NULL,
+  `invoice_number` varchar(50) NOT NULL,
+  `invoice_date` date NOT NULL,
+  `total_amount_before_gst` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `total_gst_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `final_total_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `discount_amount` decimal(10,2) DEFAULT 0.00,
+  `amount_paid` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `due_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `status` enum('Pending','Partially Paid','Paid','Cancelled') NOT NULL DEFAULT 'Pending',
+  `notes` text DEFAULT NULL,
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `distributor_sales_orders`
+--
+
+INSERT INTO `distributor_sales_orders` (`id`, `distributor_id`, `invoice_number`, `invoice_date`, `total_amount_before_gst`, `total_gst_amount`, `final_total_amount`, `discount_amount`, `amount_paid`, `due_amount`, `status`, `notes`, `created_at`, `updated_at`) VALUES
+(2, 2, 'INV-20250619-0001', '2025-06-19', 5100.00, 6.12, 5106.12, 0.00, 3955.94, 1150.18, 'Partially Paid', '', '2025-06-19 12:16:33', '2025-06-20 05:19:21'),
+(3, 3, 'INV-20250619-0002', '2025-06-19', 7300.00, 11.82, 6311.82, 0.00, 300.00, 6011.82, 'Partially Paid', '', '2025-06-19 12:17:02', '2025-06-20 05:49:12'),
+(4, 3, 'INV-20250620-0001', '2025-06-20', 500.00, 0.60, 500.60, 0.00, 100.00, 400.60, 'Partially Paid', 'hello there', '2025-06-20 06:31:36', '2025-06-20 06:31:36'),
+(7, 2, 'INV-00001', '2025-06-20', 3300.00, 3.96, 3203.96, 100.00, 200.00, 3003.96, 'Partially Paid', '', '2025-06-20 07:17:11', '2025-06-20 07:17:11'),
+(9, 2, 'INV-20250620-0002', '2025-06-20', 1500.00, 1.80, 1451.80, 50.00, 100.18, 1351.62, 'Partially Paid', 'dd', '2025-06-20 07:21:01', '2025-06-20 07:39:22');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `distributor_sales_order_items`
+--
+
+CREATE TABLE `distributor_sales_order_items` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `distributor_sales_order_id` int(11) UNSIGNED NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `gst_rate_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `unit_price_at_sale` decimal(10,2) NOT NULL,
+  `gst_rate_at_sale` decimal(5,2) NOT NULL,
+  `item_total_before_gst` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `item_gst_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `item_final_total` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `distributor_sales_order_items`
+--
+
+INSERT INTO `distributor_sales_order_items` (`id`, `distributor_sales_order_id`, `product_id`, `gst_rate_id`, `quantity`, `unit_price_at_sale`, `gst_rate_at_sale`, `item_total_before_gst`, `item_gst_amount`, `item_final_total`, `created_at`, `updated_at`) VALUES
+(2, 2, 3, 1, 34, 150.00, 0.12, 5100.00, 6.12, 5106.12, '2025-06-19 12:16:33', '2025-06-20 05:19:21'),
+(3, 3, 4, 1, 88, 25.00, 0.12, 2200.00, 2.64, 2202.64, '2025-06-19 12:17:02', '2025-06-20 05:49:12'),
+(4, 3, 3, 2, 34, 150.00, 0.18, 5100.00, 9.18, 5109.18, '2025-06-19 12:17:02', '2025-06-20 05:49:12'),
+(5, 4, 4, 1, 20, 25.00, 0.12, 500.00, 0.60, 500.60, '2025-06-20 06:31:36', '2025-06-20 06:31:36'),
+(8, 7, 3, 1, 22, 150.00, 0.12, 3300.00, 3.96, 3303.96, '2025-06-20 07:17:11', '2025-06-20 07:17:11'),
+(9, 9, 3, 1, 10, 150.00, 0.12, 1500.00, 1.80, 1501.80, '2025-06-20 07:21:01', '2025-06-20 07:39:22');
 
 -- --------------------------------------------------------
 
@@ -286,17 +384,18 @@ INSERT INTO `sale_payments` (`id`, `sale_id`, `payment_date`, `amount_paid`, `pa
 --
 
 CREATE TABLE `sequences` (
-  `name` varchar(100) NOT NULL,
-  `current_value` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `current_value` int(11) NOT NULL DEFAULT 0,
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `sequences`
 --
 
-INSERT INTO `sequences` (`name`, `current_value`, `updated_at`) VALUES
-('distributor_custom_id', 4, '2025-06-17 13:19:31');
+INSERT INTO `sequences` (`id`, `name`, `current_value`, `updated_at`) VALUES
+(1, 'distributor_custom_id', 3, '2025-06-19 11:08:14');
 
 -- --------------------------------------------------------
 
@@ -513,11 +612,31 @@ INSERT INTO `vendors` (`id`, `name`, `owner_phone`, `agency_name`, `contact_pers
 -- Indexes for table `distributors`
 --
 ALTER TABLE `distributors`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `distributor_payments`
+--
+ALTER TABLE `distributor_payments`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `custom_id` (`custom_id`),
-  ADD UNIQUE KEY `owner_phone` (`owner_phone`),
-  ADD UNIQUE KEY `agency_gst_number` (`agency_gst_number`),
-  ADD UNIQUE KEY `gmail` (`gmail`);
+  ADD KEY `fk_distributor_payments_sales_order_id` (`distributor_sales_order_id`);
+
+--
+-- Indexes for table `distributor_sales_orders`
+--
+ALTER TABLE `distributor_sales_orders`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `invoice_number` (`invoice_number`),
+  ADD KEY `fk_distributor_sales_orders_distributor_id` (`distributor_id`);
+
+--
+-- Indexes for table `distributor_sales_order_items`
+--
+ALTER TABLE `distributor_sales_order_items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_distributor_sales_order_items_sales_order_id` (`distributor_sales_order_id`),
+  ADD KEY `fk_distributor_sales_order_items_product_id` (`product_id`),
+  ADD KEY `fk_distributor_sales_order_items_gst_rate_id` (`gst_rate_id`);
 
 --
 -- Indexes for table `gst_rates`
@@ -574,7 +693,8 @@ ALTER TABLE `sale_payments`
 -- Indexes for table `sequences`
 --
 ALTER TABLE `sequences`
-  ADD PRIMARY KEY (`name`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
 
 --
 -- Indexes for table `stock_in`
@@ -619,7 +739,25 @@ ALTER TABLE `vendors`
 -- AUTO_INCREMENT for table `distributors`
 --
 ALTER TABLE `distributors`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `distributor_payments`
+--
+ALTER TABLE `distributor_payments`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `distributor_sales_orders`
+--
+ALTER TABLE `distributor_sales_orders`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `distributor_sales_order_items`
+--
+ALTER TABLE `distributor_sales_order_items`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `gst_rates`
@@ -664,6 +802,12 @@ ALTER TABLE `sale_payments`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
+-- AUTO_INCREMENT for table `sequences`
+--
+ALTER TABLE `sequences`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `stock_in`
 --
 ALTER TABLE `stock_in`
@@ -696,6 +840,26 @@ ALTER TABLE `vendors`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `distributor_payments`
+--
+ALTER TABLE `distributor_payments`
+  ADD CONSTRAINT `fk_distributor_payments_sales_order_id` FOREIGN KEY (`distributor_sales_order_id`) REFERENCES `distributor_sales_orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `distributor_sales_orders`
+--
+ALTER TABLE `distributor_sales_orders`
+  ADD CONSTRAINT `fk_distributor_sales_orders_distributor_id` FOREIGN KEY (`distributor_id`) REFERENCES `distributors` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `distributor_sales_order_items`
+--
+ALTER TABLE `distributor_sales_order_items`
+  ADD CONSTRAINT `fk_distributor_sales_order_items_gst_rate_id` FOREIGN KEY (`gst_rate_id`) REFERENCES `gst_rates` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_distributor_sales_order_items_product_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_distributor_sales_order_items_sales_order_id` FOREIGN KEY (`distributor_sales_order_id`) REFERENCES `distributor_sales_orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `marketing_distribution`
