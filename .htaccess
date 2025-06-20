@@ -15,8 +15,15 @@ Options -Indexes
 	# If you installed CodeIgniter in a subfolder, you will need to
 	# change the following line to match the subfolder you need.
 	# http://httpd.apache.org/docs/current/mod/mod_rewrite.html#rewritebase
-	RewriteBase /samhita/
-	# RewriteBase /
+
+
+
+
+	# uncomment this below line in local 
+	# RewriteBase /samhita/
+
+	# uncomment this below line in live server 
+	RewriteBase /
  
 
 	# Redirect Trailing Slashes...
