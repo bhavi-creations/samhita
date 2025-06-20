@@ -12,7 +12,10 @@
 
 
 
-                <!-- Dashboard -->
+
+
+
+
                 <li class="nav-header">MAIN</li>
                 <li class="nav-item">
                     <a href="<?= base_url('dashboard') ?>" class="nav-link <?= uri_string() == 'dashboard' ? 'active' : '' ?>">
@@ -21,14 +24,13 @@
                     </a>
                 </li>
 
-
-                <!-- Stock Management -->
                 <li class="nav-header">STOCK MANAGEMENT</li>
                 <li class="nav-item">
                     <a class="nav-link" href="<?= base_url('distributors') ?>">
                         <i class="bi bi-truck-flatbed"></i> Distributors
                     </a>
                 </li>
+
                 <li class="nav-item mt-3">
                     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
                         <span>Product Pricing</span>
@@ -49,7 +51,6 @@
 
                 <li class="nav-item">
                     <a class="nav-link" href="<?= base_url('products/manage-prices') ?>">
-
                         <i class=" nav-icon fa-solid fa-indian-rupee-sign"></i>
                         <p> Manage Prices </p>
                     </a>
@@ -86,7 +87,7 @@
                         <p> Stock Out </p>
                     </a>
                 </li>
-                <!-- Tax Settings -->
+
                 <li class="nav-header">TAX SETTINGS</li>
                 <li class="nav-item">
                     <a href="<?= base_url('gst-rates') ?>" class="nav-link <?= uri_string() == 'gst-rates' ? 'active' : '' ?>">
@@ -95,7 +96,6 @@
                     </a>
                 </li>
 
-                <!-- Sales -->
                 <li class="nav-header">SALES</li>
                 <li class="nav-item">
                     <a href="<?= base_url('sales/create') ?>" class="nav-link <?= uri_string() == 'sales/create' ? 'active' : '' ?>">
@@ -110,7 +110,41 @@
                     </a>
                 </li>
 
-                <!-- Marketing -->
+                <?php
+                $isDistributorSalesActive = url_is('distributor-sales') || url_is('distributor-sales/*');
+                ?>
+                <li class="nav-item <?= $isDistributorSalesActive ? 'menu-open' : '' ?>">
+                    <a href="#" class="nav-link <?= $isDistributorSalesActive ? 'active' : '' ?>">
+                        <i class="nav-icon fas fa-truck-loading"></i>
+                        <p>
+                            Distributor Sales
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+                        <li class="nav-item">
+                            <a href="<?= base_url('distributor-sales') ?>" class="nav-link <?= uri_string() == 'distributor-sales' ? 'active' : '' ?>">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>All Sales Orders</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?= base_url('distributor-sales/new') ?>" class="nav-link <?= uri_string() == 'distributor-sales/new' ? 'active' : '' ?>">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Create New Order</p>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+
+
+
+
+
+
                 <li class="nav-header">MARKETING</li>
                 <li class="nav-item">
                     <a href="<?= base_url('marketing-persons') ?>" class="nav-link <?= uri_string() == 'marketing-persons' ? 'active' : '' ?>">
@@ -124,8 +158,6 @@
                         <p>Distribute Products</p>
                     </a>
                 </li>
-
-                <!-- Reports -->
                 <li class="nav-header">REPORTS</li>
                 <li class="nav-item">
                     <a href="<?= base_url('reports/person-stock') ?>" class="nav-link <?= uri_string() == 'reports/person-stock' ? 'active' : '' ?>">
@@ -135,6 +167,10 @@
                 </li>
 
             </ul>
+
+
+
+
         </nav>
     </div>
 </aside>

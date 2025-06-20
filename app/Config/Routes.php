@@ -225,7 +225,55 @@ $routes->group('distributors', function ($routes) {
     $routes->get('exportExcel', 'Distributor::exportExcel');
     $routes->get('exportPdf', 'Distributor::exportPdf');
 
-     $routes->get('exportSingleExcel/(:num)', 'Distributor::exportSingleExcel/$1');
+    $routes->get('exportSingleExcel/(:num)', 'Distributor::exportSingleExcel/$1');
     $routes->get('exportSinglePdf/(:num)', 'Distributor::exportSinglePdf/$1');
-   
+});
+
+
+
+
+// Distributor sales
+
+
+
+// app/Config/Routes.php
+
+$routes->group('distributor-sales', function ($routes) {
+    // ... existing routes ...
+
+    // List all sales orders
+    $routes->get('/', 'DistributorSalesController::index', ['as' => 'distributor-sales']);
+
+    // Show form to create a new sales order
+    $routes->get('new', 'DistributorSalesController::create', ['as' => 'distributor-sales-new']);
+
+    // Handle form submission for creating a new sales order
+    $routes->post('save', 'DistributorSalesController::store', ['as' => 'distributor-sales-store']);
+
+    // Show details of a specific sales order
+    $routes->get('show/(:num)', 'DistributorSalesController::show/$1', ['as' => 'distributor-sales-show']);
+
+    // Show form to add a payment for a sales order
+    $routes->get('add-payment/(:num)', 'DistributorSalesController::addPayment/$1', ['as' => 'distributor-sales-add-payment']);
+
+    // Handle payment form submission
+    $routes->post('save-payment', 'DistributorSalesController::savePayment', ['as' => 'distributor-sales-save-payment']);
+
+    $routes->get('edit/(:num)', 'DistributorSalesController::edit/$1', ['as' => 'distributor-sales-edit']);
+    $routes->put('update/(:num)', 'DistributorSalesController::update/$1', ['as' => 'distributor-sales-update']);
+
+    // Existing DELETE route
+    $routes->delete('delete/(:num)', 'DistributorSalesController::delete/$1', ['as' => 'distributor-sales-delete']);
+
+    // --- ADD THESE NEW ROUTES FOR EXPORT ---
+    $routes->get('export/pdf-index', 'DistributorSalesController::exportIndexPdf', ['as' => 'distributor-sales-export-pdf-index']);
+    $routes->get('export/excel-index', 'DistributorSalesController::exportIndexExcel', ['as' => 'distributor-sales-export-excel-index']);
+    // --- END NEW ROUTES ---
+
+       // Export individual invoice to PDF
+    $routes->get('export/invoice-pdf/(:num)', 'DistributorSalesController::exportInvoicePdf/$1', ['as' => 'distributor-sales-export-invoice-pdf']);
+
+    // --- NEW ROUTE FOR EXCEL EXPORT OF SINGLE INVOICE ---
+    $routes->get('export/invoice-excel/(:num)', 'DistributorSalesController::exportInvoiceExcel/$1', ['as' => 'distributor-sales-export-invoice-excel']);
+    // --- END NEW ROUTE ---
 });
