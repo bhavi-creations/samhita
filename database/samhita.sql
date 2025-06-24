@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 20, 2025 at 11:39 AM
+-- Generation Time: Jun 24, 2025 at 09:04 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -50,7 +50,8 @@ CREATE TABLE `distributors` (
 
 INSERT INTO `distributors` (`id`, `custom_id`, `agency_name`, `owner_name`, `owner_phone`, `agent_name`, `agent_phone`, `agency_gst_number`, `gmail`, `agency_address`, `status`, `notes`, `created_at`, `updated_at`) VALUES
 (2, 'DSSS-250619-0002', 'reddy farmings', 'mohan', '9898989399', 'raja', '9988899889', 'GSTIne28402vv', 'reddy@gmail.com', 'ewfae', 'Active', '', '2025-06-19 06:44:43', '2025-06-19 06:49:40'),
-(3, 'DSSS-250619-0003', 'mohan pesticides', 'mohan', '9898989898', 'raja', '9090909090', 'Gar34ernlknl', 'moeanoesticides@gmail.com', 'gsddfger', 'Active', '', '2025-06-19 11:08:14', '2025-06-19 11:08:14');
+(3, 'DSSS-250619-0003', 'mohan pesticides', 'mohan', '9898989898', 'raja', '9090909090', 'Gar34ernlknl', 'moeanoesticides@gmail.com', 'gsddfger', 'Active', '', '2025-06-19 11:08:14', '2025-06-19 11:08:14'),
+(4, 'DSSS-250624-0004', 'manikanta greens', 'manikanta', '9944558866', 'sai', '1231234567', 'Gar34ernlknlef', 'reddywed@gmail.com', 'sgefbt', 'Active', '', '2025-06-24 05:13:02', '2025-06-24 05:13:02');
 
 -- --------------------------------------------------------
 
@@ -80,7 +81,6 @@ INSERT INTO `distributor_payments` (`id`, `distributor_sales_order_id`, `payment
 (4, 2, '2025-06-19', 855.94, 'cash', '', '', '2025-06-19 12:23:27', '2025-06-19 12:23:27'),
 (5, 2, '2025-06-19', 3000.00, 'UPI', '', '', '2025-06-19 12:30:27', '2025-06-19 12:30:27'),
 (6, 4, '2025-06-20', 100.00, 'Cash', '14', 'weee', '2025-06-20 06:31:36', '2025-06-20 06:31:36'),
-(9, 7, '2025-06-20', 200.00, 'Cash', '', '', '2025-06-20 07:17:11', '2025-06-20 07:17:11'),
 (10, 9, '2025-06-20', 50.00, 'Cash', '', '', '2025-06-20 07:21:01', '2025-06-20 07:21:01'),
 (11, 9, '2025-06-20', 50.18, '', '', '', '2025-06-20 07:22:25', '2025-06-20 07:22:25');
 
@@ -115,8 +115,9 @@ INSERT INTO `distributor_sales_orders` (`id`, `distributor_id`, `invoice_number`
 (2, 2, 'INV-20250619-0001', '2025-06-19', 5100.00, 6.12, 5106.12, 0.00, 3955.94, 1150.18, 'Partially Paid', '', '2025-06-19 12:16:33', '2025-06-20 05:19:21'),
 (3, 3, 'INV-20250619-0002', '2025-06-19', 7300.00, 11.82, 6311.82, 0.00, 300.00, 6011.82, 'Partially Paid', '', '2025-06-19 12:17:02', '2025-06-20 05:49:12'),
 (4, 3, 'INV-20250620-0001', '2025-06-20', 500.00, 0.60, 500.60, 0.00, 100.00, 400.60, 'Partially Paid', 'hello there', '2025-06-20 06:31:36', '2025-06-20 06:31:36'),
-(7, 2, 'INV-00001', '2025-06-20', 3300.00, 3.96, 3203.96, 100.00, 200.00, 3003.96, 'Partially Paid', '', '2025-06-20 07:17:11', '2025-06-20 07:17:11'),
-(9, 2, 'INV-20250620-0002', '2025-06-20', 1500.00, 1.80, 1451.80, 50.00, 100.18, 1351.62, 'Partially Paid', 'dd', '2025-06-20 07:21:01', '2025-06-20 07:39:22');
+(9, 2, 'INV-20250620-0002', '2025-06-20', 1500.00, 1.80, 1451.80, 50.00, 100.18, 1351.62, 'Partially Paid', 'dd', '2025-06-20 07:21:01', '2025-06-20 07:39:22'),
+(11, 2, 'INV-20250624-00003', '2025-06-24', 1500.00, 1.80, 1401.80, 100.00, 0.00, 1401.80, 'Pending', '', '2025-06-24 05:10:25', '2025-06-24 05:11:02'),
+(17, 2, 'INV-20250624-00004', '2025-06-24', 3450.00, 4.14, 3454.14, 0.00, 0.00, 3454.14, 'Pending', '', '2025-06-24 06:09:39', '2025-06-24 06:10:00');
 
 -- --------------------------------------------------------
 
@@ -148,8 +149,9 @@ INSERT INTO `distributor_sales_order_items` (`id`, `distributor_sales_order_id`,
 (3, 3, 4, 1, 88, 25.00, 0.12, 2200.00, 2.64, 2202.64, '2025-06-19 12:17:02', '2025-06-20 05:49:12'),
 (4, 3, 3, 2, 34, 150.00, 0.18, 5100.00, 9.18, 5109.18, '2025-06-19 12:17:02', '2025-06-20 05:49:12'),
 (5, 4, 4, 1, 20, 25.00, 0.12, 500.00, 0.60, 500.60, '2025-06-20 06:31:36', '2025-06-20 06:31:36'),
-(8, 7, 3, 1, 22, 150.00, 0.12, 3300.00, 3.96, 3303.96, '2025-06-20 07:17:11', '2025-06-20 07:17:11'),
-(9, 9, 3, 1, 10, 150.00, 0.12, 1500.00, 1.80, 1501.80, '2025-06-20 07:21:01', '2025-06-20 07:39:22');
+(9, 9, 3, 1, 10, 150.00, 0.12, 1500.00, 1.80, 1501.80, '2025-06-20 07:21:01', '2025-06-20 07:39:22'),
+(15, 11, 3, 1, 10, 150.00, 0.12, 1500.00, 1.80, 1501.80, '2025-06-24 05:11:02', '2025-06-24 05:11:02'),
+(27, 17, 3, 1, 23, 150.00, 0.12, 3450.00, 4.14, 3454.14, '2025-06-24 06:10:00', '2025-06-24 06:10:00');
 
 -- --------------------------------------------------------
 
@@ -291,10 +293,11 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `description`, `selling_price`, `default_selling_price`, `current_stock`, `unit_id`, `created_at`, `updated_at`) VALUES
-(3, 'soil mixture', 'this is the powder to mix into soil', 150.00, NULL, 815, 1, '2025-06-04 07:44:05', '2025-06-17 04:50:35'),
-(4, 'water mixture', 'this can be add in the water and spray to the cropes', 25.00, NULL, 8878, 2, '2025-06-05 07:20:13', '2025-06-17 04:56:25'),
-(5, 'miniral tablets', 'need to mix in the water and have to spary to plants', NULL, NULL, 51, 7, '2025-06-05 12:02:34', '2025-06-17 04:56:47'),
-(6, 'chock powder', '', NULL, NULL, 1312, 1, '2025-06-06 11:36:07', '2025-06-17 04:57:08');
+(3, 'soil mixture', 'this is the powder to mix into soil', 150.00, NULL, 1319, 1, '2025-06-04 07:44:05', '2025-06-24 06:10:00'),
+(4, 'water mixture', 'this can be add in the water and spray to the cropes', 25.00, NULL, 8878, 2, '2025-06-05 07:20:13', '2025-06-24 06:07:28'),
+(5, 'miniral tablets', 'need to mix in the water and have to spary to plants', 20.00, NULL, 51, 7, '2025-06-05 12:02:34', '2025-06-24 05:19:57'),
+(6, 'chock powder', '', 5.00, NULL, 1312, 1, '2025-06-06 11:36:07', '2025-06-24 05:20:03'),
+(7, 'wood sticks', '', 500.00, NULL, 499, 10, '2025-06-24 05:18:28', '2025-06-24 07:02:53');
 
 -- --------------------------------------------------------
 
@@ -395,7 +398,7 @@ CREATE TABLE `sequences` (
 --
 
 INSERT INTO `sequences` (`id`, `name`, `current_value`, `updated_at`) VALUES
-(1, 'distributor_custom_id', 3, '2025-06-19 11:08:14');
+(1, 'distributor_custom_id', 4, '2025-06-24 05:13:02');
 
 -- --------------------------------------------------------
 
@@ -465,7 +468,9 @@ INSERT INTO `stock_in` (`id`, `product_id`, `quantity`, `current_quantity`, `ven
 (48, 5, 111, 111, 1, 11.00, 1221.00, 1, 146.52, 1367.52, 1111.00, 1367.52, '2025-06-16', ''),
 (49, 3, 50, 50, 1, 5.00, 250.00, 1, 30.00, 280.00, 200.00, 280.00, '2025-06-16', ''),
 (50, 6, 222, 222, 1, 2.00, 444.00, 1, 53.28, 497.28, 222.00, 497.28, '2025-06-16', ''),
-(51, 5, 22, 22, 3, 20.00, 440.00, 1, 52.80, 492.80, 100.00, 392.80, '2025-06-16', '');
+(51, 5, 22, 22, 3, 20.00, 440.00, 1, 52.80, 492.80, 100.00, 392.80, '2025-06-16', ''),
+(53, 3, 500, 500, 1, 20.00, 10000.00, 1, 1200.00, 11200.00, 400.00, 11000.00, '2025-06-24', ''),
+(54, 7, 500, 500, 3, 20.00, 10000.00, 1, 1200.00, 11200.00, 1200.00, 11200.00, '2025-06-24', '');
 
 -- --------------------------------------------------------
 
@@ -510,7 +515,10 @@ INSERT INTO `stock_in_payments` (`id`, `stock_in_id`, `payment_amount`, `payment
 (23, 48, 1111.00, '2025-06-16', 'Initial payment upon stock-in', '2025-06-16 09:23:13'),
 (24, 49, 200.00, '2025-06-16', 'Initial payment upon stock-in', '2025-06-16 09:24:00'),
 (25, 50, 222.00, '2025-06-16', 'Initial payment upon stock-in', '2025-06-16 09:24:36'),
-(26, 51, 100.00, '2025-06-16', 'Initial payment upon stock-in', '2025-06-16 10:54:33');
+(26, 51, 100.00, '2025-06-16', 'Initial payment upon stock-in', '2025-06-16 10:54:33'),
+(28, 53, 200.00, '2025-06-24', 'Initial payment upon stock-in', '2025-06-24 05:16:59'),
+(29, 53, 200.00, '2025-06-24', '', '2025-06-24 10:47:25'),
+(30, 54, 1200.00, '2025-06-24', 'Initial payment upon stock-in', '2025-06-24 05:21:19');
 
 -- --------------------------------------------------------
 
@@ -524,6 +532,7 @@ CREATE TABLE `stock_out` (
   `quantity_out` int(11) NOT NULL,
   `transaction_type` varchar(50) NOT NULL COMMENT 'e.g., marketing_distribution, direct_sale, damage_loss',
   `transaction_id` int(11) UNSIGNED DEFAULT NULL,
+  `transaction_item_id` int(11) UNSIGNED DEFAULT NULL,
   `issued_date` date NOT NULL,
   `notes` text DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
@@ -534,20 +543,33 @@ CREATE TABLE `stock_out` (
 -- Dumping data for table `stock_out`
 --
 
-INSERT INTO `stock_out` (`id`, `product_id`, `quantity_out`, `transaction_type`, `transaction_id`, `issued_date`, `notes`, `created_at`, `updated_at`) VALUES
-(1, 3, 80, 'marketing_distribution', 8, '2025-06-12', '', '2025-06-12 09:48:08', '2025-06-12 10:32:33'),
-(2, 3, 90, 'marketing_distribution', 9, '2025-06-12', '', '2025-06-12 09:49:22', '2025-06-12 10:32:15'),
-(3, 4, 90, 'marketing_distribution', 10, '2025-06-13', '', '2025-06-12 10:10:25', '2025-06-12 10:53:07'),
-(4, 4, 20, 'marketing_distribution', 11, '2025-06-12', '', '2025-06-12 11:30:06', '2025-06-12 11:30:06'),
-(5, 4, 400, 'marketing_distribution', 12, '2025-06-14', '', '2025-06-14 07:55:32', '2025-06-14 07:55:32'),
-(6, 3, 50, 'marketing_distribution', 13, '2025-06-14', '', '2025-06-14 08:03:52', '2025-06-14 08:03:52'),
-(7, 3, 20, 'marketing_distribution', 14, '2025-06-14', '', '2025-06-14 08:05:58', '2025-06-14 08:05:58'),
-(8, 3, 20, 'Sale', 14, '2025-06-14', '', '2025-06-14 12:06:29', '2025-06-14 12:06:29'),
-(9, 3, 50, 'marketing_distribution', 15, '2025-06-16', '', '2025-06-16 12:09:57', '2025-06-16 12:09:57'),
-(10, 3, 12, 'Damage', NULL, '2025-06-17', '', '2025-06-17 04:50:35', '2025-06-17 04:50:35'),
-(11, 4, 11, 'Sample', NULL, '2025-06-17', '', '2025-06-17 04:56:25', '2025-06-17 04:56:25'),
-(12, 5, 82, 'Internal Use', NULL, '2025-06-17', '', '2025-06-17 04:56:47', '2025-06-17 04:56:47'),
-(13, 6, 20, 'Other', NULL, '2025-06-17', '', '2025-06-17 04:57:08', '2025-06-17 04:57:08');
+INSERT INTO `stock_out` (`id`, `product_id`, `quantity_out`, `transaction_type`, `transaction_id`, `transaction_item_id`, `issued_date`, `notes`, `created_at`, `updated_at`) VALUES
+(1, 3, 80, 'marketing_distribution', 8, NULL, '2025-06-12', '', '2025-06-12 09:48:08', '2025-06-12 10:32:33'),
+(2, 3, 90, 'marketing_distribution', 9, NULL, '2025-06-12', '', '2025-06-12 09:49:22', '2025-06-12 10:32:15'),
+(3, 4, 90, 'marketing_distribution', 10, NULL, '2025-06-13', '', '2025-06-12 10:10:25', '2025-06-12 10:53:07'),
+(4, 4, 20, 'marketing_distribution', 11, NULL, '2025-06-12', '', '2025-06-12 11:30:06', '2025-06-12 11:30:06'),
+(5, 4, 400, 'marketing_distribution', 12, NULL, '2025-06-14', '', '2025-06-14 07:55:32', '2025-06-14 07:55:32'),
+(6, 3, 50, 'marketing_distribution', 13, NULL, '2025-06-14', '', '2025-06-14 08:03:52', '2025-06-14 08:03:52'),
+(7, 3, 20, 'marketing_distribution', 14, NULL, '2025-06-14', '', '2025-06-14 08:05:58', '2025-06-14 08:05:58'),
+(8, 3, 20, 'Sale', 14, NULL, '2025-06-14', '', '2025-06-14 12:06:29', '2025-06-14 12:06:29'),
+(9, 3, 50, 'marketing_distribution', 15, NULL, '2025-06-16', '', '2025-06-16 12:09:57', '2025-06-16 12:09:57'),
+(10, 3, 12, 'Damage', NULL, NULL, '2025-06-17', '', '2025-06-17 04:50:35', '2025-06-17 04:50:35'),
+(11, 4, 11, 'Sample', NULL, NULL, '2025-06-17', '', '2025-06-17 04:56:25', '2025-06-17 04:56:25'),
+(12, 5, 82, 'Internal Use', NULL, NULL, '2025-06-17', '', '2025-06-17 04:56:47', '2025-06-17 04:56:47'),
+(13, 6, 20, 'Other', NULL, NULL, '2025-06-17', '', '2025-06-17 04:57:08', '2025-06-17 04:57:08'),
+(14, 3, 15, 'distributor_sale', 10, NULL, '2025-06-24', 'Distributor Sale for Invoice INV-20250624-00003, Item ID: 10', '2025-06-24 04:34:19', '2025-06-24 04:34:19'),
+(15, 3, 10, 'distributor_sale', 10, NULL, '2025-06-24', 'Distributor Sale for Invoice INV-20250624-00003, Item ID: 11 (New Item Added During Edit)', '2025-06-24 04:44:24', '2025-06-24 04:44:24'),
+(16, 3, 20, 'distributor_sale', 10, NULL, '2025-06-24', 'Distributor Sale for Invoice INV-20250624-00003, Item ID: 12 (New Item Added During Edit)', '2025-06-24 04:45:14', '2025-06-24 04:45:14'),
+(17, 3, 15, 'distributor_sale', 10, NULL, '2025-06-24', 'Distributor Sale for Invoice INV-20250624-00003, Item ID: 13 (New Item Added During Edit)', '2025-06-24 04:45:41', '2025-06-24 04:45:41'),
+(20, 3, 5, 'distributor_sale', 11, NULL, '2025-06-24', 'Distributor Sale for Invoice INV-20250624-00003, Item ID: 14', '2025-06-24 05:10:25', '2025-06-24 05:10:25'),
+(21, 3, 10, 'distributor_sale', 11, NULL, '2025-06-24', 'Distributor Sale for Invoice INV-20250624-00003, Item ID: 15 (New Item Added During Edit)', '2025-06-24 05:11:02', '2025-06-24 05:11:02'),
+(24, 4, 870, 'distributor_sale', 13, NULL, '2025-06-24', 'Distributor Sale for Invoice INV-20250624-00005, Item ID: 17', '2025-06-24 05:27:07', '2025-06-24 05:27:07'),
+(25, 4, 800, 'distributor_sale', 13, NULL, '2025-06-24', 'Distributor Sale for Invoice INV-20250624-00005, Item ID: 18 (New Item Added During Edit)', '2025-06-24 05:27:42', '2025-06-24 05:27:42'),
+(26, 7, 50, 'distributor_sale', 14, NULL, '2025-06-24', 'Distributor Sale for Invoice INV-20250624-00005, Item ID: 19', '2025-06-24 05:41:55', '2025-06-24 05:41:55'),
+(27, 7, 30, 'distributor_sale', 14, NULL, '2025-06-24', 'Distributor Sale for Invoice INV-20250624-00005, Item ID: 20 (New Item Added During Edit)', '2025-06-24 05:42:38', '2025-06-24 05:42:38'),
+(28, 7, 60, 'distributor_sale', 14, NULL, '2025-06-24', 'Distributor Sale for Invoice INV-20250624-00005, Item ID: 21 (New Item Added During Edit)', '2025-06-24 05:42:55', '2025-06-24 05:42:55'),
+(34, 3, 23, 'distributor_sale', 17, NULL, '2025-06-24', 'Distributor Sale for Invoice INV-20250624-00004, Item ID: 27', '2025-06-24 06:10:00', '2025-06-24 06:10:00'),
+(35, 7, 1, 'Damage', NULL, NULL, '2025-06-24', '', '2025-06-24 07:02:53', '2025-06-24 07:02:53');
 
 -- --------------------------------------------------------
 
@@ -739,25 +761,25 @@ ALTER TABLE `vendors`
 -- AUTO_INCREMENT for table `distributors`
 --
 ALTER TABLE `distributors`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `distributor_payments`
 --
 ALTER TABLE `distributor_payments`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `distributor_sales_orders`
 --
 ALTER TABLE `distributor_sales_orders`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `distributor_sales_order_items`
 --
 ALTER TABLE `distributor_sales_order_items`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `gst_rates`
@@ -769,7 +791,7 @@ ALTER TABLE `gst_rates`
 -- AUTO_INCREMENT for table `marketing_distribution`
 --
 ALTER TABLE `marketing_distribution`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `marketing_persons`
@@ -787,7 +809,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `sales`
@@ -811,19 +833,19 @@ ALTER TABLE `sequences`
 -- AUTO_INCREMENT for table `stock_in`
 --
 ALTER TABLE `stock_in`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT for table `stock_in_payments`
 --
 ALTER TABLE `stock_in_payments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `stock_out`
 --
 ALTER TABLE `stock_out`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `units`
