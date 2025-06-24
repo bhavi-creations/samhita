@@ -54,6 +54,17 @@ class StockOut extends BaseController
         $issued_date_start = $this->request->getGet('issued_date_start');
         $issued_date_end = $this->request->getGet('issued_date_end');
 
+        // Define a mapping for user-friendly transaction types
+        $transactionTypeMap = [
+            'Sale'                 => 'Sale',
+            'distributor_sale'     => 'Distributor Sale',
+            'marketing_distribution' => 'Marketing Distribution',
+            'Damage'               => 'Damage',
+            'Sample'               => 'Sample',
+            'Internal Use'         => 'Internal Use',
+            'Other'                => 'Other',
+        ];
+
         // Build the query
         $builder = $this->stockOutModel->builder();
         $builder->select('stock_out.*, products.name as product_name');
@@ -64,7 +75,8 @@ class StockOut extends BaseController
             $builder->where('stock_out.product_id', $product_id);
         }
         if (!empty($transaction_type)) {
-            $builder->where('stock_out.transaction_type', $transaction_type);
+            // Use the original database value for filtering
+            $builder->where('stock_out.transaction_type', array_search($transaction_type, $transactionTypeMap) ?: $transaction_type);
         }
         if (!empty($issued_date_start)) {
             $builder->where('stock_out.issued_date >=', $issued_date_start);
@@ -75,9 +87,16 @@ class StockOut extends BaseController
 
         $stockOutRecords = $builder->orderBy('stock_out.issued_date DESC, stock_out.id DESC')->get()->getResultArray();
 
-        // Fetch all products and transaction types for filter dropdowns
+        // Fetch all products and distinct transaction types from DB for filter dropdown
         $products = $this->productModel->select('id, name')->findAll();
-        $allTransactionTypes = $this->stockOutModel->distinct()->select('transaction_type')->findAll();
+        $allDbTransactionTypes = $this->stockOutModel->distinct()->select('transaction_type')->findAll();
+        $allDbTransactionTypes = array_column($allDbTransactionTypes, 'transaction_type');
+
+        // Prepare transaction types for the filter dropdown, using user-friendly names
+        $filterTransactionTypes = [];
+        foreach ($allDbTransactionTypes as $dbType) {
+            $filterTransactionTypes[$dbType] = $transactionTypeMap[$dbType] ?? $dbType;
+        }
 
         // Prepare a map for product names (if not already joined in primary query)
         $productMap = array_column($products, 'name', 'id');
@@ -87,6 +106,7 @@ class StockOut extends BaseController
         foreach ($stockOutRecords as $record) {
             $record['related_transaction_details'] = null; // Initialize
             $record['product_name'] = $productMap[$record['product_id']] ?? 'N/A'; // Ensure product name is set
+            $record['display_transaction_type'] = $transactionTypeMap[$record['transaction_type']] ?? $record['transaction_type']; // Add display type
 
             if ($record['transaction_type'] === 'Sale' && !empty($record['transaction_id'])) {
                 // Fetch sale and marketing person details if transaction_type is Sale
@@ -149,12 +169,12 @@ class StockOut extends BaseController
             'title'                   => 'Stock Out Records',
             'stockOutRecords'         => $enrichedRecords,
             'products'                => $products, // For filter dropdown
-            'transactionTypes'        => array_column($allTransactionTypes, 'transaction_type'), // For filter dropdown
+            'transactionTypes'        => $filterTransactionTypes, // Use mapped types for dropdown
             'selectedProductId'       => $product_id,
-            'selectedTransactionType' => $transaction_type,
+            'selectedTransactionType' => $transaction_type, // This will be the user-friendly name if selected
             'selectedIssuedDateStart' => $issued_date_start,
             'selectedIssuedDateEnd'   => $issued_date_end,
-            'request'                 => $this->request, // This line ensures $request is passed
+            'request'                 => $this->request,
         ];
 
         return view('stock_out/index', $data);
@@ -283,6 +303,19 @@ class StockOut extends BaseController
             throw new \CodeIgniter\Exceptions\PageNotFoundException('Stock Out record not found: ' . $id);
         }
 
+        // Define a mapping for user-friendly transaction types for this view
+        $transactionTypeMap = [
+            'Sale'                 => 'Sale',
+            'distributor_sale'     => 'Distributor Sale',
+            'marketing_distribution' => 'Marketing Distribution',
+            'Damage'               => 'Damage',
+            'Sample'               => 'Sample',
+            'Internal Use'         => 'Internal Use',
+            'Other'                => 'Other',
+        ];
+        $record['display_transaction_type'] = $transactionTypeMap[$record['transaction_type']] ?? $record['transaction_type'];
+
+
         // Initialize related_transaction_details
         $record['related_transaction_details'] = null;
 
@@ -364,6 +397,17 @@ class StockOut extends BaseController
         $issued_date_start = $this->request->getGet('issued_date_start');
         $issued_date_end = $this->request->getGet('issued_date_end');
 
+        // Define a mapping for user-friendly transaction types for export
+        $transactionTypeMap = [
+            'Sale'                 => 'Sale',
+            'distributor_sale'     => 'Distributor Sale',
+            'marketing_distribution' => 'Marketing Distribution',
+            'Damage'               => 'Damage',
+            'Sample'               => 'Sample',
+            'Internal Use'         => 'Internal Use',
+            'Other'                => 'Other',
+        ];
+
         $builder = $this->stockOutModel->builder();
         $builder->select('stock_out.id, products.name as product_name, stock_out.quantity_out, stock_out.transaction_type, stock_out.transaction_id, stock_out.issued_date, stock_out.notes, stock_out.created_at');
         $builder->join('products', 'products.id = stock_out.product_id');
@@ -373,7 +417,8 @@ class StockOut extends BaseController
             $builder->where('stock_out.product_id', $product_id);
         }
         if (!empty($transaction_type)) {
-            $builder->where('stock_out.transaction_type', $transaction_type);
+             // Use the original database value for filtering during export as well
+            $builder->where('stock_out.transaction_type', array_search($transaction_type, $transactionTypeMap) ?: $transaction_type);
         }
         if (!empty($issued_date_start)) {
             $builder->where('stock_out.issued_date >=', $issued_date_start);
@@ -387,6 +432,7 @@ class StockOut extends BaseController
         foreach ($recordsToExport as &$record) {
             $record['distributed_to_name'] = '';
             $record['distributed_to_type'] = '';
+            $record['display_transaction_type'] = $transactionTypeMap[$record['transaction_type']] ?? $record['transaction_type']; // Add display type for export
 
             if ($record['transaction_type'] === 'Sale' && !empty($record['transaction_id'])) {
                 $sale = $this->salesModel->select('marketing_persons.name as marketing_person_name')
@@ -436,7 +482,7 @@ class StockOut extends BaseController
             $sheet->setCellValue($col++ . $row, $sno++);
             $sheet->setCellValue($col++ . $row, $dataRow['product_name']);
             $sheet->setCellValue($col++ . $row, $dataRow['quantity_out']);
-            $sheet->setCellValue($col++ . $row, $dataRow['transaction_type']);
+            $sheet->setCellValue($col++ . $row, $dataRow['display_transaction_type']); // Use display type
             $sheet->setCellValue($col++ . $row, $dataRow['transaction_id']);
             $sheet->setCellValue($col++ . $row, $dataRow['issued_date']);
             $sheet->setCellValue($col++ . $row, $dataRow['notes']);
@@ -465,11 +511,22 @@ class StockOut extends BaseController
      */
     public function exportPdf(): ResponseInterface
     {
-        // Fetch the same data you display in the index view (potentially enriched)
+        // Get filter parameters, apply them as in the index() method
         $product_id = $this->request->getGet('product_id');
         $transaction_type = $this->request->getGet('transaction_type');
         $issued_date_start = $this->request->getGet('issued_date_start');
         $issued_date_end = $this->request->getGet('issued_date_end');
+
+        // Define a mapping for user-friendly transaction types for PDF
+        $transactionTypeMap = [
+            'Sale'                 => 'Sale',
+            'distributor_sale'     => 'Distributor Sale',
+            'marketing_distribution' => 'Marketing Distribution',
+            'Damage'               => 'Damage',
+            'Sample'               => 'Sample',
+            'Internal Use'         => 'Internal Use',
+            'Other'                => 'Other',
+        ];
 
         $builder = $this->stockOutModel->builder();
         $builder->select('stock_out.*, products.name as product_name');
@@ -479,7 +536,8 @@ class StockOut extends BaseController
             $builder->where('stock_out.product_id', $product_id);
         }
         if (!empty($transaction_type)) {
-            $builder->where('stock_out.transaction_type', $transaction_type);
+            // Use the original database value for filtering
+            $builder->where('stock_out.transaction_type', array_search($transaction_type, $transactionTypeMap) ?: $transaction_type);
         }
         if (!empty($issued_date_start)) {
             $builder->where('stock_out.issued_date >=', $issued_date_start);
@@ -495,6 +553,7 @@ class StockOut extends BaseController
         foreach ($stockOutRecords as $record) {
             $record['distributed_to_display'] = 'N/A'; // Default
             $record['related_link'] = null; // Default
+            $record['display_transaction_type'] = $transactionTypeMap[$record['transaction_type']] ?? $record['transaction_type']; // Add display type for PDF
 
             if ($record['transaction_type'] === 'Sale' && !empty($record['transaction_id'])) {
                 $sale = $this->salesModel

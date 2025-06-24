@@ -33,9 +33,9 @@
                     <label for="transaction_type" class="form-label">Transaction Type</label>
                     <select name="transaction_type" id="transaction_type" class="form-select">
                         <option value="">All Types</option>
-                        <?php foreach ($transactionTypes as $type): ?>
-                            <option value="<?= esc($type) ?>" <?= (string)$selectedTransactionType === (string)$type ? 'selected' : '' ?>>
-                                <?= esc($type) ?>
+                        <?php foreach ($transactionTypes as $dbValue => $displayValue): ?>
+                            <option value="<?= esc($displayValue) ?>" <?= (string)$selectedTransactionType === (string)$displayValue ? 'selected' : '' ?>>
+                                <?= esc($displayValue) ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
@@ -94,7 +94,7 @@
                                     <td><?= $sno++ ?></td>
                                     <td><?= esc($record['product_name']) ?></td>
                                     <td><?= esc($record['quantity_out']) ?></td>
-                                    <td><?= esc($record['transaction_type']) ?></td>
+                                    <td><?= esc($record['display_transaction_type']) ?></td> <!-- Use the new display_transaction_type -->
                                     <td>
                                         <?php if ($record['transaction_type'] === 'distributor_sale' && !empty($record['related_transaction_details'])): ?>
                                             <strong>Distributor:</strong> <?= esc($record['related_transaction_details']['agency_name'] ?? 'N/A') ?><br>
