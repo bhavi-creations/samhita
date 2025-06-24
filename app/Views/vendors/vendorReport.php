@@ -75,7 +75,7 @@
             <th>Quantity</th>
             <th>Unit</th>
             <th>Purchase Price</th>
-            <th>Selling Price</th>
+           
             <th>Date Received</th>
             <th>Notes</th>
         </tr>
@@ -90,7 +90,7 @@
                 <td><?= esc($entry['quantity']) ?></td>
                 <td><?= esc($entry['unit_name']) ?></td>
                 <td><?= esc($entry['purchase_price']) ?></td>
-                <td><?= esc($entry['selling_price']) ?></td>
+               
                 <td><?= esc($entry['date_received']) ?></td>
                 <td><?= esc($entry['notes']) ?></td>
             </tr>
