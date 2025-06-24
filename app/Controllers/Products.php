@@ -7,7 +7,8 @@ use App\Models\ProductModel;
 use App\Models\UnitModel;
 use App\Models\StockInModel;
 use App\Models\StockOutModel;
-use CodeIgniter\HTTP\ResponseInterface; // Added for type hinting on new methods
+use App\Models\StockInPaymentModel; // Added initialization if used for stockIn store
+use CodeIgniter\HTTP\ResponseInterface;
 
 class Products extends BaseController
 {
@@ -16,8 +17,9 @@ class Products extends BaseController
     protected $stockInModel;
     protected $stockOutModel;
     protected $db;
-    protected $session; // Declare session property
-    protected $validation; // Declare validation property
+    protected $session;
+    protected $validation;
+    protected $stockInPaymentModel; // Declared for use in constructor if applicable
 
     public function __construct()
     {
@@ -25,10 +27,11 @@ class Products extends BaseController
         $this->unitModel = new UnitModel();
         $this->stockInModel = new StockInModel();
         $this->stockOutModel = new StockOutModel();
+        $this->stockInPaymentModel = new StockInPaymentModel(); // Initialize if you use it, otherwise remove
         $this->db = \Config\Database::connect();
-        $this->session = \Config\Services::session(); // Initialize session service
-        $this->validation = \Config\Services::validation(); // Initialize validation service
-        helper(['form', 'url']); // Load form and URL helpers
+        $this->session = \Config\Services::session();
+        $this->validation = \Config\Services::validation();
+        helper(['form', 'url']);
     }
 
     public function index()
@@ -44,23 +47,19 @@ class Products extends BaseController
 
     public function create()
     {
-        // Pass all units for dropdown
         $units = $this->unitModel->findAll();
-        // Pass validation service for form errors
         $data['validation'] = \Config\Services::validation();
-        // Pass units to the view
         $data['units'] = $units;
         return view('products/create', $data);
     }
 
     public function store()
     {
-        // Basic validation for product creation
         $rules = [
             'name'          => 'required|min_length[3]|max_length[255]|is_unique[products.name]',
             'description'   => 'permit_empty|string',
             'unit_id'       => 'required|integer|is_not_unique[units.id]',
-            'selling_price' => 'permit_empty|numeric|greater_than_equal_to[0]|decimal[10,2]', // Added rule for selling_price
+            'selling_price' => 'permit_empty|numeric|greater_than_equal_to[0]|decimal[10,2]',
         ];
 
         if (!$this->validate($rules)) {
@@ -71,8 +70,7 @@ class Products extends BaseController
             'name'          => $this->request->getPost('name'),
             'description'   => $this->request->getPost('description'),
             'unit_id'       => $this->request->getPost('unit_id'),
-            'selling_price' => $this->request->getPost('selling_price'), // Include selling_price from the form
-            // 'default_selling_price' => $this->request->getPost('default_selling_price'), // Uncomment if added to form
+            'selling_price' => $this->request->getPost('selling_price'),
         ];
 
         $this->productModel->save($data);
@@ -87,7 +85,6 @@ class Products extends BaseController
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Product not found');
         }
         $units = $this->unitModel->findAll();
-        // Pass validation service for form errors
         $data['validation'] = \Config\Services::validation();
         $data['product'] = $product;
         $data['units'] = $units;
@@ -96,12 +93,11 @@ class Products extends BaseController
 
     public function update($id)
     {
-        // Basic validation for product update
         $rules = [
-            'name'          => 'required|min_length[3]|max_length[255]|is_unique[products.name,id,' . $id . ']', // Allow same name for self-update
+            'name'          => 'required|min_length[3]|max_length[255]|is_unique[products.name,id,' . $id . ']',
             'description'   => 'permit_empty|string',
             'unit_id'       => 'required|integer|is_not_unique[units.id]',
-            'selling_price' => 'permit_empty|numeric|greater_than_equal_to[0]|decimal[10,2]', // Added rule for selling_price
+            'selling_price' => 'permit_empty|numeric|greater_than_equal_to[0]|decimal[10,2]',
         ];
 
         if (!$this->validate($rules)) {
@@ -112,7 +108,7 @@ class Products extends BaseController
             'name'          => $this->request->getPost('name'),
             'description'   => $this->request->getPost('description'),
             'unit_id'       => $this->request->getPost('unit_id'),
-            'selling_price' => $this->request->getPost('selling_price'), // Include selling_price from the form
+            'selling_price' => $this->request->getPost('selling_price'),
         ];
 
         $this->productModel->update($id, $data);
@@ -193,9 +189,8 @@ class Products extends BaseController
         }
 
         $data = [
-            'id' => $id, // Important: Include ID for update operation
+            'id' => $id,
             'selling_price' => $this->request->getPost('selling_price'),
-            // No need to manually set 'updated_at' here, the model handles it via useTimestamps
         ];
 
         if ($this->productModel->save($data)) {
@@ -205,47 +200,22 @@ class Products extends BaseController
         }
     }
 
-    // --- Available Stock Overview with Prices Module (NEW) ---
+    // --- Available Stock Overview with Prices Module (MODIFIED TO READ FROM current_stock) ---
 
     /**
      * Display an overview of all products showing available stock and selling price.
+     * This method now reads 'current_stock' directly from the products table.
      */
     public function stockOverview(): string
     {
-        // 1. Fetch all products along with their unit names
+        // Fetch all products along with their unit names and the current_stock
         $builder = $this->productModel->builder();
-        $builder->select('products.id, products.name, products.selling_price, units.name as unit_name');
+        // SELECT products.id, products.name, products.selling_price, products.current_stock AS available_stock, units.name AS unit_name
+        $builder->select('products.id, products.name, products.selling_price, products.current_stock as available_stock, units.name as unit_name');
         $builder->join('units', 'units.id = products.unit_id');
         $products = $builder->get()->getResultArray();
 
-        // 2. Fetch total stock-in for all products efficiently
-        // Using getResultArray() to fetch all at once then map
-        $stockIns = $this->db->table('stock_in')
-                             ->select('product_id, SUM(quantity) as total_in')
-                             ->groupBy('product_id')
-                             ->get()
-                             ->getResultArray();
-
-        // 3. Fetch total stock-out for all products efficiently
-        // Using getResultArray() to fetch all at once then map
-        $stockOuts = $this->db->table('stock_out')
-                              ->select('product_id, SUM(quantity_out) as total_out')
-                              ->groupBy('product_id')
-                              ->get()
-                              ->getResultArray();
-
-        // 4. Map stock data by product_id for efficient lookup
-        $stockInMap = array_column($stockIns, 'total_in', 'product_id');
-        $stockOutMap = array_column($stockOuts, 'total_out', 'product_id');
-
-        // 5. Calculate available stock for each product and add to the product array
-        foreach ($products as &$product) { // Using & to modify the array elements directly
-            $productId = $product['id'];
-            $totalIn = $stockInMap[$productId] ?? 0;
-            $totalOut = $stockOutMap[$productId] ?? 0;
-            $product['available_stock'] = $totalIn - $totalOut;
-        }
-        unset($product); // Break the reference to the last element
+        // Removed: Logic for summing stock_in and stock_out tables, as current_stock is now the source of truth.
 
         $data = [
             'title'    => 'Available Stock Overview with Prices',
@@ -255,30 +225,22 @@ class Products extends BaseController
         return view('products/stock_overview', $data);
     }
 
-    // --- API Endpoint to get Available Stock for a Product (Existing) ---
-    public function getAvailableStock(int $productId)
+    // --- API Endpoint to get Available Stock for a Product (MODIFIED TO READ FROM current_stock) ---
+    /**
+     * Returns the available stock for a product directly from the products.current_stock column.
+     *
+     * @param int $productId The ID of the product.
+     * @return ResponseInterface JSON response with available_stock and unit_name.
+     */
+    public function getAvailableStock(int $productId): ResponseInterface
     {
-        // Calculate available stock using stock_in and stock_out tables
-        $stockIn = $this->db->table('stock_in')
-            ->selectSum('quantity')
-            ->where('product_id', $productId)
-            ->get()
-            ->getRow()->quantity ?? 0;
-
-        $stockOut = $this->db->table('stock_out')
-            ->selectSum('quantity_out')
-            ->where('product_id', $productId)
-            ->get()
-            ->getRow()->quantity_out ?? 0;
-
-        $availableStock = $stockIn - $stockOut;
-
-        // Fetch the unit name for the product
-        $product = $this->productModel->select('units.name as unit_name')
+        // Fetch the product directly, including its current_stock and unit name
+        $product = $this->productModel->select('products.current_stock, units.name as unit_name')
             ->join('units', 'units.id = products.unit_id')
             ->find($productId);
 
-        $unitName = $product['unit_name'] ?? 'units'; // Default to 'units' if not found
+        $availableStock = $product['current_stock'] ?? 0;
+        $unitName = $product['unit_name'] ?? 'units';
 
         // Return as JSON
         return $this->response->setJSON([

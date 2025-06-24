@@ -5,8 +5,8 @@ namespace App\Controllers;
 use App\Controllers\BaseController; // Assuming you have a BaseController
 use App\Models\DistributorModel;
 use CodeIgniter\HTTP\ResponseInterface; // For return types
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx; 
-use PhpOffice\PhpSpreadsheet\Spreadsheet; 
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
@@ -193,7 +193,7 @@ class Distributor extends BaseController
 
 
 
-     public function exportExcel()
+    public function exportExcel()
     {
         $distributors = $this->distributorModel->findAll();
 
@@ -202,9 +202,20 @@ class Distributor extends BaseController
 
         // Set Headers
         $headers = [
-            'ID', 'Custom ID', 'Agency Name', 'Owner Name', 'Owner Phone',
-            'Agency Address', 'Status', 'Agent Name', 'Agent Phone',
-            'Agency GST Number', 'Gmail', 'Notes', 'Created At', 'Updated At'
+            'ID',
+            'Custom ID',
+            'Agency Name',
+            'Owner Name',
+            'Owner Phone',
+            'Agency Address',
+            'Status',
+            'Agent Name',
+            'Agent Phone',
+            'Agency GST Number',
+            'Gmail',
+            'Notes',
+            'Created At',
+            'Updated At'
         ];
         $sheet->fromArray($headers, null, 'A1');
 
@@ -244,11 +255,8 @@ class Distributor extends BaseController
         exit(); // Stop script execution after file download
     }
 
-    /**
-     * Exports distributor data to a PDF file.
-     * Requires Dompdf library.
-     */
-      public function exportPdf()
+
+    public function exportPdf()
     {
         $data['distributors'] = $this->distributorModel->findAll();
 
@@ -277,7 +285,7 @@ class Distributor extends BaseController
 
 
 
-     public function exportSingleExcel(int $id)
+    public function exportSingleExcel(int $id)
     {
         $distributor = $this->distributorModel->find($id);
 

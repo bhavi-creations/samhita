@@ -57,12 +57,13 @@
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>
-                    <th>S.No.</th> <th>Product (Unit)</th>
+                    <th>S.No.</th>
+                    <th>Product (Unit)</th>
                     <th>Marketing Person</th>
                     <th>Quantity Issued</th>
                     <th>Date Issued</th>
                     <th>Notes</th>
-                    <th>Current Available Stock</th>
+                    <th>Current Available Stock</th> <?php // This will be updated by the controller ?>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -80,7 +81,8 @@
                     ?>
                     <?php foreach ($distributions as $index => $d): ?>
                         <tr>
-                            <td><?= esc($serialNumber + $index + 1) ?></td> <td>
+                            <td><?= esc($serialNumber + $index + 1) ?></td>
+                            <td>
                                 <?= esc($d['product_name']) ?> (<?= esc($d['unit_name']) ?>)
                             </td>
                             <td><?= esc($d['custom_id']) ?> - <?= esc($d['person_name']) ?></td>
@@ -88,7 +90,8 @@
                             <td><?= esc($d['date_issued']) ?></td>
                             <td><?= esc($d['notes']) ?></td>
                             <td>
-                                <span class="badge bg-info"><?= esc($d['current_available_stock']) ?> <?= esc($d['unit_name']) ?></span>
+                                <?php // Assuming 'current_product_stock' will be passed from the controller ?>
+                                <span class="badge bg-info"><?= esc($d['current_product_stock'] ?? 'N/A') ?> <?= esc($d['unit_name']) ?></span> 
                             </td>
                             <td>
                                 <a href="<?= base_url('marketing-distribution/edit/' . $d['id']) ?>" class="btn btn-sm btn-warning">Edit</a>
@@ -107,3 +110,5 @@
     </div>
 </section>
 <?= $this->endSection() ?>
+
+

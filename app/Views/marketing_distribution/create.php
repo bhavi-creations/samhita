@@ -19,17 +19,19 @@
         <?php endif; ?>
 
         <form action="<?= base_url('marketing-distribution/store') ?>" method="post">
-            <?= csrf_field() ?> <div class="mb-3">
+            <?= csrf_field() ?>
+            <div class="mb-3">
                 <label for="product_id" class="form-label">Product <span class="text-danger">*</span></label>
                 <select name="product_id" id="product_id" class="form-control <?= (isset($errors['product_id'])) ? 'is-invalid' : '' ?>" required>
                     <option value="">Select Product</option>
                     <?php foreach($products as $product): ?>
-                    <option value="<?= $product['id'] ?>" <?= set_select('product_id', $product['id']) ?>>
+                    <option value="<?= $product['id'] ?>" data-stock="<?= esc($product['current_stock']) ?>" <?= set_select('product_id', $product['id']) ?>>
                         <?= esc($product['name']) ?> (<?= esc($product['unit_name']) ?>)
                     </option>
                     <?php endforeach; ?>
                 </select>
                 <?php if (isset($errors['product_id'])): ?><div class="invalid-feedback"><?= $errors['product_id'] ?></div><?php endif; ?>
+                <small class="text-muted" id="availableStockHint"></small> <?php // Display for selected product stock ?>
             </div>
 
             <div class="mb-3">
@@ -47,9 +49,9 @@
 
             <div class="mb-3">
                 <label for="quantity_issued" class="form-label">Quantity Issued <span class="text-danger">*</span></label>
-                <input type="number" name="quantity_issued" id="quantity_issued" class="form-control <?= (isset($errors['quantity_issued'])) ? 'is-invalid' : '' ?>" value="<?= set_value('quantity_issued') ?>" required />
+                <input type="number" name="quantity_issued" id="quantity_issued" class="form-control <?= (isset($errors['quantity_issued'])) ? 'is-invalid' : '' ?>" value="<?= set_value('quantity_issued') ?>" required min="1" /> <?php // Added min="1" ?>
                 <?php if (isset($errors['quantity_issued'])): ?><div class="invalid-feedback"><?= $errors['quantity_issued'] ?></div><?php endif; ?>
-                <small class="text-muted" id="availableStockHint"></small> </div>
+            </div>
 
             <div class="mb-3">
                 <label for="date_issued" class="form-label">Date Issued <span class="text-danger">*</span></label>
@@ -74,29 +76,30 @@
 <?= $this->section('scripts') ?>
 <script>
 $(document).ready(function() {
-    function fetchAvailableStock() {
+    // Products data is available from the PHP context
+    const products = <?= json_encode($products) ?>;
+
+    function updateAvailableStockDisplay() {
         var productId = $('#product_id').val();
+        var availableStockHint = $('#availableStockHint');
+        
         if (productId) {
-            $.ajax({
-                url: '<?= base_url('api/products/available-stock/') ?>' + productId,
-                type: 'GET',
-                success: function(response) {
-                    $('#availableStockHint').text('Available: ' + response.available_stock + ' ' + response.unit_name);
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.error("AJAX Error: ", textStatus, errorThrown);
-                    console.error("Response Text: ", jqXHR.responseText);
-                    $('#availableStockHint').text('Could not fetch available stock.');
-                }
-            });
+            const selectedProduct = products.find(p => String(p.id) === String(productId));
+            if (selectedProduct) {
+                availableStockHint.text('Available: ' + selectedProduct.current_stock + ' ' + selectedProduct.unit_name);
+            } else {
+                availableStockHint.text('Available: N/A');
+            }
         } else {
-            $('#availableStockHint').text('');
+            availableStockHint.text('');
         }
     }
 
-    $('#product_id').change(fetchAvailableStock);
+    // Attach event listener to product select dropdown
+    $('#product_id').change(updateAvailableStockDisplay);
 
-    // No need to trigger on page load for create, as product_id will be empty initially
+    // Initial call to display stock if a product is pre-selected (e.g., after validation error)
+    updateAvailableStockDisplay(); 
 });
 </script>
 <?= $this->endSection() ?>

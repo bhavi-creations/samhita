@@ -1,4 +1,4 @@
-<?php $this->extend('layouts/main'); // Adjust 'layouts/main' to your actual layout file 
+<?= $this->extend('layouts/main'); // Adjust 'layouts/main' to your actual layout file 
 ?>
 
 <?php $this->section('content'); ?>
@@ -24,7 +24,8 @@
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th>S.No.</th> <th>Invoice Number</th>
+                        <th>S.No.</th>
+                        <th>Invoice Number</th>
                         <th>Distributor</th>
                         <th>Invoice Date</th>
                         <th>Total Amount</th>
@@ -35,10 +36,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php $s_no = 1; // Initialize serial number ?>
+                    <?php $s_no = 1; // Initialize serial number 
+                    ?>
                     <?php foreach ($sales_orders as $order): ?>
                         <tr>
-                            <td><?= $s_no++ ?></td> <td><?= esc($order['invoice_number']) ?></td>
+                            <td><?= $s_no++ ?></td>
+                            <td><?= esc($order['invoice_number']) ?></td>
                             <td><?= esc($order['agency_name']) ?></td>
                             <td><?= esc($order['invoice_date']) ?></td>
                             <td>₹<?= number_format($order['final_total_amount'], 2) ?></td>
@@ -74,3 +77,6 @@
     }
 </script>
 <?php $this->endSection(); ?>
+
+
+ 

@@ -321,33 +321,33 @@ class MarketingPersons extends BaseController
 
     // In app/Controllers/MarketingPersons.php
 
-public function exportAllPdf()
-{
-    $persons = $this->personModel->findAll();
+    public function exportAllPdf()
+    {
+        $persons = $this->personModel->findAll();
 
-    $options = new Options();
-    $options->set('isHtml5ParserEnabled', true);
-    $options->set('isRemoteEnabled', true);
-    $dompdf = new Dompdf($options);
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $options->set('isRemoteEnabled', true);
+        $dompdf = new Dompdf($options);
 
-    // --- ADD THIS DATA TO BE PASSED TO THE TEMPLATE ---
-    $data = [
-        'persons' => $persons,
-        'upload_base_url' => base_url('public/uploads/marketing_persons') // Pass the base URL for images
-    ];
+        // --- ADD THIS DATA TO BE PASSED TO THE TEMPLATE ---
+        $data = [
+            'persons' => $persons,
+            'upload_base_url' => base_url('public/uploads/marketing_persons') // Pass the base URL for images
+        ];
 
-    // --- UPDATE THE VIEW CALL TO USE $data ---
-    $html = view('marketing_persons/all_persons_template', $data);
-    $dompdf->loadHtml($html);
+        // --- UPDATE THE VIEW CALL TO USE $data ---
+        $html = view('marketing_persons/all_persons_template', $data);
+        $dompdf->loadHtml($html);
 
-    // Keep landscape for more space
-    $dompdf->setPaper('A4', 'landscape');
-    $dompdf->render();
+        // Keep landscape for more space
+        $dompdf->setPaper('A4', 'landscape');
+        $dompdf->render();
 
-    $fileName = 'Marketing_Persons_All_' . date('Ymd_His') . '.pdf';
-    $dompdf->stream($fileName, array("Attachment" => 1)); // 1 = download, 0 = preview
-    exit;
-}
+        $fileName = 'Marketing_Persons_All_' . date('Ymd_His') . '.pdf';
+        $dompdf->stream($fileName, array("Attachment" => 1)); // 1 = download, 0 = preview
+        exit;
+    }
 
     // New: Export a Single Marketing Person to PDF
     // In app/Controllers/MarketingPersons.php
