@@ -15377,3 +15377,59 @@ html.maximized-card {
 }
 
 /*# sourceMappingURL=adminlte.css.map */
+
+
+.side_bg{
+  background-color: #2e7d32 !important;
+}
+
+.nav-item .nav-link p {
+    color: white !important;  
+    font-weight: bold;
+}
+
+.nav-item .nav-link .nav-icon {
+    color: white !important;  
+    font-weight: bold;
+}
+
+ 
+/* Styles for the Sidebar Brand section */
+.sidebar-brand {
+    padding: 15px 0; /* Adjust padding as needed */
+    text-align: center;
+    background-color: #f8f9fa; /* Example background color for the brand area */
+    border-bottom: 1px solid #dee2e6; /* Separator line */
+    margin-bottom: 20px; /* Space below the brand section */
+}
+
+.brand-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #343a40; /* Default text color for brand link */
+    font-weight: 600;
+    font-size: 1.25rem;
+    transition: color 0.3s ease;
+}
+
+.brand-link:hover {
+    color: #007bff; /* Hover color */
+}
+
+.brand-image {
+    height: 40px; /* Adjust height of the logo */
+    width: 40px; /* Adjust width of the logo */
+    border-radius: 50%; /* Make it circular if desired */
+    object-fit: cover; /* Ensure image covers the area */
+    margin-right: 10px; /* Space between logo and text */
+    vertical-align: middle;
+}
+
+.brand-text {
+    font-size: 18px; /* Font size for the brand text */
+    color: green !important; /* Color of the brand text */
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1); /* Subtle text shadow */
+}
