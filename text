@@ -1,0 +1,2 @@
+('admin', 'admin@example.com', '$2y$10$w8c7.N9Zt8Jb.J0W/N8.k.q/GjC4o.V3e/M7.L5p.D5eW7X.Y.m', 'admin');
+-- The password hash above is for 'password123'. You can generate new hashes with password_hash() in PHP.

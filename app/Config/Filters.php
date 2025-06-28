@@ -12,6 +12,7 @@ use CodeIgniter\Filters\InvalidChars;
 use CodeIgniter\Filters\PageCache;
 use CodeIgniter\Filters\PerformanceMetrics;
 use CodeIgniter\Filters\SecureHeaders;
+use App\Filters\AuthFilter; // Make sure this is present
 
 class Filters extends BaseFilters
 {
@@ -34,6 +35,7 @@ class Filters extends BaseFilters
         'forcehttps'    => ForceHTTPS::class,
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
+        'auth'          => AuthFilter::class, // Your custom AuthFilter alias
     ];
 
     /**
@@ -69,13 +71,22 @@ class Filters extends BaseFilters
      */
     public array $globals = [
         'before' => [
-            // 'honeypot',
-            // 'csrf',
-            // 'invalidchars',
+            // 'honeypot', // Uncomment if you want to use honeypot globally
+            'auth' => [ // Apply 'auth' filter globally
+                'except' => [ // EXCEPT for these routes
+                    'login',        // The login form display
+                    'login/*',      // The login form submission (any method)
+                    'logout',       // The logout action
+                    'test',         // Your temporary test route
+                    // Add any other truly public pages here that should not require login
+                ]
+            ],
+            // 'csrf', // Uncomment this if you want CSRF protection globally
+            // 'invalidchars', // Uncomment if you want to use this globally
         ],
         'after' => [
-            // 'honeypot',
-            // 'secureheaders',
+            // 'honeypot', // Uncomment if you want to use honeypot globally
+            // 'secureheaders', // Uncomment if you want to use this globally
         ],
     ];
 

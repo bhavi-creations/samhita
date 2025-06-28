@@ -6,8 +6,8 @@ class Home extends BaseController
 {
     public function index()
     {
- 
-        return view('dashboard/index'  );
+        log_message('debug', 'Home::index() method was successfully reached.'); // Add this line
 
+        return view('dashboard/index');
     }
 }
