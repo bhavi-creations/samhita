@@ -238,7 +238,7 @@
         <div style="clear: both;"></div>
 
         <p style="text-align: center; margin-top: 10px;">2-46-26/21, Venkat Nager, Kakinada-533003</p>
-        <p style="text-align: center; margin: 0;">GSTIN: [Your Company GSTIN]</p>
+        <p style="text-align: center; margin: 0;">GSTIN: 37AQFPB2946M1ZN</p>
         <p style="text-align: center; margin: 0;">Phone: 9848549349, 9491822559 | Email: samhithasoilsolutions@gmail.com</p>
 
     </div>
@@ -248,7 +248,7 @@
         <p><strong>SAMHITA SOIL SOLUTIONS</strong></p>
         <p>2-46-26/21, Venkat Nager, </p>
         <p>Kakinada-533003</p>
-        <p>GSTIN: [Your Company GSTIN]</p>
+        <p>GSTIN: 37AQFPB2946M1ZN</p>
         <p>Phone: 9848549349 , 9491822559</p>
     </div>
 
