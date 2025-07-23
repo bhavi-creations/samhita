@@ -1,0 +1,16 @@
+INFO - 2025-07-22 12:12:05 --> REDIRECTED ROUTE at https://samhita.bhavicreations.com/index.php/
+INFO - 2025-07-22 12:13:50 --> REDIRECTED ROUTE at https://samhita.bhavicreations.com/index.php/
+DEBUG - 2025-07-22 12:14:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-22 12:14:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-22 12:14:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-22 12:14:33 --> Auth::attemptLogin - Attempting login for: bhavicreations
+DEBUG - 2025-07-22 12:14:33 --> Auth::attemptLogin - User not found for: bhavicreations
+DEBUG - 2025-07-22 12:14:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-22 12:14:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-22 12:14:45 --> Auth::attemptLogin - Attempting login for: admin
+DEBUG - 2025-07-22 12:14:45 --> Auth::attemptLogin - User found. Hashed password from DB: $2y$10$Sh/3KsbkbQ12FXx.ZBngVOi1ZOTuKa4swBJBgjtIhvZ7HhXQ.Dh3W
+DEBUG - 2025-07-22 12:14:45 --> Auth::attemptLogin - Plaintext password from form (for verification): password123
+DEBUG - 2025-07-22 12:14:45 --> Auth::attemptLogin - User admin successfully logged in.
+DEBUG - 2025-07-22 12:14:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-22 12:14:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-22 12:26:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 28, 2025 at 02:18 PM
+-- Generation Time: Jul 23, 2025 at 08:53 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,29 @@ SET time_zone = "+00:00";
 --
 -- Database: `samhita`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `company_settings`
+--
+
+CREATE TABLE `company_settings` (
+  `id` int(5) UNSIGNED NOT NULL,
+  `setting_name` varchar(100) NOT NULL,
+  `setting_value` varchar(255) DEFAULT NULL,
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `company_settings`
+--
+
+INSERT INTO `company_settings` (`id`, `setting_name`, `setting_value`, `created_at`, `updated_at`) VALUES
+(1, 'company_logo', 'company_logo_1753253364_425fcde2cef350d6968f.png', '2025-07-23 10:11:46', '2025-07-23 06:49:24'),
+(2, 'company_stamp', 'company_stamp_1753247862_a223749b4fa5262a9abc.jpg', '2025-07-23 10:11:46', '2025-07-23 05:17:42'),
+(3, 'company_signature', 'company_signature_1753247867_ef7da14e43871ffad39f.png', '2025-07-23 10:11:46', '2025-07-23 05:17:47');
 
 -- --------------------------------------------------------
 
@@ -654,6 +677,13 @@ INSERT INTO `vendors` (`id`, `name`, `owner_phone`, `agency_name`, `contact_pers
 --
 
 --
+-- Indexes for table `company_settings`
+--
+ALTER TABLE `company_settings`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `setting_name` (`setting_name`);
+
+--
 -- Indexes for table `distributors`
 --
 ALTER TABLE `distributors`
@@ -787,6 +817,12 @@ ALTER TABLE `vendors`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `company_settings`
+--
+ALTER TABLE `company_settings`
+  MODIFY `id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `distributors`

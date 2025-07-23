@@ -6,10 +6,19 @@
     <style>
         body {
             font-family: "DejaVu Sans", sans-serif;
-            /* Ensure Rupee symbol support */
             font-size: 10pt;
             margin: 15mm;
-            /* Adjust margins as needed */
+        }
+
+        /* Add new styles for images */
+        .company-logo {
+            max-width: 150px;
+            /* Adjust as needed */
+            height: auto;
+            position: absolute;
+            /* Position the logo */
+            top: 15mm;
+            left: 15mm;
         }
 
         .invoice-header {
@@ -17,12 +26,16 @@
             margin-bottom: 30px;
             border-bottom: 2px solid #333;
             padding-bottom: 15px;
+            position: relative;
+            /* Needed for absolute positioning of logo if placed inside */
         }
 
+        /* Adjust header title to make space for logo */
         .invoice-header h1 {
             margin: 0;
             font-size: 24pt;
             color: #333;
+            /* text-align: right; If logo is left, move title right */
         }
 
         .company-info,
@@ -67,7 +80,6 @@
         .invoice-details .label {
             font-weight: bold;
             width: 150px;
-            /* Adjust as needed */
         }
 
         .item-table {
@@ -90,7 +102,6 @@
 
         .totals-table {
             width: 40%;
-            /* Align to right */
             float: right;
             border-collapse: collapse;
             margin-bottom: 20px;
@@ -145,11 +156,15 @@
 
         .notes-section {
             margin-top: 30px;
+            clear: both;
+            /* Clear floats before this section */
         }
 
         .signature-section {
             margin-top: 50px;
             text-align: right;
+            position: relative;
+            /* For stamp/signature positioning */
         }
 
         .signature-section p {
@@ -160,6 +175,31 @@
             width: 200px;
             text-align: center;
         }
+
+        .company-signature {
+            max-width: 150px;
+            /* Adjust as needed */
+            height: auto;
+            position: absolute;
+            bottom: 30px;
+            /* Position above the signature line */
+            right: 50px;
+            /* Adjust right position */
+        }
+
+        .company-stamp {
+            max-width: 120px;
+            /* Adjust as needed */
+            height: auto;
+            position: absolute;
+            bottom: 10px;
+            /* Adjust relative to signature */
+            right: 250px;
+            /* Adjust position */
+            opacity: 0.7;
+            /* Make stamp slightly transparent */
+        }
+
 
         .page-break {
             page-break-after: always;
@@ -184,27 +224,38 @@
 <body>
 
     <div class="invoice-header">
-        <h1>INVOICE</h1>
-        <p><strong>[Your Company Name]</strong></p>
-        <p>[Your Company Address Line 1]</p>
-        <p>[Your Company Address Line 2]</p>
-        <p>GSTIN: [Your Company GSTIN]</p>
-        <p>Phone: [Your Company Phone Number] | Email: [Your Company Email]</p>
-    </div>
+        <?php if ($company_logo_data): ?>
+            <div style="float: left; margin-right: 45px;">
+                <img src="<?= esc($company_logo_data) ?>" alt="Company Logo" style="max-width: 100px; height: auto;">
+            </div>
+        <?php endif; ?>
 
+        <div style="float: left;">
+            <h3>INVOICE</h3>
+            <h2><strong>SAMHITA SOIL SOLUTIONS</strong></h2>
+        </div>
+
+        <div style="clear: both;"></div>
+
+        <p style="text-align: center; margin-top: 10px;">2-46-26/21, Venkat Nager, Kakinada-533003</p>
+        <p style="text-align: center; margin: 0;">GSTIN: [Your Company GSTIN]</p>
+        <p style="text-align: center; margin: 0;">Phone: 9848549349, 9491822559 | Email: samhithasoilsolutions@gmail.com</p>
+
+    </div>
+    <div style="clear: both;"></div>
     <div class="company-info">
         <h3>Invoice From:</h3>
-        <p><strong>[Your Company Name]</strong></p>
-        <p>[Your Company Address Line 1]</p>
-        <p>[Your Company Address Line 2]</p>
+        <p><strong>SAMHITA SOIL SOLUTIONS</strong></p>
+        <p>2-46-26/21, Venkat Nager, </p>
+        <p>Kakinada-533003</p>
         <p>GSTIN: [Your Company GSTIN]</p>
-        <p>Phone: [Your Company Phone Number]</p>
+        <p>Phone: 9848549349 , 9491822559</p>
     </div>
 
     <div class="customer-info">
         <h3>Bill To:</h3>
         <p><strong><?= esc($distributor['agency_name'] ?? 'N/A') ?></strong></p>
-        <p>Attn: <?= esc($distributor['owner_name'] ?? 'N/A') ?></p>
+        <p>Coustmer: <?= esc($distributor['owner_name'] ?? 'N/A') ?></p>
         <p><?= esc($distributor['agency_address'] ?? 'N/A') ?></p>
         <p>GSTIN: <?= esc($distributor['agency_gst_number'] ?? 'N/A') ?></p>
         <p>Phone: <?= esc($distributor['owner_phone'] ?? 'N/A') ?></p>
@@ -221,17 +272,11 @@
             <tr>
                 <td class="label">Order Date:</td>
                 <td><?= esc(date('d-M-Y', strtotime($sales_order['invoice_date']))) ?></td>
-                <td class="label">Payment Type:</td>
-                <td><?= esc($sales_order['payment_type'] ?? 'N/A') ?></td>
-            </tr>
-            <tr>
                 <td class="label">Status:</td>
                 <td><?= esc($sales_order['status']) ?></td>
-                <td class="label">Due Date:</td>
-                <td><?php // You might want to calculate a due date here, e.g., 30 days from invoice date
-                    echo esc(date('d-M-Y', strtotime($sales_order['invoice_date'] . ' + 30 days')));
-                    ?></td>
+
             </tr>
+
         </table>
     </div>
 
@@ -342,8 +387,27 @@
         <p><?= esc($sales_order['notes'] ?? 'N/A') ?></p>
     </div>
 
+
+
     <div class="signature-section">
-        <p>Authorized Signature</p>
+        <div style="float: right; text-align: center; position: relative; width: 350px; height: 150px;">
+
+            <?php if ($company_stamp_data): ?>
+                <img src="<?= esc($company_stamp_data) ?>" alt="Company Stamp"
+                    style="max-width: 100px; height: auto; position: absolute; bottom: 80px; left: 50px; opacity: 0.7;">
+            <?php endif; ?>
+
+            <?php if ($company_signature_data): ?>
+                <img src="<?= esc($company_signature_data) ?>" alt="Company Signature"
+                    style="max-width: 150px; height: auto; position: absolute; bottom: 80px; right: 50px;">
+            <?php endif; ?>
+
+            <p style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); 
+                  border-top: 1px solid #000; width: 200px; text-align: center; margin: 0;">
+                Authorized Signature
+            </p>
+        </div>
+        <div style="clear: both;"></div>
     </div>
 
     <div class="footer" style="position: fixed; bottom: 15mm; left: 15mm; right: 15mm; text-align: center; font-size: 8pt; color: #555;">

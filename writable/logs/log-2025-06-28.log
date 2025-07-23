@@ -163,3 +163,4 @@ DEBUG - 2025-06-28 12:22:00 --> Home::index() method was successfully reached.
 DEBUG - 2025-06-28 12:22:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 DEBUG - 2025-06-28 12:22:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 DEBUG - 2025-06-28 12:23:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-28 12:26:14 --> REDIRECTED ROUTE at https://samhita.bhavicreations.com/index.php/

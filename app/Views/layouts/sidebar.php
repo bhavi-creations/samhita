@@ -12,12 +12,12 @@
 
 
 
- 
+
 
 
                 <li class="nav-item">
                     <a href="<?= base_url('dashboard') ?>" class="nav-link <?= uri_string() == 'dashboard' ? 'active' : '' ?>">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>  
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
@@ -238,12 +238,15 @@
 
 
 
+                <li class="nav-item">
+                    <a href="<?= base_url('company-settings') ?>" class="nav-link <?= uri_string() == 'company-settings' ? 'active' : '' ?>">
+                        <i class="nav-icon fas fa-cogs"></i>
+                        <p>Company Settings</p>
+                    </a>
+                </li>
 
 
             </ul>
-
-
-
 
         </nav>
     </div>

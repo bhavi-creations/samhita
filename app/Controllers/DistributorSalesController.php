@@ -9,8 +9,8 @@ use App\Models\DistributorPaymentModel;
 use App\Models\DistributorModel;
 use App\Models\ProductModel;
 use App\Models\GstRateModel;
-use App\Models\StockOutModel; 
-
+use App\Models\StockOutModel;
+use App\Models\CompanySettingModel;
 // For PDF
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -28,8 +28,9 @@ class DistributorSalesController extends BaseController
     protected $distributorModel;
     protected $productModel;
     protected $gstRateModel;
-    protected $stockOutModel; 
-    protected $db; 
+    protected $stockOutModel;
+    protected $companySettingModel;
+    protected $db;
 
     public function __construct()
     {
@@ -39,9 +40,10 @@ class DistributorSalesController extends BaseController
         $this->distributorModel               = new DistributorModel();
         $this->productModel                   = new ProductModel();
         $this->gstRateModel                   = new GstRateModel();
-        $this->stockOutModel                  = new StockOutModel(); 
-        $this->db = \Config\Database::connect(); 
-        helper('number'); 
+        $this->stockOutModel                  = new StockOutModel();
+        $this->companySettingModel      = new CompanySettingModel();
+        $this->db = \Config\Database::connect();
+        helper('number');
     }
 
     public function index()
@@ -132,8 +134,8 @@ class DistributorSalesController extends BaseController
                 if (!$product) { // This handles both null (not found) and false (DB error)
                     $dbError = $this->db->error();
                     if ($dbError['code'] !== 0) {
-                         log_message('critical', 'DistributorSales::store - DB Error fetching product ' . $productId . ': ' . $dbError['message'] . ' (Code: ' . $dbError['code'] . ')');
-                         throw new \Exception('Database error fetching product details.');
+                        log_message('critical', 'DistributorSales::store - DB Error fetching product ' . $productId . ': ' . $dbError['message'] . ' (Code: ' . $dbError['code'] . ')');
+                        throw new \Exception('Database error fetching product details.');
                     }
                     log_message('error', 'DistributorSales::store - Product not found for ID: ' . $productId);
                     return redirect()->back()->withInput()->with('error', 'Invalid product selected. Please refresh and try again.');
@@ -222,7 +224,7 @@ class DistributorSalesController extends BaseController
         $invoiceNumber = $prefix . $currentDatePart . '-' . str_pad($invoiceSeq, 5, '0', STR_PAD_LEFT);
         // --- END Invoice Number Generation Logic ---
 
-        $this->db->transStart(); 
+        $this->db->transStart();
 
         try {
             $salesOrderData = [
@@ -248,7 +250,7 @@ class DistributorSalesController extends BaseController
 
             foreach ($salesOrderItemsData as $item) {
                 $item['distributor_sales_order_id'] = $salesOrderId;
-                $insertedItemId = $this->distributorSalesOrderItemModel->insert($item, true); 
+                $insertedItemId = $this->distributorSalesOrderItemModel->insert($item, true);
 
                 if (!$insertedItemId) {
                     $dbErrors = $this->distributorSalesOrderItemModel->errors();
@@ -279,8 +281,8 @@ class DistributorSalesController extends BaseController
                         'quantity_out'      => $item['quantity'],
                         'transaction_type'  => 'distributor_sale',
                         'transaction_id'    => $salesOrderId,
-                        'transaction_item_id' => $insertedItemId, 
-                        'issued_date'       => $orderDate, 
+                        'transaction_item_id' => $insertedItemId,
+                        'issued_date'       => $orderDate,
                         'notes'             => 'Distributor Sale for Invoice ' . $invoiceNumber . ', Item ID: ' . $insertedItemId,
                     ])) {
                         $modelErrors = $this->stockOutModel->errors();
@@ -412,7 +414,7 @@ class DistributorSalesController extends BaseController
 
         // Construct unique rule string for invoice number, allowing self-update
         $uniqueRuleString = 'is_unique[distributor_sales_orders.invoice_number,id,' . $id . ']';
-        
+
         $rules = [
             'distributor_id'        => 'required|integer',
             'order_date'            => 'required|valid_date',
@@ -438,18 +440,18 @@ class DistributorSalesController extends BaseController
 
         $totalAmountBeforeGst = 0;
         $totalGstAmount = 0;
-        $salesOrderItemsToProcess = []; 
+        $salesOrderItemsToProcess = [];
 
         // Fetch original sales order items for comparison, mapped by their ID
         $originalSalesOrderItems = $this->distributorSalesOrderItemModel
             ->where('distributor_sales_order_id', $id)
             ->findAll();
-        $originalItemsMap = []; 
+        $originalItemsMap = [];
         foreach ($originalSalesOrderItems as $item) {
             $originalItemsMap[$item['id']] = $item;
         }
 
-        $itemIdsToKeep = []; 
+        $itemIdsToKeep = [];
 
         // --- PRE-CHECK: Stock availability for net increases and prepare item data for processing ---
         foreach ($postedProducts as $itemKey => $item) {
@@ -461,7 +463,7 @@ class DistributorSalesController extends BaseController
             $productId = $item['product_id'];
             $newQuantity = (int) $item['quantity'];
             $gstRateId = $item['gst_rate_id'];
-            $itemId = $item['id'] ?? null; 
+            $itemId = $item['id'] ?? null;
 
             try {
                 $product = $this->productModel->find($productId);
@@ -494,7 +496,7 @@ class DistributorSalesController extends BaseController
                 log_message('error', 'DistributorSales::update - Exception during GST rate lookup (pre-check): ' . $e->getMessage());
                 return redirect()->back()->withInput()->with('error', 'An unexpected error occurred while fetching GST rate details for pre-check: ' . $e->getMessage());
             }
-            
+
             // Calculate item amounts (needed for later saving)
             $unitPriceAtSale = (float) $product['selling_price'];
             $gstRateAtSale = (float) $gstRate['rate'];
@@ -521,8 +523,8 @@ class DistributorSalesController extends BaseController
 
             // If the item has an ID (meaning it's an existing item from the DB)
             if ($itemId && isset($originalItemsMap[$itemId])) {
-                $itemToSave['id'] = $itemId; 
-                $itemIdsToKeep[] = $itemId; 
+                $itemToSave['id'] = $itemId;
+                $itemIdsToKeep[] = $itemId;
             }
             $salesOrderItemsToProcess[] = $itemToSave;
         }
@@ -537,15 +539,15 @@ class DistributorSalesController extends BaseController
         $newDueAmount = $finalTotalAmount - ($salesOrder['amount_paid'] ?? 0);
         $newStatus = ($newDueAmount <= 0) ? 'Paid' : (($salesOrder['amount_paid'] > 0) ? 'Partially Paid' : 'Pending');
 
-        $this->db->transStart(); 
+        $this->db->transStart();
 
         try {
             // --- Phase 1: Revert all old stock changes and delete existing stock_out records for this sales order ---
             // Get all existing stock_out records for this sales order BEFORE deleting items
             $existingStockOuts = $this->stockOutModel
-                                      ->where('transaction_id', $id)
-                                      ->where('transaction_type', 'distributor_sale')
-                                      ->findAll();
+                ->where('transaction_id', $id)
+                ->where('transaction_type', 'distributor_sale')
+                ->findAll();
 
             foreach ($existingStockOuts as $oldStockOutRecord) {
                 $originalProductId = $oldStockOutRecord['product_id'];
@@ -566,8 +568,8 @@ class DistributorSalesController extends BaseController
 
             // Now, delete ALL stock_out records related to this distributor sales order
             if (!$this->stockOutModel->where('transaction_id', $id)
-                                      ->where('transaction_type', 'distributor_sale')
-                                      ->delete()) {
+                ->where('transaction_type', 'distributor_sale')
+                ->delete()) {
                 $modelErrors = $this->stockOutModel->errors();
                 throw new \Exception('Failed to delete old stock out records for sales order ID ' . $id . ': ' . (!empty($modelErrors) ? implode(', ', $modelErrors) : 'Unknown error.'));
             }
@@ -603,7 +605,7 @@ class DistributorSalesController extends BaseController
             foreach ($salesOrderItemsToProcess as $itemData) {
                 $productId = $itemData['product_id'];
                 $newQuantity = (int) $itemData['quantity'];
-                
+
                 // Check current stock for deduction
                 $currentProduct = $this->productModel->find($productId);
                 if (!$currentProduct) {
@@ -611,15 +613,15 @@ class DistributorSalesController extends BaseController
                 }
 
                 if ($newQuantity > (int)$currentProduct['current_stock']) {
-                     throw new \Exception('Insufficient stock for product "' . esc($currentProduct['name']) . '". Needed: ' . $newQuantity . ', Available: ' . (int)$currentProduct['current_stock']);
+                    throw new \Exception('Insufficient stock for product "' . esc($currentProduct['name']) . '". Needed: ' . $newQuantity . ', Available: ' . (int)$currentProduct['current_stock']);
                 }
 
                 // Insert the new sales order item into distributor_sales_order_items
                 // Note: We unset 'id' if it exists from a re-submitted old item so insert generates a new ID.
                 $tempItemData = $itemData;
-                unset($tempItemData['id']); 
-                $newSalesOrderItemId = $this->distributorSalesOrderItemModel->insert($tempItemData, true); 
-                
+                unset($tempItemData['id']);
+                $newSalesOrderItemId = $this->distributorSalesOrderItemModel->insert($tempItemData, true);
+
                 if (!$newSalesOrderItemId) {
                     $dbErrors = $this->distributorSalesOrderItemModel->errors();
                     $errorMessage = !empty($dbErrors) ? implode(', ', $dbErrors) : 'Unknown database error.';
@@ -637,7 +639,7 @@ class DistributorSalesController extends BaseController
                 if (!$this->stockOutModel->insert([
                     'product_id'        => $productId,
                     'quantity_out'      => $newQuantity,
-                    'transaction_type'  => 'distributor_sale', 
+                    'transaction_type'  => 'distributor_sale',
                     'transaction_id'    => $id, // Link to the main sales order ID
                     'transaction_item_id' => $newSalesOrderItemId, // Link to the NEW sales order item ID
                     'issued_date'       => $orderDate,
@@ -648,7 +650,7 @@ class DistributorSalesController extends BaseController
                 }
             }
 
-            $this->db->transComplete(); 
+            $this->db->transComplete();
 
             if ($this->db->transStatus() === false) {
                 $dbError = $this->db->error();
@@ -659,7 +661,7 @@ class DistributorSalesController extends BaseController
             log_message('info', 'DistributorSales::update - Sales Order ' . $salesOrder['invoice_number'] . ' with ID ' . $id . ' updated successfully.');
             return redirect()->to(base_url('distributor-sales/show/' . $id))->with('success', 'Sales Order ' . $salesOrder['invoice_number'] . ' updated successfully!');
         } catch (\Exception $e) {
-            $this->db->transRollback(); 
+            $this->db->transRollback();
             log_message('error', 'DistributorSales::update - Caught Exception during sales order update (ID: ' . $id . '): ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
             return redirect()->back()->withInput()->with('error', 'An unexpected error occurred while updating the sales order: ' . $e->getMessage());
         }
@@ -826,14 +828,14 @@ class DistributorSalesController extends BaseController
                     }
                 } catch (\Exception $e) {
                     log_message('error', 'DistributorSales::delete - Exception during product stock return for deletion: ' . $e->getMessage());
-                    throw $e; 
+                    throw $e;
                 }
             }
 
             // NEW: Delete ALL corresponding stock_out records linked to this sales order ID
             if (!$this->stockOutModel->where('transaction_id', $id)
-                                      ->where('transaction_type', 'distributor_sale')
-                                      ->delete()) {
+                ->where('transaction_type', 'distributor_sale')
+                ->delete()) {
                 $modelErrors = $this->stockOutModel->errors();
                 throw new \Exception('Failed to delete associated stock out records for sales order ID ' . $id . ': ' . (!empty($modelErrors) ? implode(', ', $modelErrors) : 'Unknown error.'));
             }
@@ -933,7 +935,7 @@ class DistributorSalesController extends BaseController
         exit;
     }
 
-    public function exportInvoicePdf($id)
+    public function exportInvoicePdf($id, $mode = 'download')
     {
         $salesOrder = $this->distributorSalesOrderModel->find($id);
 
@@ -958,13 +960,43 @@ class DistributorSalesController extends BaseController
         }
         unset($item);
 
+        // Fetch only the filenames from the database
+        $companyLogoFilename = $this->companySettingModel->getSetting('company_logo');
+        $companyStampFilename = $this->companySettingModel->getSetting('company_stamp');
+        $companySignatureFilename = $this->companySettingModel->getSetting('company_signature');
+
+        // **CRUCIAL CHANGE:** Convert images to Base64 strings for embedding in PDF
+        $company_logo_data = null;
+        $company_stamp_data = null;
+        $company_signature_data = null;
+
+        $logoPath = $companyLogoFilename ? ROOTPATH . 'public/uploads/company_images/' . $companyLogoFilename : null;
+        if ($logoPath && file_exists($logoPath)) {
+            $company_logo_data = 'data:image/png;base64,' . base64_encode(file_get_contents($logoPath));
+        }
+
+        $stampPath = $companyStampFilename ? ROOTPATH . 'public/uploads/company_images/' . $companyStampFilename : null;
+        if ($stampPath && file_exists($stampPath)) {
+            $company_stamp_data = 'data:image/png;base64,' . base64_encode(file_get_contents($stampPath));
+        }
+
+        $signaturePath = $companySignatureFilename ? ROOTPATH . 'public/uploads/company_images/' . $companySignatureFilename : null;
+        if ($signaturePath && file_exists($signaturePath)) {
+            $company_signature_data = 'data:image/png;base64,' . base64_encode(file_get_contents($signaturePath));
+        }
+
         $data = [
             'title'             => 'Distributor Sales Invoice',
             'sales_order'       => $salesOrder,
             'sales_order_items' => $salesOrderItems,
             'distributor'       => $distributor,
             'payments'          => $payments,
-            'currentDate'       => date('Y-m-d H:i:s')
+            'currentDate'       => date('Y-m-d H:i:s'),
+
+            // Pass the Base64 data to the view
+            'company_logo_data' => $company_logo_data,
+            'company_stamp_data' => $company_stamp_data,
+            'company_signature_data' => $company_signature_data,
         ];
 
         $html = view('distributorsales/invoice_pdf', $data);
@@ -981,7 +1013,9 @@ class DistributorSalesController extends BaseController
 
         $invoiceNumber = $salesOrder['invoice_number'] ?? 'INV-' . $salesOrder['id'];
         $fileName = 'Distributor_Sales_Invoice_' . str_replace('/', '_', $invoiceNumber) . '_' . date('Ymd_His') . '.pdf';
-        $dompdf->stream($fileName, array("Attachment" => 1));
+        $attachment = ($mode === 'download') ? 1 : 0;
+
+        $dompdf->stream($fileName, array("Attachment" => $attachment));
         exit;
     }
 
@@ -1112,7 +1146,7 @@ class DistributorSalesController extends BaseController
                 $sheet->setCellValue($col++ . $current_row, $payment['amount']);
                 $sheet->setCellValue($col++ . $current_row, $payment['payment_method'] ?? 'N/A');
                 $sheet->setCellValue($col++ . $current_row, $payment['transaction_id'] ?? 'N/A');
-                $sheet->setCellValue($col++ . $current_row, $payment['notes'] ?? 'N/A'); 
+                $sheet->setCellValue($col++ . $current_row, $payment['notes'] ?? 'N/A');
                 $current_row++;
             }
         } else {

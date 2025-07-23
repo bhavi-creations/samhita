@@ -184,6 +184,18 @@ $routes->group('/', ['filter' => 'auth'], function ($routes) {
         $routes->get('export/pdf-index', 'DistributorSalesController::exportIndexPdf', ['as' => 'distributor-sales-export-pdf-index']);
         $routes->get('export/excel-index', 'DistributorSalesController::exportIndexExcel', ['as' => 'distributor-sales-export-excel-index']);
         $routes->get('export/invoice-pdf/(:num)', 'DistributorSalesController::exportInvoicePdf/$1', ['as' => 'distributor-sales-export-invoice-pdf']);
+        $routes->get('export/invoice-pdf/(:num)/(:any)', 'DistributorSalesController::exportInvoicePdf/$1/$2', ['as' => 'distributor-sales-export-invoice-pdf-mode']);
+
         $routes->get('export/invoice-excel/(:num)', 'DistributorSalesController::exportInvoiceExcel/$1', ['as' => 'distributor-sales-export-invoice-excel']);
+    });
+
+
+
+    // In app/Config/Routes.php
+    $routes->group('/', function ($routes) {
+
+        $routes->get('company-settings', 'CompanySettingsController::index');
+        $routes->post('company-settings/upload-image', 'CompanySettingsController::uploadImage');
+        $routes->post('company-settings/delete-image/(:any)', 'CompanySettingsController::deleteImage/$1');
     });
 });
