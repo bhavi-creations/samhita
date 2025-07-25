@@ -20,10 +20,10 @@ Options -Indexes
 
 
 	# uncomment this below line in local 
-	RewriteBase /samhita/
+	# RewriteBase /samhita/
 
 	# uncomment this below line in live server 
-	# RewriteBase /
+	RewriteBase /
  
 
 	# Redirect Trailing Slashes...
