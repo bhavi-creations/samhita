@@ -130,7 +130,12 @@ class DistributorSalesController extends BaseController
             $gstRateId = $item['gst_rate_id'];
 
             try {
-                $product = $this->productModel->find($productId);
+                // Fetch product with its unit name
+                $product = $this->productModel
+                    ->select('products.*, units.name as unit_name')
+                    ->join('units', 'units.id = products.unit_id')
+                    ->find($productId);
+
                 if (!$product) { // This handles both null (not found) and false (DB error)
                     $dbError = $this->db->error();
                     if ($dbError['code'] !== 0) {
@@ -164,14 +169,16 @@ class DistributorSalesController extends BaseController
             // Check available stock (from products.current_stock)
             if ($quantity > $product['current_stock']) {
                 log_message('warning', 'DistributorSales::store - Insufficient stock for product ID: ' . $productId . '. Required: ' . $quantity . ', Available: ' . $product['current_stock']);
-                return redirect()->back()->withInput()->with('error', 'Not enough stock available for "' . esc($product['name']) . '". Requested: ' . $quantity . ', Available: ' . $product['current_stock'] . ' ' . esc($product['unit_name']) . '.');
+                // Use the fetched unit_name for the error message
+                return redirect()->back()->withInput()->with('error', 'Not enough stock available for "' . esc($product['name']) . '". Requested: ' . $quantity . ', Available: ' . $product['current_stock'] . ' ' . esc($product['unit_name'] ?? 'units') . '.');
             }
 
             $unitPriceAtSale = (float) $product['selling_price'];
-            $gstRateAtSale = (float) $gstRate['rate'];
+            $gstRateAtSale = (float) $gstRate['rate']; // This is now a whole number (e.g., 18)
 
             $itemTotalBeforeGst = $quantity * $unitPriceAtSale;
-            $itemGstAmount = ($itemTotalBeforeGst * $gstRateAtSale) / 100;
+            // Divide gstRateAtSale by 100 here for calculation
+            $itemGstAmount = ($itemTotalBeforeGst * ($gstRateAtSale / 100));
             $itemFinalTotal = $itemTotalBeforeGst + $itemGstAmount;
 
             $totalAmountBeforeGst += $itemTotalBeforeGst;
@@ -182,7 +189,7 @@ class DistributorSalesController extends BaseController
                 'gst_rate_id'            => $gstRateId,
                 'quantity'               => $quantity,
                 'unit_price_at_sale'     => $unitPriceAtSale,
-                'gst_rate_at_sale'       => $gstRateAtSale,
+                'gst_rate_at_sale'       => $gstRateAtSale, // Store as whole number (e.g., 18)
                 'item_total_before_gst'  => $itemTotalBeforeGst,
                 'item_gst_amount'        => $itemGstAmount,
                 'item_final_total'       => $itemFinalTotal,
@@ -338,8 +345,10 @@ class DistributorSalesController extends BaseController
         }
 
         $salesOrderItems = $this->distributorSalesOrderItemModel
-            ->select('distributor_sales_order_items.*, products.name as product_name')
+            // Select product_unit_name from products table and join units table
+            ->select('distributor_sales_order_items.*, products.name as product_name, units.name as unit_name')
             ->join('products', 'products.id = distributor_sales_order_items.product_id')
+            ->join('units', 'units.id = products.unit_id') // Join the units table
             ->where('distributor_sales_order_id', $id)
             ->findAll();
 
@@ -466,7 +475,12 @@ class DistributorSalesController extends BaseController
             $itemId = $item['id'] ?? null;
 
             try {
-                $product = $this->productModel->find($productId);
+                // Fetch product with its unit name
+                $product = $this->productModel
+                    ->select('products.*, units.name as unit_name')
+                    ->join('units', 'units.id = products.unit_id')
+                    ->find($productId);
+
                 if (!$product) {
                     $dbError = $this->db->error();
                     if ($dbError['code'] !== 0) {
@@ -499,9 +513,10 @@ class DistributorSalesController extends BaseController
 
             // Calculate item amounts (needed for later saving)
             $unitPriceAtSale = (float) $product['selling_price'];
-            $gstRateAtSale = (float) $gstRate['rate'];
+            $gstRateAtSale = (float) $gstRate['rate']; // This is now a whole number (e.g., 18)
             $itemTotalBeforeGst = $newQuantity * $unitPriceAtSale;
-            $itemGstAmount = ($itemTotalBeforeGst * $gstRateAtSale) / 100;
+            // Divide gstRateAtSale by 100 here for calculation
+            $itemGstAmount = ($itemTotalBeforeGst * ($gstRateAtSale / 100));
             $itemFinalTotal = $itemTotalBeforeGst + $itemGstAmount;
 
             // Accumulate totals for the main sales order
@@ -515,7 +530,7 @@ class DistributorSalesController extends BaseController
                 'gst_rate_id'                => $gstRateId,
                 'quantity'                   => $newQuantity,
                 'unit_price_at_sale'         => $unitPriceAtSale,
-                'gst_rate_at_sale'           => $gstRateAtSale,
+                'gst_rate_at_sale'           => $gstRateAtSale, // Store as whole number (e.g., 18)
                 'item_total_before_gst'      => $itemTotalBeforeGst,
                 'item_gst_amount'            => $itemGstAmount,
                 'item_final_total'           => $itemFinalTotal,
@@ -607,13 +622,19 @@ class DistributorSalesController extends BaseController
                 $newQuantity = (int) $itemData['quantity'];
 
                 // Check current stock for deduction
-                $currentProduct = $this->productModel->find($productId);
+                // Fetch product with its unit name for stock check message
+                $currentProduct = $this->productModel
+                    ->select('products.*, units.name as unit_name')
+                    ->join('units', 'units.id = products.unit_id')
+                    ->find($productId);
+
                 if (!$currentProduct) {
                     throw new \Exception('Product ' . $productId . ' not found for stock deduction.');
                 }
 
                 if ($newQuantity > (int)$currentProduct['current_stock']) {
-                    throw new \Exception('Insufficient stock for product "' . esc($currentProduct['name']) . '". Needed: ' . $newQuantity . ', Available: ' . (int)$currentProduct['current_stock']);
+                    // Use the fetched unit_name for the error message
+                    throw new \Exception('Insufficient stock for product "' . esc($currentProduct['name']) . '". Needed: ' . $newQuantity . ', Available: ' . (int)$currentProduct['current_stock'] . ' ' . esc($currentProduct['unit_name'] ?? 'units'));
                 }
 
                 // Insert the new sales order item into distributor_sales_order_items
@@ -943,14 +964,32 @@ class DistributorSalesController extends BaseController
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
 
-        $salesOrderItems = $this->distributorSalesOrderItemModel->where('distributor_sales_order_id', $id)->findAll();
+        // --- CHANGE START ---
+        // Fetch sales order items with product name and unit name
+        $salesOrderItems = $this->distributorSalesOrderItemModel
+            ->select('distributor_sales_order_items.*, products.name as product_name, units.name as unit_name')
+            ->join('products', 'products.id = distributor_sales_order_items.product_id')
+            ->join('units', 'units.id = products.unit_id') // Join the units table to get unit name
+            ->where('distributor_sales_order_id', $id)
+            ->findAll();
+        // --- CHANGE END ---
+
         $distributor = $this->distributorModel->find($salesOrder['distributor_id']);
         $payments = $this->distributorPaymentModel->where('distributor_sales_order_id', $id)->findAll();
 
+        // The foreach loop below is no longer strictly necessary for product_name and unit_name
+        // as they are fetched directly in the query above. However, it's kept for other product/GST details.
         foreach ($salesOrderItems as &$item) {
+            // Re-fetching product/gstRate here is redundant for name/unit, but might be for other attributes
+            // If product and gstRate models are well-defined, you might remove these finds
+            // and rely solely on the join in the query above.
             $product = $this->productModel->find($item['product_id']);
             $gstRate = $this->gstRateModel->find($item['gst_rate_id']);
-            $item['product_name'] = $product['name'] ?? 'N/A';
+            
+            // Ensure product_name and unit_name are set, though they should be from the join
+            $item['product_name'] = $item['product_name'] ?? ($product['name'] ?? 'N/A');
+            $item['unit_name'] = $item['unit_name'] ?? ($product['unit_name'] ?? 'N/A'); // Ensure unit_name is available
+            
             $item['product_unit_price'] = $product['selling_price'] ?? 0;
             $item['gst_rate_name'] = $gstRate['name'] ?? 'N/A';
             $item['gst_rate_percentage'] = $gstRate['rate'] ?? 0;

@@ -286,7 +286,9 @@
             <tr>
                 <th width="5%">#</th>
                 <th width="30%">Product</th>
-                <th width="10%" class="text-right">Quantity</th>
+                <!-- --- CHANGE START --- -->
+                <th width="10%" class="text-right">Quantity (Unit)</th>
+                <!-- --- CHANGE END --- -->
                 <th width="15%" class="text-right">Unit Price</th>
                 <th width="10%" class="text-right">GST %</th>
                 <th width="15%" class="text-right">Amount (Excl. GST)</th>
@@ -301,7 +303,9 @@
                     <tr>
                         <td class="text-center"><?= $i++ ?></td>
                         <td><?= esc($item['product_name']) ?></td>
-                        <td class="text-right"><?= esc($item['quantity']) ?></td>
+                        <!-- --- CHANGE START --- -->
+                        <td class="text-right"><?= esc($item['quantity']) ?> <?= esc($item['unit_name'] ?? '') ?></td>
+                        <!-- --- CHANGE END --- -->
                         <td class="text-right">₹<?= number_format($item['unit_price_at_sale'], 2) ?></td>
                         <td class="text-right"><?= number_format($item['gst_rate_at_sale'], 2) ?>%</td>
                         <td class="text-right">₹<?= number_format($item['item_total_before_gst'], 2) ?></td>
@@ -402,8 +406,8 @@
                     style="max-width: 150px; height: auto; position: absolute; bottom: 80px; right: 50px;">
             <?php endif; ?>
 
-            <p style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); 
-                  border-top: 1px solid #000; width: 200px; text-align: center; margin: 0;">
+            <p style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+                     border-top: 1px solid #000; width: 200px; text-align: center; margin: 0;">
                 Authorized Signature
             </p>
         </div>

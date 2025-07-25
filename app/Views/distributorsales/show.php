@@ -1,4 +1,4 @@
-<?php $this->extend('layouts/main'); // Adjust to your actual layout file 
+<?php $this->extend('layouts/main'); // Adjust to your actual layout file
 ?>
 
 <?php $this->section('content'); ?>
@@ -77,7 +77,8 @@
                         <thead>
                             <tr>
                                 <th>Product</th>
-                                <th>Quantity</th>
+                                <!-- Changed Quantity header to include Unit -->
+                                <th>Quantity (Unit)</th>
                                 <th>Unit Price</th>
                                 <th>GST Rate (%)</th>
                                 <th>Amount Before GST</th>
@@ -89,7 +90,8 @@
                             <?php foreach ($sales_order_items as $item): ?>
                                 <tr>
                                     <td><?= esc($item['product_name']) ?></td>
-                                    <td><?= esc($item['quantity']) ?></td>
+                                     
+                                    <td><?= esc($item['quantity']) ?> <?= esc($item['unit_name']) ?></td>
                                     <td>₹<?= number_format($item['unit_price_at_sale'], 2) ?></td>
                                     <td><?= number_format($item['gst_rate_at_sale'], 2) ?>%</td>
                                     <td>₹<?= number_format($item['item_total_before_gst'], 2) ?></td>
