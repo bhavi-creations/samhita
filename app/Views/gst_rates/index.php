@@ -38,7 +38,10 @@
                         <tr>
                             <td><?= $loopIndex + 1 ?></td> <!-- S.No -->
                             <td><?= esc($gst['name']) ?></td>
-                            <td><?= esc($gst['rate'] * 100) ?>%</td>
+                            <!-- --- CHANGE START --- -->
+                            <!-- Removed multiplication by 100 as the rate is now stored as a whole number percentage -->
+                            <td><?= esc($gst['rate']) ?>%</td>
+                            <!-- --- CHANGE END --- -->
                             <td><?= esc($gst['created_at']) ?></td>
                             <td><?= esc($gst['updated_at']) ?></td>
                             <td>

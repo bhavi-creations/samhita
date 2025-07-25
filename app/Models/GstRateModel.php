@@ -12,7 +12,7 @@ class GstRateModel extends Model
     protected $returnType     = 'array'; // Or 'object'
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['name', 'rate']; // 'name' (e.g., "GST 18%"), 'rate' (e.g., 0.18)
+    protected $allowedFields = ['name', 'rate']; // 'name' (e.g., "GST 18%"), 'rate' (e.g., 18.00)
 
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';
@@ -21,10 +21,11 @@ class GstRateModel extends Model
 
     // Validation rules for adding/updating GST rates
     protected $validationRules = [
-        // 'name' => 'required|min_length[2]|max_length[50]|is_unique[gst_rates.name,id,{id}]',
         'name' => 'required|min_length[2]|max_length[50]',
-
-        'rate' => 'required|numeric|greater_than_equal_to[0]|less_than_equal_to[1]' // Rate as a decimal (e.g., 0.18 for 18%)
+        // --- CHANGE START ---
+        // Rate can now be a whole number percentage (e.g., 18 for 18%)
+        'rate' => 'required|numeric|greater_than_equal_to[0]|less_than_equal_to[100]' // Rate as a percentage (e.g., 18 for 18%)
+        // --- CHANGE END ---
     ];
     protected $validationMessages = [
         'name' => [
@@ -37,8 +38,9 @@ class GstRateModel extends Model
             'required'               => 'GST Rate Percentage is required.',
             'numeric'                => 'GST Rate must be a number.',
             'greater_than_equal_to'  => 'GST Rate cannot be negative.',
-            'less_than_equal_to'     => 'GST Rate cannot be greater than 100% (1.00).'
+            'less_than_equal_to'     => 'GST Rate cannot be greater than 100%.'
         ]
     ];
     protected $skipValidation     = false;
 }
+    

@@ -47,35 +47,38 @@ class GstRates extends BaseController
                 ],
             ],
             'rate' => [
-                'rules'  => 'required|numeric|greater_than_equal_to[0.01]|less_than_equal_to[1.00]',
+                // --- CHANGE START ---
+                // Validation rule remains the same, allowing input up to 100
+                'rules'  => 'required|numeric|greater_than_equal_to[0.01]|less_than_equal_to[100.00]',
                 'errors' => [
                     'required'              => 'Rate is required.',
                     'numeric'               => 'Rate must be a number.',
                     'greater_than_equal_to' => 'Rate must be at least 0.01.',
-                    'less_than_equal_to'    => 'Rate cannot exceed 1.00.',
+                    'less_than_equal_to'    => 'Rate cannot exceed 100%.',
                 ],
+                // --- CHANGE END ---
             ],
         ];
 
         if (! $this->validate($rules)) {
-            // Flashdata will be set here if validation fails
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
         $data = [
             'name' => $this->request->getPost('name'),
+            // --- CHANGE START ---
+            // Removed division by 100. Save the rate as entered (e.g., 18)
             'rate' => (float) $this->request->getPost('rate'),
+            // --- CHANGE END ---
         ];
 
         try {
             if ($this->gstRateModel->save($data)) {
                 return redirect()->to(base_url('gst-rates'))->with('success', 'GST Rate added successfully!');
             } else {
-                // Flashdata will be set here if save() returns false
                 return redirect()->back()->withInput()->with('error', 'Failed to add GST Rate.');
             }
         } catch (\ReflectionException $e) {
-            // Flashdata will be set here if a ReflectionException occurs
             return redirect()->back()->withInput()->with('error', 'Failed to add GST Rate: ' . $e->getMessage());
         }
     }
@@ -88,6 +91,11 @@ class GstRates extends BaseController
         if (empty($gstRate)) {
             return redirect()->to(base_url('gst-rates'))->with('error', 'GST Rate not found.');
         }
+
+        // --- CHANGE START ---
+        // Removed multiplication by 100. The rate is already stored as a percentage.
+        // $gstRate['rate'] = $gstRate['rate'] * 100; // REMOVED
+        // --- CHANGE END ---
 
         $data = [
             'gstRate'    => $gstRate,
@@ -107,48 +115,39 @@ class GstRates extends BaseController
         }
     }
 
+    public function update($id = null)
+    {
+        $gstRate = $this->gstRateModel->find($id);
 
+        if (!$gstRate) {
+            return redirect()->to(base_url('gst-rates'))->with('error', 'GST Rate not found.');
+        }
 
+        $rules = [
+            'name' => "required|min_length[2]|max_length[50]|is_unique[gst_rates.name,id,{$id}]",
+            // --- CHANGE START ---
+            // Validation rule remains the same, allowing input up to 100
+            'rate' => 'required|numeric|greater_than_equal_to[0]|less_than_equal_to[100]'
+            // --- CHANGE END ---
+        ];
 
+        if (! $this->validate($rules)) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
 
+        $data = [
+            'id'   => $id,
+            'name' => $this->request->getPost('name'),
+            // --- CHANGE START ---
+            // Removed division by 100. Save the rate as entered (e.g., 18)
+            'rate' => (float) str_replace(',', '.', $this->request->getPost('rate'))
+            // --- CHANGE END ---
+        ];
 
-
-
-
-
-
-
-   
-
-public function update($id = null)
-{
-    $gstRate = $this->gstRateModel->find($id);
-
-    if (!$gstRate) {
-        return redirect()->to(base_url('gst-rates'))->with('error', 'GST Rate not found.');
+        if ($this->gstRateModel->save($data)) {
+            return redirect()->to(base_url('gst-rates'))->with('success', 'GST Rate updated successfully!');
+        } else {
+            return redirect()->back()->withInput()->with('error', 'Failed to update GST Rate.');
+        }
     }
-
-    $rules = [
-        'name' => "required|min_length[2]|max_length[50]|is_unique[gst_rates.name,id,{$id}]",
-        'rate' => 'required|numeric|greater_than_equal_to[0]|less_than_equal_to[1]'
-    ];
-
-    if (! $this->validate($rules)) {
-        return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
-    }
-
-    $data = [
-        'id'   => $id,
-        'name' => $this->request->getPost('name'),
-        'rate' => str_replace(',', '.', $this->request->getPost('rate'))
-    ];
-
-    if ($this->gstRateModel->save($data)) {
-        return redirect()->to(base_url('gst-rates'))->with('success', 'GST Rate updated successfully!');
-    } else {
-        return redirect()->back()->withInput()->with('error', 'Failed to update GST Rate.');
-    }
-}
-
-
 }

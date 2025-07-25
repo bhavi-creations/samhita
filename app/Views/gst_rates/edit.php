@@ -34,8 +34,13 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="rate" class="form-label">Rate (as a decimal, e.g., 0.18 for 18%):</label>
-                    <input type="number" name="rate" id="rate" class="form-control <?= (session()->getFlashdata('errors.rate')) ? 'is-invalid' : '' ?>" step="0.01" min="0" max="1" value="<?= old('rate', $gstRate['rate']) ?>" required>
+                    <!-- Updated label text for clarity -->
+                    <label for="rate" class="form-label">Rate (as a percentage, e.g., 18 for 18%):</label>
+                    <!-- Changed step to 0.01 to allow for decimal percentages (e.g., 0.5%), min to 0, max to 100 -->
+                    <!-- --- CHANGE START --- -->
+                    <!-- Removed multiplication by 100 as the rate is now stored as a whole number percentage -->
+                    <input type="number" name="rate" id="rate" class="form-control <?= (session()->getFlashdata('errors.rate')) ? 'is-invalid' : '' ?>" step="0.01" min="0" max="100" value="<?= old('rate', $gstRate['rate']) ?>" required>
+                    <!-- --- CHANGE END --- -->
                     <?php if (session()->getFlashdata('errors.rate')): ?>
                         <div class="invalid-feedback">
                             <?= session()->getFlashdata('errors.rate') ?>
