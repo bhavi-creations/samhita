@@ -31,8 +31,7 @@
                                 <th>Product Name</th>
                                 <th>Description</th>
                                 <th>Unit</th>
-                                <!-- Removed 'Purchase Price' column as it's managed during stock-in -->
-                                <th>Current Stock</th>
+                           
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -44,7 +43,7 @@
                                     <td><?= esc($product['name']) ?></td>
                                     <td><?= esc($product['description'] ?? 'N/A') ?></td>
                                     <td><?= esc($product['unit_name']) ?></td>
-                                    <td><?= esc($product['current_stock']) ?></td>
+                                    
                                     <td>
                                         <a href="<?= base_url('purchased-products/edit/' . $product['id']) ?>" class="btn btn-sm btn-info me-2">Edit</a>
                                         <a href="<?= base_url('purchased-products/delete/' . $product['id']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this purchased product? This may affect linked stock-in records!');">Delete</a>

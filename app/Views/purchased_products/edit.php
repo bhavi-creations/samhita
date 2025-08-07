@@ -62,14 +62,7 @@
                     <?php endif; ?>
                 </div>
 
-                <!-- Removed 'Purchase Price' field as it's now managed during stock-in -->
-
-                <div class="mb-3">
-                    <label for="current_stock" class="form-label">Current Stock:</label>
-                    <input type="number" class="form-control" id="current_stock" name="current_stock"
-                           value="<?= old('current_stock', $purchasedProduct['current_stock'] ?? '0') ?>" readonly>
-                    <div class="form-text">Stock is updated via Stock In/Out entries, not directly editable here.</div>
-                </div>
+                
 
                 <button type="submit" class="btn btn-primary">Update Purchased Product</button>
                 <a href="<?= base_url('purchased-products') ?>" class="btn btn-secondary">Cancel</a>

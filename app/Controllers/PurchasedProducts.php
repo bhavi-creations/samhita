@@ -74,7 +74,7 @@ class PurchasedProducts extends BaseController
             'name'          => $this->request->getPost('name'),
             'description'   => $this->request->getPost('description'),
             'unit_id'       => $this->request->getPost('unit_id'),
-            'current_stock' => 0, // New purchased products start with 0 stock
+            
         ];
 
         if ($this->purchasedProductModel->save($data)) {
