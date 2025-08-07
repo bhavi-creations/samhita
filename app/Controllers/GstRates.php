@@ -38,25 +38,25 @@ class GstRates extends BaseController
     {
         $rules = [
             'name' => [
-                'rules'  => 'required|min_length[3]|max_length[50]|is_unique[gst_rates.name]',
+                // --- CHANGE START ---
+                // Removed 'is_unique[gst_rates.name]' to allow duplicate names
+                'rules'  => 'required|min_length[3]|max_length[50]',
                 'errors' => [
                     'required'   => 'GST Rate Name is required.',
                     'min_length' => 'GST Rate Name must be at least 3 characters long.',
                     'max_length' => 'GST Rate Name cannot exceed 50 characters.',
-                    'is_unique'  => 'This GST Rate Name already exists.',
+                    // Removed 'is_unique' error message
                 ],
+                // --- CHANGE END ---
             ],
             'rate' => [
-                // --- CHANGE START ---
-                // Validation rule remains the same, allowing input up to 100
-                'rules'  => 'required|numeric|greater_than_equal_to[0.01]|less_than_equal_to[100.00]',
+                'rules'  => 'required|numeric|greater_than_equal_to[0]|less_than_equal_to[100.00]',
                 'errors' => [
                     'required'              => 'Rate is required.',
                     'numeric'               => 'Rate must be a number.',
-                    'greater_than_equal_to' => 'Rate must be at least 0.01.',
-                    'less_than_equal_to'    => 'Rate cannot exceed 100%.',
+                    'greater_than_equal_to' => 'GST Rate cannot be negative.',
+                    'less_than_equal_to'    => 'GST Rate cannot be greater than 100%.',
                 ],
-                // --- CHANGE END ---
             ],
         ];
 
@@ -66,10 +66,7 @@ class GstRates extends BaseController
 
         $data = [
             'name' => $this->request->getPost('name'),
-            // --- CHANGE START ---
-            // Removed division by 100. Save the rate as entered (e.g., 18)
             'rate' => (float) $this->request->getPost('rate'),
-            // --- CHANGE END ---
         ];
 
         try {
@@ -91,11 +88,6 @@ class GstRates extends BaseController
         if (empty($gstRate)) {
             return redirect()->to(base_url('gst-rates'))->with('error', 'GST Rate not found.');
         }
-
-        // --- CHANGE START ---
-        // Removed multiplication by 100. The rate is already stored as a percentage.
-        // $gstRate['rate'] = $gstRate['rate'] * 100; // REMOVED
-        // --- CHANGE END ---
 
         $data = [
             'gstRate'    => $gstRate,
@@ -124,11 +116,19 @@ class GstRates extends BaseController
         }
 
         $rules = [
-            'name' => "required|min_length[2]|max_length[50]|is_unique[gst_rates.name,id,{$id}]",
-            // --- CHANGE START ---
-            // Validation rule remains the same, allowing input up to 100
+            'name' => [
+                // --- CHANGE START ---
+                // Removed 'is_unique[gst_rates.name,id,{$id}]' to allow duplicate names
+                'rules'  => 'required|min_length[2]|max_length[50]',
+                'errors' => [
+                    'required'   => 'GST Rate Name is required.',
+                    'min_length' => 'GST Rate Name must be at least 2 characters long.',
+                    'max_length' => 'GST Rate Name cannot exceed 50 characters.',
+                    // Removed 'is_unique' error message
+                ],
+                // --- CHANGE END ---
+            ],
             'rate' => 'required|numeric|greater_than_equal_to[0]|less_than_equal_to[100]'
-            // --- CHANGE END ---
         ];
 
         if (! $this->validate($rules)) {
@@ -138,10 +138,7 @@ class GstRates extends BaseController
         $data = [
             'id'   => $id,
             'name' => $this->request->getPost('name'),
-            // --- CHANGE START ---
-            // Removed division by 100. Save the rate as entered (e.g., 18)
             'rate' => (float) str_replace(',', '.', $this->request->getPost('rate'))
-            // --- CHANGE END ---
         ];
 
         if ($this->gstRateModel->save($data)) {

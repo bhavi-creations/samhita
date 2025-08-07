@@ -26,18 +26,22 @@
                     <table class="table table-striped table-hover table-bordered">
                         <thead>
                             <tr>
-                                <th>S.No.</th> <th>Product Name</th>
-                                <th>Current Selling Price</th>
+                                <th>S.No.</th>
+                                <th>Product Name</th>
+                                <th>Dealer's Price</th> <!-- Changed from Current Selling Price -->
+                                <th>Farmer's Price</th> <!-- NEW -->
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php $sno = 1; ?> <?php foreach ($products as $product): ?>
                                 <tr>
-                                    <td><?= $sno++ ?></td> <td><?= esc($product['name']) ?></td>
+                                    <td><?= $sno++ ?></td>
+                                    <td><?= esc($product['name']) ?></td>
                                     <td>₹<?= number_format($product['selling_price'] ?? 0, 2) ?></td>
+                                    <td>₹<?= number_format($product['farmer_price'] ?? 0, 2) ?></td> <!-- NEW -->
                                     <td>
-                                        <a href="<?= base_url('products/edit-price/' . $product['id']) ?>" class="btn btn-sm btn-info">Edit Price</a>
+                                        <a href="<?= base_url('products/edit-price/' . $product['id']) ?>" class="btn btn-sm btn-info">Edit Prices</a> <!-- Updated button text -->
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

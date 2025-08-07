@@ -11,16 +11,6 @@
             <form action="<?= base_url('gst-rates/store') ?>" method="post">
                 <?= csrf_field() ?>
 
-<?php // --- TEMPORARY DEBUGGING START --- ?>
-<p style="background-color: yellow; padding: 10px;">
-    DEBUG: Validation Errors:
-    <?php var_dump(session()->getFlashdata('errors')); ?>
-    <br>
-    DEBUG: Save Error:
-    <?php var_dump(session()->getFlashdata('error')); ?>
-</p>
-<?php // --- TEMPORARY DEBUGGING END --- ?>
-
                 <?php if (session()->getFlashdata('errors')): ?>
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         <ul class="mb-0">
@@ -43,10 +33,12 @@
                 </div>
 
                 <div class="mb-3">
-                    <!-- Updated label text for clarity -->
                     <label for="rate" class="form-label">Rate (as a percentage, e.g., 18 for 18%):</label>
                     <!-- Changed step to 0.01 to allow for decimal percentages (e.g., 0.5%), min to 0, max to 100 -->
+                    <!-- --- CHANGE START --- -->
+                    <!-- Ensured min attribute is 0 to allow 0% -->
                     <input type="number" name="rate" id="rate" class="form-control <?= (session()->getFlashdata('errors.rate')) ? 'is-invalid' : '' ?>" step="0.01" min="0" max="100" value="<?= old('rate') ?>" required>
+                    <!-- --- CHANGE END --- -->
                     <?php if (session()->getFlashdata('errors.rate')): ?>
                         <div class="invalid-feedback">
                             <?= session()->getFlashdata('errors.rate') ?>

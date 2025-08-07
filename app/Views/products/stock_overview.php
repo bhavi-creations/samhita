@@ -24,7 +24,8 @@
                                 <th>Product Name</th>
                                 <th>Unit</th>
                                 <th>Available Stock</th>
-                                <th>Selling Price</th>
+                                <th>Dealer's Price</th> <!-- Changed from Selling Price -->
+                                <th>Farmer's Price</th> <!-- NEW -->
                             </tr>
                         </thead>
                         <tbody>
@@ -35,7 +36,8 @@
                                     <td><?= esc($product['name']) ?></td>
                                     <td><?= esc($product['unit_name']) ?></td>
                                     <td><?= esc($product['available_stock']) ?></td>
-                                    <td>₹<?= number_format($product['selling_price'] ?? 0, 2) ?></td>
+                                    <td>₹<?= number_format($product['selling_price'] ?? 0, 2) ?></td> <!-- Display Dealer's Price -->
+                                    <td>₹<?= number_format($product['farmer_price'] ?? 0, 2) ?></td> <!-- Display Farmer's Price -->
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>

@@ -29,7 +29,9 @@
         <div class="card-body">
             <form action="<?= base_url('products/update-price/' . $product['id']) ?>" method="post">
                 <?= csrf_field() ?>
-                <input type="hidden" name="_method" value="POST"> <div class="mb-3 row">
+                <input type="hidden" name="_method" value="POST">
+                
+                <div class="mb-3 row">
                     <label for="product_name" class="col-sm-3 col-form-label">Product Name:</label>
                     <div class="col-sm-9">
                         <input type="text" readonly class="form-control-plaintext" id="product_name" value="<?= esc($product['name']) ?>">
@@ -37,14 +39,21 @@
                 </div>
 
                 <div class="mb-3 row">
-                    <label for="current_selling_price" class="col-sm-3 col-form-label">Current Selling Price:</label>
+                    <label for="current_selling_price" class="col-sm-3 col-form-label">Current Dealer's Price:</label> <!-- Changed label -->
                     <div class="col-sm-9">
                         <input type="text" readonly class="form-control-plaintext" id="current_selling_price" value="₹<?= number_format($product['selling_price'] ?? 0, 2) ?>">
                     </div>
                 </div>
 
                 <div class="mb-3 row">
-                    <label for="selling_price" class="col-sm-3 col-form-label">New Selling Price (per unit):</label>
+                    <label for="current_farmer_price" class="col-sm-3 col-form-label">Current Farmer's Price:</label> <!-- NEW -->
+                    <div class="col-sm-9">
+                        <input type="text" readonly class="form-control-plaintext" id="current_farmer_price" value="₹<?= number_format($product['farmer_price'] ?? 0, 2) ?>">
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="selling_price" class="col-sm-3 col-form-label">New Dealer's Price (per unit):</label> <!-- Changed label -->
                     <div class="col-sm-9">
                         <input type="number" step="0.01" class="form-control" id="selling_price" name="selling_price"
                                value="<?= old('selling_price', $product['selling_price'] ?? '') ?>" required>
@@ -56,8 +65,21 @@
                     </div>
                 </div>
 
+                <div class="mb-3 row">
+                    <label for="farmer_price" class="col-sm-3 col-form-label">New Farmer's Price (per unit):</label> <!-- NEW -->
+                    <div class="col-sm-9">
+                        <input type="number" step="0.01" class="form-control" id="farmer_price" name="farmer_price"
+                               value="<?= old('farmer_price', $product['farmer_price'] ?? '') ?>" required>
+                        <?php if (isset($validation) && $validation->hasError('farmer_price')): ?>
+                            <div class="text-danger mt-1">
+                                <?= $validation->getError('farmer_price') ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+
                 <div class="d-flex justify-content-end">
-                    <button type="submit" class="btn btn-primary">Update Price</button>
+                    <button type="submit" class="btn btn-primary">Update Prices</button> <!-- Updated button text -->
                 </div>
             </form>
         </div>

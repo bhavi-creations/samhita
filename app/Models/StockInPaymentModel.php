@@ -2,24 +2,41 @@
 
 use CodeIgniter\Model;
 
+/**
+ * This model handles all database interactions for the 'stock_in_payments' table.
+ * It has been corrected to align with the table's schema by:
+ * - Specifying all valid columns in the $allowedFields array.
+ * - Disabling the use of timestamps, as the table only has a `created_at` column.
+ */
 class StockInPaymentModel extends Model
 {
-    protected $table      = 'stock_in_payments';
-    protected $primaryKey = 'id';
-
+    // The name of the database table
+    protected $table            = 'stock_in_payments';
+    protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
-    protected $returnType     = 'array';
-    protected $useSoftDeletes = false;
+    protected $returnType       = 'array';
+    protected $useSoftDeletes   = false;
+    protected $protectFields    = true;
+    
+    // Corrected: All columns from the 'stock_in_payments' table are now included
+    // for a successful INSERT/UPDATE.
+    protected $allowedFields    = [
+        'stock_in_id', 
+        'payment_amount', 
+        'payment_date', 
+        'payment_type', 
+        'transaction_id', 
+        'notes',
+    ];
 
-    protected $allowedFields = ['stock_in_id', 'payment_amount', 'payment_date', 'notes', 'created_at'];
-
+    // Corrected: The model is now explicitly told not to use timestamps,
+    // as the table lacks an 'updated_at' column.
     protected $useTimestamps = false; 
     protected $createdField  = 'created_at';
-    protected $updatedField  = false;
 
-    protected $validationRules    = [];
-    protected $validationMessages = [];
-    protected $skipValidation     = false;
+    protected $validationRules      = [];
+    protected $validationMessages   = [];
+    protected $skipValidation       = false;
 
     // Callbacks to update parent StockIn entry
     protected $afterInsert = ['updateStockInAmounts'];
@@ -56,14 +73,14 @@ class StockInPaymentModel extends Model
         // (e.g., if stock_in_id wasn't part of the fields being updated).
         // This is safe for afterUpdate, but NOT for afterDelete (record already gone).
         else if (isset($data['id'])) { 
-             log_message('debug', 'Attempting to fetch original record for ID: ' . $data['id']);
-             $originalRecord = $this->find($data['id']); // Try to fetch the original record
-             if ($originalRecord) {
-                 $stockInIdsToRecalculate[] = $originalRecord['stock_in_id'];
-                 log_message('debug', 'Identified stock_in_id from original record: ' . $originalRecord['stock_in_id']);
-             } else {
-                 log_message('debug', 'Original record not found for ID: ' . $data['id'] . '. (Likely afterDelete where record is gone)');
-             }
+            log_message('debug', 'Attempting to fetch original record for ID: ' . $data['id']);
+            $originalRecord = $this->find($data['id']); // Try to fetch the original record
+            if ($originalRecord) {
+                $stockInIdsToRecalculate[] = $originalRecord['stock_in_id'];
+                log_message('debug', 'Identified stock_in_id from original record: ' . $originalRecord['stock_in_id']);
+            } else {
+                log_message('debug', 'Original record not found for ID: ' . $data['id'] . '. (Likely afterDelete where record is gone)');
+            }
         } else {
             log_message('debug', 'Could not determine stock_in_id from $data structure.');
         }
@@ -85,9 +102,9 @@ class StockInPaymentModel extends Model
 
                 // Calculate total paid for this stock_in_id
                 $totalPaidResult = $this->selectSum('payment_amount')
-                                         ->where('stock_in_id', $currentStockInId)
-                                         ->get()
-                                         ->getRow();
+                                            ->where('stock_in_id', $currentStockInId)
+                                            ->get()
+                                            ->getRow();
                 $totalPaid = $totalPaidResult->payment_amount ?? 0;
                 log_message('debug', 'Calculated totalPaid: ' . $totalPaid);
 
@@ -96,14 +113,12 @@ class StockInPaymentModel extends Model
                 if ($stockInEntry) {
                     $grandTotal = $stockInEntry['grand_total'];
                     $amountPending = $grandTotal - $totalPaid;
-                    // log_message('debug', 'Grand Total: ' . $grandInEntry['grand_total'] . ', New Amount Pending: ' . $amountPending);  
                     log_message('debug', 'Grand Total: ' . $stockInEntry['grand_total'] . ', New Amount Pending: ' . $amountPending);
-
 
                     // Update the parent stock_in record
                     $updateResult = $stockInModel->update($currentStockInId, [
-                        'amount_paid'    => $totalPaid,
-                        'amount_pending' => $amountPending
+                            'initial_amount_paid' => $totalPaid, // Correct field name from your table
+                            'balance_amount'      => $amountPending // Correct field name from your table
                     ]);
                     if ($updateResult) {
                         log_message('debug', 'Stock In ID ' . $currentStockInId . ' amounts updated successfully.');

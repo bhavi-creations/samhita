@@ -1,4 +1,3 @@
-
 <?= $this->extend('layouts/main'); // Adjust to your actual layout file 
 ?>
 
@@ -41,6 +40,24 @@
                 <?php endif; ?>
             </div>
 
+            <!-- NEW FIELD: Sale By (Marketing Person) -->
+            <div class="mb-3">
+                <label for="marketing_person_id" class="form-label">Sale By (Marketing Person) <span class="text-danger">*</span></label>
+                <select class="form-control" id="marketing_person_id" name="marketing_person_id" required>
+                    <option value="">Select Marketing Person</option>
+                    <?php foreach ($marketing_persons as $person): ?>
+                        <option value="<?= esc($person['id']) ?>" <?= set_select('marketing_person_id', $person['id']) ?>>
+                            <?= esc($person['name']) ?> (<?= esc($person['custom_id']) ?>)
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+                <?php if (session('validation') && session('validation')->hasError('marketing_person_id')): ?>
+                    <div class="text-danger mt-1">
+                        <?= session('validation')->getError('marketing_person_id') ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+
             <div class="mb-3">
                 <label for="invoice_date" class="form-label">Invoice Date <span class="text-danger">*</span></label>
                 <input type="date" class="form-control" id="invoice_date" name="order_date" value="<?= set_value('order_date', date('Y-m-d')) ?>" required>
@@ -71,19 +88,17 @@
         <div class="card-body">
             <div id="productRows">
                 <?php
-                // products passed from controller now include 'current_stock'
-                // Ensure 'products' data is available for JS, including current_stock
-                // The $products variable already contains 'current_stock' if the ProductsController was updated correctly.
-
-                $old_product_data = old('products') ?? [[]]; // Now expects an array of arrays
+                $old_product_data = old('products') ?? [[]];
+                if (empty($old_product_data[0])) {
+                    $old_product_data = [[]];
+                }
 
                 foreach ($old_product_data as $key => $productData):
                     $current_product_id = $productData['product_id'] ?? null;
                     $current_quantity = $productData['quantity'] ?? 1;
-                    $current_gst_rate_id = $productData['gst_rate_id'] ?? '';
                 ?>
                     <div class="row product-item mb-3 gx-2 align-items-center border-bottom pb-2">
-                        <div class="col-md-4">
+                        <div class="col-md-5">
                             <label class="form-label">Product <span class="text-danger">*</span></label>
                             <select class="form-control product-select" name="products[<?= $key ?>][product_id]" required>
                                 <option value="">Select Product</option>
@@ -91,10 +106,9 @@
                                     <option
                                         value="<?= esc($product['id']) ?>"
                                         data-price="<?= esc($product['selling_price']) ?>"
-                                        data-stock="<?= esc($product['current_stock']) ?>" <?php // NEW: Pass current_stock 
-                                                                                            ?>
+                                        data-stock="<?= esc($product['current_stock']) ?>"
                                         <?= set_select('products.' . $key . '.product_id', $product['id'], (string)$current_product_id === (string)$product['id']) ?>>
-                                        <?= esc($product['name']) ?> (₹<?= number_format($product['selling_price'], 2) ?>) - Stock: <?= esc($product['current_stock']) ?>
+                                        <?= esc($product['name']) ?> (₹<?= number_format($product['selling_price'] ?? 0, 2) ?>) - Stock: <?= esc($product['current_stock']) ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>
@@ -103,10 +117,9 @@
                                     <?= session('validation')->getError('products.' . $key . '.product_id') ?>
                                 </div>
                             <?php endif; ?>
-                            <small class="text-muted product-stock-display mt-1">Available Stock: N/A</small> <?php // NEW: Display for selected stock 
-                                                                                                                ?>
+                            <small class="text-muted product-stock-display mt-1">Available Stock: N/A</small>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <label class="form-label">Quantity <span class="text-danger">*</span></label>
                             <input type="number" class="form-control quantity-input" name="products[<?= $key ?>][quantity]" min="1" value="<?= esc($current_quantity) ?>" required>
                             <?php if (session('validation') && session('validation')->hasError('products.' . $key . '.quantity')): ?>
@@ -115,35 +128,15 @@
                                 </div>
                             <?php endif; ?>
                         </div>
-                        <div class="col-md-2">
-                            <label class="form-label">GST Rate <span class="text-danger">*</span></label>
-                            <select class="form-control gst-rate-select" name="products[<?= $key ?>][gst_rate_id]" required>
-                                <option value="">Select GST Rate</option>
-                                <?php foreach ($gst_rates as $gst): ?>
-                                    <option value="<?= esc($gst['id']) ?>" data-rate="<?= esc($gst['rate']) ?>"
-                                        <?= set_select('products.' . $key . '.gst_rate_id', $gst['id'], (string)$current_gst_rate_id === (string)$gst['id']) ?>>
-                                        <?= esc($gst['name']) ?> (<?= esc($gst['rate']) ?>%)
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                            <?php if (session('validation') && session('validation')->hasError('products.' . $key . '.gst_rate_id')): ?>
-                                <div class="text-danger mt-1">
-                                    <?= session('validation')->getError('products.' . $key . '.gst_rate_id') ?>
-                                </div>
-                            <?php endif; ?>
-                        </div>
                         <div class="col-md-3">
-                            <label class="form-label">Amount</label>
+                            <label class="form-label">Item Total (Excl. GST)</label>
                             <div class="input-group">
                                 <span class="input-group-text">₹</span>
-                                <input type="text" class="form-control item-total-display" value="0.00" readonly>
+                                <input type="text" class="form-control item-total-before-gst-display" value="0.00" readonly>
                             </div>
-                            <small class="text-muted">Incl. GST: <span class="item-total-gst-display">0.00</span></small><br>
-                            <small class="text-muted">Excl. GST: <span class="item-total-before-gst-display">0.00</span></small>
                         </div>
                         <div class="col-md-1 text-center">
-                            <?php if (count($old_product_data) > 1 || $key > 0): // Allow removal if more than one row, or if it's not the first (initial) row 
-                            ?>
+                            <?php if (count($old_product_data) > 1 || $key > 0): ?>
                                 <button type="button" class="btn btn-danger btn-sm remove-product-row">X</button>
                             <?php endif; ?>
                         </div>
@@ -154,12 +147,56 @@
                 <div class="d-flex justify-content-end mb-2">
                     <strong>Total Amount (Excl. GST):</strong> ₹<span id="overallAmountBeforeGst">0.00</span>
                 </div>
-                <div class="d-flex justify-content-end mb-2">
-                    <strong>Total GST Amount:</strong> ₹<span id="overallGstAmount">0.00</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- NEW CARD: Overall GST Details (Now with multiple GST fields) -->
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            Overall GST Details
+            <button type="button" class="btn btn-info btn-sm add-overall-gst-field">Add Another Overall GST</button>
+        </div>
+        <div class="card-body">
+            <div id="overallGstFieldsContainer">
+                <?php 
+                // Handle old input for overall GST rates
+                $old_overall_gst_rate_ids = old('overall_gst_rate_ids') ?? ['']; // Ensure at least one empty select
+                if (!is_array($old_overall_gst_rate_ids)) {
+                    $old_overall_gst_rate_ids = [$old_overall_gst_rate_ids]; // Convert single value to array
+                }
+                foreach ($old_overall_gst_rate_ids as $gst_idx => $selected_gst_id):
+                ?>
+                <div class="mb-3 overall-gst-field-group">
+                    <label for="overall_gst_rate_id_<?= $gst_idx ?>" class="form-label">Overall GST Rate #<?= $gst_idx + 1 ?> <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <select class="form-control overall-gst-rate-select" id="overall_gst_rate_id_<?= $gst_idx ?>" name="overall_gst_rate_ids[]" required>
+                            <option value="">Select Overall GST Rate</option>
+                            <?php foreach ($gst_rates as $gst): ?>
+                                <option value="<?= esc($gst['id']) ?>" data-rate="<?= esc($gst['rate']) ?>"
+                                    <?= set_select('overall_gst_rate_ids.' . $gst_idx, $gst['id'], (string)$selected_gst_id === (string)$gst['id']) ?>>
+                                    <?= esc($gst['name']) ?> (<?= esc($gst['rate']) ?>%)
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                        <?php if ($gst_idx > 0 || count($old_overall_gst_rate_ids) > 1): // Show remove button if not the first initial field or if there are multiple initially ?>
+                            <button type="button" class="btn btn-outline-danger remove-overall-gst-field">X</button>
+                        <?php endif; ?>
+                    </div>
+                    <?php if (session('validation') && session('validation')->hasError('overall_gst_rate_ids.' . $gst_idx)): ?>
+                        <div class="text-danger mt-1">
+                            <?= session('validation')->getError('overall_gst_rate_ids.' . $gst_idx) ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
-                <div class="d-flex justify-content-end mb-2">
-                    <strong>Grand Total:</strong> ₹<span id="overallGrandTotal" class="fs-5 text-primary">0.00</span>
-                </div>
+                <?php endforeach; ?>
+            </div>
+            
+            <div class="d-flex justify-content-end mb-2">
+                <strong>Total GST Amount:</strong> ₹<span id="overallGstAmount">0.00</span>
+            </div>
+            <div class="d-flex justify-content-end mb-2">
+                <strong>Grand Total (Before Discount):</strong> ₹<span id="grandTotalBeforeDiscount">0.00</span>
             </div>
         </div>
     </div>
@@ -245,14 +282,26 @@
 <?php $this->section('scripts'); ?>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // Corrected order of variable declarations to ensure elements exist when accessed
         const productRowsContainer = document.getElementById('productRows');
         const addProductRowButton = document.getElementById('addProductRow');
-        const initialPaymentAmountInput = document.getElementById('initial_payment_amount');
-        const balanceAmountDisplay = document.getElementById('balance_amount_display');
         const overallAmountBeforeGstDisplay = document.getElementById('overallAmountBeforeGst');
         const overallGstAmountDisplay = document.getElementById('overallGstAmount');
+        const grandTotalBeforeDiscountDisplay = document.getElementById('grandTotalBeforeDiscount');
+        const overallGrandTotalDisplay = document.getElementById('overallGrandTotal'); 
+        const overallGstFieldsContainer = document.getElementById('overallGstFieldsContainer');
+        const addOverallGstButton = document.querySelector('.add-overall-gst-field');
+        
+        // Payment related elements
+        const initialPaymentAmountInput = document.getElementById('initial_payment_amount');
+        const balanceAmountDisplay = document.getElementById('balance_amount_display');
         const overallDiscountInput = document.getElementById('discount');
-        const overallGrandTotalDisplay = document.getElementById('overallGrandTotal');
+        const paymentMethodSelect = document.getElementById('payment_method');
+        const transactionIdInput = document.getElementById('transaction_id');
+
+        // New variable to store the latest calculated grand total
+        let latestGrandTotal = 0; 
+
 
         // Function to get product data from PHP into JS, including 'current_stock'
         const products = <?= json_encode($products) ?>;
@@ -276,30 +325,25 @@
             if (productId) {
                 const product = getProductDetails(productId);
                 if (product) {
-                    stockDisplay.textContent = `Available Stock: ${product.current_stock}`;
+                    if (stockDisplay) stockDisplay.textContent = `Available Stock: ${product.current_stock}`;
                 } else {
-                    stockDisplay.textContent = 'Available Stock: N/A';
+                    if (stockDisplay) stockDisplay.textContent = 'Available Stock: N/A';
                 }
             } else {
-                stockDisplay.textContent = 'Available Stock: N/A';
+                if (stockDisplay) stockDisplay.textContent = 'Available Stock: N/A';
             }
         }
 
-        // Function to calculate and update the current row's individual totals
+        // Function to calculate and update the current row's individual totals (only before GST)
         function calculateRow(row) {
             const productSelect = row.querySelector('.product-select');
             const quantityInput = row.querySelector('.quantity-input');
-            const gstRateSelect = row.querySelector('.gst-rate-select');
-            const itemTotalDisplay = row.querySelector('.item-total-display');
-            const itemTotalGstDisplay = row.querySelector('.item-total-gst-display');
             const itemTotalBeforeGstDisplay = row.querySelector('.item-total-before-gst-display');
 
             const productId = productSelect.value;
             const quantity = parseFloat(quantityInput.value) || 0;
-            const gstRateId = gstRateSelect.value;
 
             let unitPrice = 0;
-            let gstPercentage = 0;
 
             if (productId) {
                 const product = getProductDetails(productId);
@@ -308,58 +352,102 @@
                 }
             }
 
-            if (gstRateId) {
-                const gst = getGstRateDetails(gstRateId);
-                if (gst) {
-                    gstPercentage = parseFloat(gst.rate);
-                }
-            }
-
             const amountBeforeGst = unitPrice * quantity;
-            const gstAmount = amountBeforeGst * (gstPercentage / 100);
-            const finalTotal = amountBeforeGst + gstAmount;
-
-            itemTotalDisplay.value = finalTotal.toFixed(2);
-            itemTotalGstDisplay.textContent = gstAmount.toFixed(2);
-            itemTotalBeforeGstDisplay.textContent = amountBeforeGst.toFixed(2);
+            if (itemTotalBeforeGstDisplay) itemTotalBeforeGstDisplay.value = amountBeforeGst.toFixed(2);
 
             return {
-                amountBeforeGst: amountBeforeGst,
-                gstAmount: gstAmount,
-                finalTotal: finalTotal
+                amountBeforeGst: amountBeforeGst
             };
         }
 
         // Function to calculate and update overall totals
         function updateOverallTotals() {
             let totalAmountBeforeGst = 0;
-            let totalGstAmount = 0;
-            let grandTotalBeforeDiscount = 0;
             const discountAmount = parseFloat(overallDiscountInput.value) || 0;
 
             document.querySelectorAll('.product-item').forEach(row => {
-                updateProductStockDisplay(row); // Update stock display for each row
+                updateProductStockDisplay(row);
                 const rowTotals = calculateRow(row);
                 totalAmountBeforeGst += rowTotals.amountBeforeGst;
-                totalGstAmount += rowTotals.gstAmount;
-                grandTotalBeforeDiscount += rowTotals.finalTotal;
             });
 
+            // Calculate overall GST based on all selected overall GST rates
+            let totalOverallGstPercentage = 0;
+            overallGstFieldsContainer.querySelectorAll('.overall-gst-rate-select').forEach(select => {
+                const selectedGstOption = select.options[select.selectedIndex];
+                totalOverallGstPercentage += parseFloat(selectedGstOption.dataset.rate) || 0;
+            });
+
+            const overallGstAmount = totalAmountBeforeGst * (totalOverallGstPercentage / 100);
+            const grandTotalBeforeDiscount = totalAmountBeforeGst + overallGstAmount;
             const finalGrandTotal = grandTotalBeforeDiscount - discountAmount;
 
-            overallAmountBeforeGstDisplay.textContent = totalAmountBeforeGst.toFixed(2);
-            overallGstAmountDisplay.textContent = totalGstAmount.toFixed(2);
-            overallGrandTotalDisplay.textContent = finalGrandTotal.toFixed(2);
+            if (overallAmountBeforeGstDisplay) overallAmountBeforeGstDisplay.textContent = totalAmountBeforeGst.toFixed(2);
+            if (overallGstAmountDisplay) overallGstAmountDisplay.textContent = overallGstAmount.toFixed(2);
+            if (grandTotalBeforeDiscountDisplay) grandTotalBeforeDiscountDisplay.textContent = grandTotalBeforeDiscount.toFixed(2);
+            if (overallGrandTotalDisplay) overallGrandTotalDisplay.textContent = finalGrandTotal.toFixed(2);
 
-            updateBalanceAmount();
+            // Store the calculated finalGrandTotal
+            latestGrandTotal = finalGrandTotal; 
+            // Pass the stored value to updateBalanceAmount
+            updateBalanceAmount(latestGrandTotal); 
         }
 
-        // Function to update balance amount
-        function updateBalanceAmount() {
-            const grandTotal = parseFloat(overallGrandTotalDisplay.textContent) || 0;
+        // Function to update balance amount - now accepts grandTotal as an argument
+        function updateBalanceAmount(grandTotal) {
             const amountPaid = parseFloat(initialPaymentAmountInput.value) || 0;
             const balance = grandTotal - amountPaid;
-            balanceAmountDisplay.value = balance.toFixed(2);
+            
+            if (balanceAmountDisplay) balanceAmountDisplay.value = balance.toFixed(2);
+        }
+
+        // Function to toggle required attribute for payment method based on amount paid
+        function togglePaymentFieldsRequired() {
+            const amountPaid = parseFloat(initialPaymentAmountInput.value) || 0;
+
+            if (paymentMethodSelect) { // Ensure paymentMethodSelect exists
+                if (amountPaid > 0) {
+                    paymentMethodSelect.setAttribute('required', 'required');
+                } else {
+                    paymentMethodSelect.removeAttribute('required');
+                    paymentMethodSelect.value = ''; // Clear selection if not required
+                }
+            }
+        }
+
+
+        // Function to add a new overall GST field
+        function addOverallGstField() {
+            const newGstFieldGroup = document.createElement('div');
+            newGstFieldGroup.className = 'mb-3 overall-gst-field-group';
+            const newGstIndex = overallGstFieldsContainer.querySelectorAll('.overall-gst-field-group').length;
+            newGstFieldGroup.innerHTML = `
+                <label for="overall_gst_rate_id_${newGstIndex}" class="form-label">Overall GST Rate #${newGstIndex + 1} <span class="text-danger">*</span></label>
+                <div class="input-group">
+                    <select class="form-control overall-gst-rate-select" id="overall_gst_rate_id_${newGstIndex}" name="overall_gst_rate_ids[]" required>
+                        <option value="">Select Overall GST Rate</option>
+                        <?php foreach ($gst_rates as $gst): ?>
+                            <option value="<?= esc($gst['id']) ?>" data-rate="<?= esc($gst['rate']) ?>">
+                                <?= esc($gst['name']) ?> (<?= esc($gst['rate']) ?>%)
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                    <button type="button" class="btn btn-outline-danger remove-overall-gst-field">X</button>
+                </div>
+            `;
+            overallGstFieldsContainer.appendChild(newGstFieldGroup);
+            
+            // Attach listeners to the new elements
+            newGstFieldGroup.querySelector('.overall-gst-rate-select').addEventListener('change', updateOverallTotals);
+            newGstFieldGroup.querySelector('.remove-overall-gst-field').addEventListener('click', function() {
+                if (overallGstFieldsContainer.querySelectorAll('.overall-gst-field-group').length > 1) {
+                    this.closest('.overall-gst-field-group').remove(); // Use 'this' to refer to the clicked button
+                    updateOverallTotals();
+                } else {
+                    alert('You must have at least one overall GST rate selected.');
+                }
+            });
+            updateOverallTotals(); // Recalculate totals after adding new GST field
         }
 
         // Function to add a new product row
@@ -368,51 +456,36 @@
             const newRow = document.createElement('div');
             newRow.className = 'row product-item mb-3 gx-2 align-items-center border-bottom pb-2';
             newRow.innerHTML = `
-            <div class="col-md-4">
-                <label class="form-label">Product <span class="text-danger">*</span></label>
-                <select class="form-control product-select" name="products[${newRowIndex}][product_id]" required>
-                    <option value="">Select Product</option>
-                    <?php foreach ($products as $product): ?>
-                        <option 
-                            value="<?= esc($product['id']) ?>" 
-                            data-price="<?= esc($product['selling_price']) ?>"
-                            data-stock="<?= esc($product['current_stock']) ?>"> <?php // NEW: Pass current_stock 
-                                                                                ?>
-                            <?= esc($product['name']) ?> (₹<?= number_format($product['selling_price'], 2) ?>) - Stock: <?= esc($product['current_stock']) ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-                <small class="text-muted product-stock-display mt-1">Available Stock: N/A</small> <?php // NEW: Display for selected stock 
-                                                                                                    ?>
-            </div>
-            <div class="col-md-2">
-                <label class="form-label">Quantity <span class="text-danger">*</span></label>
-                <input type="number" class="form-control quantity-input" name="products[${newRowIndex}][quantity]" min="1" value="1" required>
-            </div>
-            <div class="col-md-2">
-                <label class="form-label">GST Rate <span class="text-danger">*</span></label>
-                <select class="form-control gst-rate-select" name="products[${newRowIndex}][gst_rate_id]" required>
-                    <option value="">Select GST Rate</option>
-                    <?php foreach ($gst_rates as $gst): ?>
-                        <option value="<?= esc($gst['id']) ?>" data-rate="<?= esc($gst['rate']) ?>">
-                            <?= esc($gst['name']) ?> (<?= esc($gst['rate']) ?>%)
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-            <div class="col-md-3">
-                <label class="form-label">Amount</label>
-                <div class="input-group">
-                    <span class="input-group-text">₹</span>
-                    <input type="text" class="form-control item-total-display" value="0.00" readonly>
+                <div class="col-md-5">
+                    <label class="form-label">Product <span class="text-danger">*</span></label>
+                    <select class="form-control product-select" name="products[${newRowIndex}][product_id]" required>
+                        <option value="">Select Product</option>
+                        <?php foreach ($products as $product): ?>
+                            <option 
+                                value="<?= esc($product['id']) ?>" 
+                                data-price="<?= esc($product['selling_price']) ?>"
+                                data-stock="<?= esc($product['current_stock']) ?>">
+                                <?= esc($product['name']) ?> (₹<?= number_format($product['selling_price'] ?? 0, 2) ?>) - Stock: <?= esc($product['current_stock']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                    <small class="text-muted product-stock-display mt-1">Available Stock: N/A</small>
                 </div>
-                <small class="text-muted">Incl. GST: <span class="item-total-gst-display">0.00</span></small><br>
-                <small class="text-muted">Excl. GST: <span class="item-total-before-gst-display">0.00</span></small>
-            </div>
-            <div class="col-md-1 text-center">
-                <button type="button" class="btn btn-danger btn-sm remove-product-row">X</button>
-            </div>
-        `;
+                <div class="col-md-3">
+                    <label class="form-label">Quantity <span class="text-danger">*</span></label>
+                    <input type="number" class="form-control quantity-input" name="products[${newRowIndex}][quantity]" min="1" value="1" required>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Item Total (Excl. GST)</label>
+                    <div class="input-group">
+                        <span class="input-group-text">₹</span>
+                        <input type="text" class="form-control item-total-before-gst-display" value="0.00" readonly>
+                    </div>
+                </div>
+                <div class="col-md-1 text-center">
+                    <button type="button" class="btn btn-danger btn-sm remove-product-row">X</button>
+                </div>
+            `;
             productRowsContainer.appendChild(newRow);
             attachEventListenersToRow(newRow);
             updateOverallTotals(); // Recalculate totals and stock display after adding row
@@ -422,21 +495,18 @@
         function attachEventListenersToRow(row) {
             const productSelect = row.querySelector('.product-select');
             const quantityInput = row.querySelector('.quantity-input');
-            const gstRateSelect = row.querySelector('.gst-rate-select');
-            const removeButton = row.querySelector('.remove-product-row');
+            const removeProductButton = row.querySelector('.remove-product-row');
 
             if (productSelect) {
                 productSelect.addEventListener('change', updateOverallTotals);
-                productSelect.addEventListener('change', () => updateProductStockDisplay(row)); // NEW: Update stock display on product change
+                productSelect.addEventListener('change', () => updateProductStockDisplay(row));
             }
             if (quantityInput) {
                 quantityInput.addEventListener('input', updateOverallTotals);
             }
-            if (gstRateSelect) {
-                gstRateSelect.addEventListener('change', updateOverallTotals);
-            }
-            if (removeButton) {
-                removeButton.addEventListener('click', function() {
+            
+            if (removeProductButton) {
+                removeProductButton.addEventListener('click', function() {
                     if (productRowsContainer.children.length > 1) {
                         row.remove();
                         updateOverallTotals();
@@ -447,22 +517,46 @@
             }
             // Initial stock display for this row
             updateProductStockDisplay(row);
+            calculateRow(row); // Also calculate initial row totals
         }
 
         // Event listener for adding a product row
         addProductRowButton.addEventListener('click', addProductRow);
 
         // Initial payment amount input listener
-        initialPaymentAmountInput.addEventListener('input', updateBalanceAmount);
+        initialPaymentAmountInput.addEventListener('input', function() {
+            // Now, we use the globally stored latestGrandTotal
+            updateBalanceAmount(latestGrandTotal);
+            togglePaymentFieldsRequired(); // Call to toggle required attributes
+        });
 
         // Discount input listener
         overallDiscountInput.addEventListener('input', updateOverallTotals);
 
-        // Attach listeners to existing rows on initial load (for old inputs on validation error)
+        // Listener for adding overall GST fields
+        addOverallGstButton.addEventListener('click', addOverallGstField);
+
+        // Attach listeners to existing overall GST selects and remove buttons on initial load (for old inputs)
+        overallGstFieldsContainer.querySelectorAll('.overall-gst-rate-select').forEach(select => {
+            select.addEventListener('change', updateOverallTotals);
+        });
+        overallGstFieldsContainer.querySelectorAll('.remove-overall-gst-field').forEach(button => {
+            button.addEventListener('click', function() {
+                if (overallGstFieldsContainer.querySelectorAll('.overall-gst-field-group').length > 1) {
+                    this.closest('.overall-gst-field-group').remove(); // Use 'this' to refer to the clicked button
+                    updateOverallTotals();
+                } else {
+                    alert('You must have at least one overall GST rate selected.');
+                }
+            });
+        });
+
+        // Attach listeners to existing product rows on initial load (for old inputs on validation error)
         document.querySelectorAll('.product-item').forEach(attachEventListenersToRow);
 
-        // Initial calculation when the page loads (useful if old inputs are present)
+        // Initial calculation and required toggle when the page loads (useful if old inputs are present)
         updateOverallTotals();
+        togglePaymentFieldsRequired(); // Initial call to set required attributes
     });
 </script>
 <?php $this->endSection(); ?>
