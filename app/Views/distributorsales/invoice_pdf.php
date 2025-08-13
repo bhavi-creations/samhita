@@ -284,16 +284,16 @@
     <table class="item-table">
         <thead>
             <tr>
-                <th width="5%">#</th>
+                <th width="5%">S.no</th>
                 <th width="30%">Product</th>
                 <!-- --- CHANGE START --- -->
                 <th width="10%" class="text-right">Quantity (Unit)</th>
                 <!-- --- CHANGE END --- -->
                 <th width="15%" class="text-right">Unit Price</th>
-                <th width="10%" class="text-right">GST %</th>
+                
                 <th width="15%" class="text-right">Amount (Excl. GST)</th>
-                <th width="15%" class="text-right">GST Amount</th>
-                <th width="15%" class="text-right">Total (Incl. GST)</th>
+                 
+               
             </tr>
         </thead>
         <tbody>
@@ -307,10 +307,9 @@
                         <td class="text-right"><?= esc($item['quantity']) ?> <?= esc($item['unit_name'] ?? '') ?></td>
                         <!-- --- CHANGE END --- -->
                         <td class="text-right">₹<?= number_format($item['unit_price_at_sale'], 2) ?></td>
-                        <td class="text-right"><?= number_format($item['gst_rate_at_sale'], 2) ?>%</td>
-                        <td class="text-right">₹<?= number_format($item['item_total_before_gst'], 2) ?></td>
-                        <td class="text-right">₹<?= number_format($item['item_gst_amount'], 2) ?></td>
-                        <td class="text-right">₹<?= number_format($item['item_final_total'], 2) ?></td>
+                    
+                        <td class="text-right">₹<?= number_format($item['item_total'], 2) ?></td>
+                         
                     </tr>
                 <?php endforeach; ?>
             <?php else: ?>
@@ -321,36 +320,67 @@
         </tbody>
     </table>
 
-    <table class="totals-table">
-        <tr>
-            <td class="label">Subtotal (Excl. GST):</td>
-            <td class="amount">₹<?= number_format($sales_order['total_amount_before_gst'], 2) ?></td>
-        </tr>
-        <tr>
-            <td class="label">Total GST:</td>
-            <td class="amount">₹<?= number_format($sales_order['total_gst_amount'], 2) ?></td>
-        </tr>
-        <tr>
-            <td class="label">Gross Total:</td>
-            <td class="amount">₹<?= number_format($sales_order['total_amount_before_gst'] + $sales_order['total_gst_amount'], 2) ?></td>
-        </tr>
-        <tr>
-            <td class="label">Discount:</td>
-            <td class="amount">₹<?= number_format($sales_order['discount_amount'], 2) ?></td>
-        </tr>
-        <tr class="final-total">
-            <td class="label">Grand Total:</td>
-            <td class="amount"><strong>₹<?= number_format($sales_order['final_total_amount'], 2) ?></strong></td>
-        </tr>
-        <tr>
-            <td class="label">Amount Paid:</td>
-            <td class="amount">₹<?= number_format($sales_order['amount_paid'], 2) ?></td>
-        </tr>
-        <tr>
-            <td class="label">Amount Due:</td>
-            <td class="amount"><strong>₹<?= number_format($sales_order['due_amount'], 2) ?></strong></td>
-        </tr>
-    </table>
+ 
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                 <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>GST Name</th>
+                                <th>Rate (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($gst_rates_details as $gstRate): ?>
+                                <tr>
+                                    <td><?= esc($gstRate['name']) ?></td>
+                                    <td><?= esc($gstRate['rate']) ?>%</td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+            </div>
+            <div class="col-6">
+                <table class="totals-table">
+                    <tr>
+                        <td class="label">Subtotal:</td>
+                        <td class="amount">₹<?= number_format($sales_order['sub_total'], 2) ?></td>
+                    </tr>
+                    <tr>
+                        <td class="label">Discount:</td>
+                        <td class="amount">₹<?= number_format($sales_order['discount_amount'], 2) ?></td>
+                    </tr>
+                    <tr>
+                        <td class="label">Total Amount (Before GST):</td>
+                        <td class="amount">₹<?= number_format($sales_order['total_amount_before_gst'], 2) ?></td>
+                    </tr>
+                    <tr>
+                        <td class="label">Total GST Amount:</td>
+                        <td class="amount">₹<?= number_format($sales_order['total_gst_amount'], 2) ?></td>
+                    </tr>
+                    
+                
+                    <tr class="final-total">
+                        <td class="label">Grand Total:</td>
+                        <td class="amount"><strong>₹<?= number_format($sales_order['final_total_amount'], 2) ?></strong></td>
+                    </tr>
+                    <tr>
+                        <td class="label">Amount Paid:</td>
+                        <td class="amount">₹<?= number_format($sales_order['amount_paid'], 2) ?></td>
+                    </tr>
+                    <tr>
+                        <td class="label">Amount Due:</td>
+                        <td class="amount"><strong>₹<?= number_format($sales_order['due_amount'], 2) ?></strong></td>
+                    </tr>
+                </table>
+            </div>
+
+            
+        </div>
+    </div>
+
+    
 
     <div class="amount-words">
         Amount in words: <?= convertNumberToWords($sales_order['final_total_amount']) ?> Rupees Only.
@@ -407,7 +437,7 @@
             <?php endif; ?>
 
             <p style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-                     border-top: 1px solid #000; width: 200px; text-align: center; margin: 0;">
+                             border-top: 1px solid #000; width: 200px; text-align: center; margin: 0;">
                 Authorized Signature
             </p>
         </div>

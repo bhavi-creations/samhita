@@ -43,7 +43,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="<?= base_url('distributor-sales/new') ?>" class="nav-link <?= uri_string() == 'distributor-sales/new' ? 'active' : '' ?>">
+                            <a href="<?= base_url('distributor-sales/create') ?>" class="nav-link <?= uri_string() == 'distributor-sales/create' ? 'active' : '' ?>">
                                 <i class="nav-icon bi bi-truck-flatbed"></i>
                                 <p>Create New Order</p>
                             </a>
@@ -121,19 +121,19 @@
                                 <p>Purchased Products</p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a class="nav-link <?= url_is('selling-products/manage-prices') ? 'active' : '' ?>" href="<?= base_url('selling-products/manage-prices') ?>">
                                 <i class="nav-icon fa-solid fa-indian-rupee-sign"></i>
                                 <p> Manage Prices </p>
                             </a>
-                        </li>
+                        </li> -->
                     </ul>
                 </li>
 
                 <?php
                 // --- CHANGE START ---
-                // Determine if any page under 'selling-products/stock-overview', 'stock-in', 'stock-out', or 'stock-consumption' is active
-                $isStockManagementActive = url_is('selling-products/stock-overview*') || url_is('stock-in*') || url_is('stock-out*') || url_is('stock-consumption*');
+                // Determine if any page under 'selling-products/stock-overview', 'stock-in', 'stock-consumption', or the new 'distributor-sales/sold-stock-overview' is active
+                $isStockManagementActive = url_is('selling-products/stock-overview*') || url_is('stock-in*') || url_is('stock-consumption*') || url_is('distributor-sales/sold-stock-overview*');
                 // --- CHANGE END ---
                 ?>
                 <li class="nav-item <?= $isStockManagementActive ? 'menu-open' : '' ?>">
@@ -145,16 +145,12 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
+                       
+                        <!-- New Sold Stock Overview Link -->
                         <li class="nav-item">
-                            <a class="nav-link <?= url_is('selling-products/stock-overview') ? 'active' : '' ?>" href="<?= base_url('selling-products/stock-overview') ?>">
-                                <i class="nav-icon fas fa-boxes"></i>
-                                <p>Selling Stock Overview</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link <?= url_is('stock-out*') ? 'active' : '' ?>" href="<?= base_url('stock-out') ?>">
-                                <i class="nav-icon fas fa-truck-moving"></i>
-                                <p> Stock Out </p>
+                            <a class="nav-link <?= url_is('distributor-sales/sold-stock-overview') ? 'active' : '' ?>" href="<?= base_url('distributor-sales/sold-stock-overview') ?>">
+                                <i class="nav-icon fas fa-chart-line"></i>
+                                <p>Sold Stock Overview</p>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -163,7 +159,6 @@
                                 <p>Stock In</p>
                             </a>
                         </li>
-                        
                         <li class="nav-item">
                             <a class="nav-link <?= url_is('stock-consumption*') ? 'active' : '' ?>" href="<?= base_url('stock-consumption') ?>">
                                 <i class="nav-icon fas fa-list-alt"></i>
@@ -173,11 +168,13 @@
                     </ul>
                 </li>
 
+
                 <?php
-                $isMarketingSalesActive = url_is('marketing-persons*') || url_is('marketing-distribution*') || url_is('sales*') || url_is('reports/person-stock*');
+                // We now check if the current URL starts with 'marketing-persons' OR is exactly 'marketing-sales'
+                $isMarketingAndSalesActive = url_is('marketing-persons*') || url_is('marketing-sales');
                 ?>
-                <li class="nav-item <?= $isMarketingSalesActive ? 'menu-open' : '' ?>">
-                    <a href="#" class="nav-link <?= $isMarketingSalesActive ? 'active' : '' ?>">
+                <li class="nav-item <?= $isMarketingAndSalesActive ? 'menu-open' : '' ?>">
+                    <a href="#" class="nav-link <?= $isMarketingAndSalesActive ? 'active' : '' ?>">
                         <i class="nav-icon fas fa-users"></i>
                         <p>
                             Marketing & Sales
@@ -188,41 +185,24 @@
                         <li class="nav-header">Marketing</li>
 
                         <li class="nav-item">
-                            <a href="<?= base_url('marketing-persons') ?>" class="nav-link <?= uri_string() == 'marketing-persons' ? 'active' : '' ?>">
-                                <i class="nav-icon fas fa-users"></i>
+                            <a href="<?= base_url('marketing-persons') ?>" class="nav-link <?= uri_string() == 'marketing-persons' || uri_string() == 'marketing-persons/create' || uri_string() == 'marketing-persons/edit' ? 'active' : '' ?>">
+                                <i class="nav-icon fas fa-user-friends"></i>
                                 <p>Marketing Persons</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="<?= base_url('marketing-distribution') ?>" class="nav-link <?= uri_string() == 'marketing-distribution' ? 'active' : '' ?>">
-                                <i class="nav-icon fas fa-share-square"></i>
-                                <p>Distribute Products</p>
-                            </a>
-                        </li>
 
-                        <li class="nav-header">SALES</li>
+                        <!-- --- NEW MARKETING SALES LINK START --- -->
                         <li class="nav-item">
-                            <a href="<?= base_url('sales/create') ?>" class="nav-link <?= uri_string() == 'sales/create' ? 'active' : '' ?>">
-                                <i class="nav-icon fas fa-plus-circle"></i>
-                                <p>Add Sale</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?= base_url('sales') ?>" class="nav-link <?= uri_string() == 'sales' ? 'active' : '' ?>">
-                                <i class="nav-icon fas fa-file-invoice-dollar"></i>
-                                <p>Sales List</p>
-                            </a>
-                        </li>
-
-                        <li class="nav-header">REPORTS</li>
-                        <li class="nav-item">
-                            <a href="<?= base_url('reports/person-stock') ?>" class="nav-link <?= uri_string() == 'reports/person-stock' ? 'active' : '' ?>">
+                            <a href="<?= base_url('marketing-sales') ?>" class="nav-link <?= uri_string() == 'marketing-sales' ? 'active' : '' ?>">
                                 <i class="nav-icon fas fa-chart-bar"></i>
-                                <p>Person Stock Report</p>
+                                <p>Marketing Sales Report</p>
                             </a>
                         </li>
+                        <!-- --- NEW MARKETING SALES LINK END --- -->
+
                     </ul>
                 </li>
+
 
                 <li class="nav-item">
                     <a href="<?= base_url('company-settings') ?>" class="nav-link <?= uri_string() == 'company-settings' ? 'active' : '' ?>">

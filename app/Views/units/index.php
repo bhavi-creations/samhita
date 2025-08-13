@@ -1,7 +1,6 @@
 <?= $this->extend('layouts/main') ?>
 <?= $this->section('content') ?>
  
-
 <h2>Units List</h2>
 
 <?php if(session()->getFlashdata('success')): ?>
@@ -13,15 +12,20 @@
 <table class="table table-bordered">
     <thead>
         <tr>
-            <th>ID</th>
+            <!-- Replaced 'ID' with 'S.No' -->
+            <th>S.No</th>
             <th>Unit Name</th>
             <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-        <?php foreach($units as $unit): ?>
+        <?php 
+        // Initialize a counter for the serial number
+        $i = 1;
+        foreach($units as $unit): ?>
         <tr>
-            <td><?= esc($unit['id']) ?></td>
+            <!-- Display and increment the serial number for each row -->
+            <td><?= $i++ ?></td>
             <td><?= esc($unit['name']) ?></td>
             <td>
                 <a href="<?= base_url('units/edit/'.$unit['id']) ?>" class="btn btn-warning btn-sm">Edit</a>

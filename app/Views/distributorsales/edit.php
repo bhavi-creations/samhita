@@ -1,437 +1,319 @@
-<?php $this->extend('layouts/main'); // Adjust to your actual layout file 
-?>
+<?php $this->extend('layouts/main'); ?>
 
 <?php $this->section('content'); ?>
 
 <div class="container mt-4">
-    <h2><?= esc($title) ?></h2>
+    <h2>Edit Sales Order: <?= esc($sales_order['invoice_number']) ?></h2>
 
     <?= session()->getFlashdata('error') ? '<div class="alert alert-danger">' . session()->getFlashdata('error') . '</div>' : '' ?>
+    <?= service('validation')->listErrors() ? '<div class="alert alert-danger">' . service('validation')->listErrors() . '</div>' : '' ?>
 
-    <?php if (session('validation')): ?>
-        <div class="alert alert-danger">
-            <?= session('validation')->listErrors(); ?>
-        </div>
-    <?php endif; ?>
+    <form action="<?= base_url('distributor-sales/update/' . $sales_order['id']) ?>" method="post">
+        <?= csrf_field() ?>
+        <input type="hidden" name="_method" value="PUT"> <!-- Method spoofing for PUT request -->
 
-    <?= form_open(base_url('distributor-sales/update/' . $sales_order['id'])) ?>
-    <?= csrf_field() ?>
-    <input type="hidden" name="_method" value="PUT">
-
-    <div class="card mb-4">
-        <div class="card-header">
-            Sales Order Details
-        </div>
-        <div class="card-body">
-            <div class="mb-3">
-                <label for="distributor_id" class="form-label">Distributor <span class="text-danger">*</span></label>
-                <select class="form-control" id="distributor_id" name="distributor_id" required>
-                    <option value="">Select Distributor</option>
-                    <?php foreach ($distributors as $distributor): ?>
-                        <option value="<?= esc($distributor['id']) ?>"
-                            <?= set_select('distributor_id', $distributor['id'], $distributor['id'] == ($sales_order['distributor_id'] ?? null)) ?>>
-                            <?= esc($distributor['agency_name']) ?> (<?= esc($distributor['owner_name']) ?>)
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-                <?php if (session('validation') && session('validation')->hasError('distributor_id')): ?>
-                    <div class="text-danger mt-1">
-                        <?= session('validation')->getError('distributor_id') ?>
-                    </div>
-                <?php endif; ?>
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4>Invoice Information</h4>
             </div>
-
-            <div class="mb-3">
-                <label for="invoice_number" class="form-label">Invoice Number</label>
-                <input type="text" name="invoice_number" id="invoice_number" class="form-control"
-                    value="<?= esc($sales_order['invoice_number'] ?? old('invoice_number')) ?>" readonly>
-                <?php if (session('validation') && session('validation')->hasError('invoice_number')): ?>
-                    <div class="text-danger mt-1">
-                        <?= session('validation')->getError('invoice_number') ?>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="invoice_number" class="form-label">Invoice Number</label>
+                            <input type="text" class="form-control" id="invoice_number" name="invoice_number" value="<?= old('invoice_number', esc($sales_order['invoice_number'])) ?>" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="invoice_date" class="form-label">Invoice Date</label>
+                            <input type="date" class="form-control" id="invoice_date" name="invoice_date" value="<?= old('invoice_date', esc($sales_order['invoice_date'])) ?>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="status" class="form-label">Status</label>
+                            <select class="form-control" id="status" name="status">
+                                <?php $statuses = ['Pending', 'Partially Paid', 'Paid', 'Cancelled']; ?>
+                                <?php foreach ($statuses as $status): ?>
+                                    <option value="<?= esc($status) ?>" <?= (old('status', $sales_order['status']) == $status) ? 'selected' : '' ?>><?= esc($status) ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
                     </div>
-                <?php endif; ?>
-            </div>
-
-            <div class="mb-3">
-                <label for="order_date" class="form-label">Invoice Date <span class="text-danger">*</span></label>
-                <input type="date" class="form-control" id="order_date" name="order_date"
-                    value="<?= set_value('order_date', $sales_order['invoice_date'] ?? date('Y-m-d')) ?>" required>
-                <?php if (session('validation') && session('validation')->hasError('order_date')): ?>
-                    <div class="text-danger mt-1">
-                        <?= session('validation')->getError('order_date') ?>
-                    </div>
-                <?php endif; ?>
-            </div>
-
-            <div class="mb-3">
-                <label for="notes" class="form-label">Notes</label>
-                <textarea class="form-control" id="notes" name="notes" rows="3"><?= set_value('notes', $sales_order['notes'] ?? '') ?></textarea>
-                <?php if (session('validation') && session('validation')->hasError('notes')): ?>
-                    <div class="text-danger mt-1">
-                        <?= session('validation')->getError('notes') ?>
-                    </div>
-                <?php endif; ?>
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="card mb-4">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            Products
-            <button type="button" class="btn btn-success btn-sm" id="addProductRow">Add Product</button>
-        </div>
-        <div class="card-body">
-            <div id="productRows">
-                <?php
-                // Use old input for product rows if validation failed, otherwise use existing sales order items
-                $old_product_data = old('products') ?? null;
-                $display_product_data = [];
-
-                if (!empty($old_product_data)) {
-                    $display_product_data = $old_product_data;
-                } elseif (!empty($sales_order_items)) {
-                    // Transform existing items into the 'products' array structure
-                    foreach ($sales_order_items as $item) {
-                        $display_product_data[] = [
-                            'product_id'    => $item['product_id'],
-                            'quantity'      => $item['quantity'],
-                            'gst_rate_id'   => $item['gst_rate_id'], // Assuming gst_rate_id is stored in sales_order_items
-                        ];
-                    }
-                } else {
-                    // Default to one empty row if no items exist (shouldn't happen for existing orders)
-                    $display_product_data = [[]];
-                }
-
-                foreach ($display_product_data as $key => $productData):
-                    // Ensure product_id, quantity, and gst_rate_id exist for the current key
-                    $current_product_id = $productData['product_id'] ?? null;
-                    $current_quantity = $productData['quantity'] ?? 1;
-                    $current_gst_rate_id = $productData['gst_rate_id'] ?? null;
-                ?>
-                    <div class="row product-item mb-3 gx-2 align-items-center border-bottom pb-2">
-                        <div class="col-md-4">
-                            <label class="form-label">Product <span class="text-danger">*</span></label>
-                            <select class="form-control product-select" name="products[<?= $key ?>][product_id]" required>
-                                <option value="">Select Product</option>
-                                <?php foreach ($products as $product): ?>
-                                    <option value="<?= esc($product['id']) ?>" data-price="<?= esc($product['selling_price']) ?>"
-                                        <?= set_select('products.' . $key . '.product_id', $product['id'], (string)$current_product_id === (string)$product['id']) ?>>
-                                        <?= esc($product['name']) ?> (₹<?= number_format($product['selling_price'], 2) ?>)
+        
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4>Distributor and Marketing Information</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="distributor_id" class="form-label">Distributor</label>
+                            <select class="form-control" id="distributor_id" name="distributor_id">
+                                <option value="">Select a Distributor</option>
+                                <?php foreach ($distributors as $distributor_option): ?>
+                                    <option value="<?= esc($distributor_option['id']) ?>" <?= (old('distributor_id', $sales_order['distributor_id']) == $distributor_option['id']) ? 'selected' : '' ?>>
+                                        <?= esc($distributor_option['agency_name']) ?> (<?= esc($distributor_option['owner_name']) ?>)
                                     </option>
                                 <?php endforeach; ?>
                             </select>
-                            <?php if (session('validation') && session('validation')->hasError('products.' . $key . '.product_id')): ?>
-                                <div class="text-danger mt-1">
-                                    <?= session('validation')->getError('products.' . $key . '.product_id') ?>
-                                </div>
-                            <?php endif; ?>
                         </div>
-                        <div class="col-md-2">
-                            <label class="form-label">Quantity <span class="text-danger">*</span></label>
-                            <input type="number" class="form-control quantity-input" name="products[<?= $key ?>][quantity]" min="1"
-                                value="<?= set_value('products.' . $key . '.quantity', $current_quantity) ?>" required>
-                            <?php if (session('validation') && session('validation')->hasError('products.' . $key . '.quantity')): ?>
-                                <div class="text-danger mt-1">
-                                    <?= session('validation')->getError('products.' . $key . '.quantity') ?>
-                                </div>
-                            <?php endif; ?>
-                        </div>
-                        <div class="col-md-2">
-                            <label class="form-label">GST Rate <span class="text-danger">*</span></label>
-                            <select class="form-control gst-rate-select" name="products[<?= $key ?>][gst_rate_id]" required>
-                                <option value="">Select GST Rate</option>
-                                <?php foreach ($gst_rates as $gst): ?>
-                                    <option value="<?= esc($gst['id']) ?>" data-rate="<?= esc($gst['rate']) ?>"
-                                        <?= set_select('products.' . $key . '.gst_rate_id', $gst['id'], (string)$current_gst_rate_id === (string)$gst['id']) ?>>
-                                        <?= esc($gst['name']) ?> (<?= esc($gst['rate']) ?>%)
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="marketing_person_id" class="form-label">Marketing Person</label>
+                            <select class="form-control" id="marketing_person_id" name="marketing_person_id">
+                                <option value="">Select a Marketing Person</option>
+                                <?php foreach ($marketing_persons as $mp_option): ?>
+                                    <option value="<?= esc($mp_option['id']) ?>" <?= (old('marketing_person_id', $sales_order['marketing_person_id']) == $mp_option['id']) ? 'selected' : '' ?>>
+                                        <?= esc($mp_option['name']) ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>
-                            <?php if (session('validation') && session('validation')->hasError('products.' . $key . '.gst_rate_id')): ?>
-                                <div class="text-danger mt-1">
-                                    <?= session('validation')->getError('products.' . $key . '.gst_rate_id') ?>
-                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h4>Invoice Items</h4>
+                <button type="button" class="btn btn-sm btn-success" id="add-item-btn">Add Item</button>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered" id="items-table">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Unit Price</th>
+                                <th>Total</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if (!empty($sales_order_items)): ?>
+                                <?php foreach ($sales_order_items as $index => $item): ?>
+                                    <tr>
+                                        <td>
+                                            <select class="form-control product-select" name="items[<?= $index ?>][product_id]">
+                                                <option value="">Select a Product</option>
+                                                <?php foreach ($products as $product_option): ?>
+                                                    <option value="<?= esc($product_option['id']) ?>" data-gst-rate-id="<?= esc($product_option['gst_rate_id']) ?>" data-unit-price="<?= esc($product_option['unit_price'] ?? 0) ?>" <?= (old('items.'.$index.'.product_id', $item['product_id']) == $product_option['id']) ? 'selected' : '' ?>>
+                                                        <?= esc($product_option['name']) ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="number" step="0.01" min="0" class="form-control item-quantity" name="items[<?= $index ?>][quantity]" value="<?= old('items.'.$index.'.quantity', esc($item['quantity'])) ?>">
+                                        </td>
+                                        <td>
+                                            <input type="number" step="0.01" min="0" class="form-control item-unit-price" name="items[<?= $index ?>][unit_price_at_sale]" value="<?= old('items.'.$index.'.unit_price_at_sale', esc($item['unit_price_at_sale'])) ?>">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control item-total" readonly value="<?= esc($item['item_total'] ?? 0) ?>">
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-sm btn-danger remove-item-btn">Remove</button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td>
+                                        <select class="form-control product-select" name="items[0][product_id]">
+                                            <option value="">Select a Product</option>
+                                            <?php foreach ($products as $product_option): ?>
+                                                <option value="<?= esc($product_option['id']) ?>" data-gst-rate-id="<?= esc($product_option['gst_rate_id']) ?>" data-unit-price="<?= esc($product_option['unit_price'] ?? 0) ?>">
+                                                    <?= esc($product_option['name']) ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="number" step="0.01" min="0" class="form-control item-quantity" name="items[0][quantity]" value="<?= old('items.0.quantity') ?>">
+                                    </td>
+                                    <td>
+                                        <input type="number" step="0.01" min="0" class="form-control item-unit-price" name="items[0][unit_price_at_sale]" value="<?= old('items.0.unit_price_at_sale') ?>">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control item-total" readonly value="0.00">
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-danger remove-item-btn">Remove</button>
+                                    </td>
+                                </tr>
                             <?php endif; ?>
-                        </div>
-                        <div class="col-md-3">
-                            <label class="form-label">Amount</label>
-                            <div class="input-group">
-                                <span class="input-group-text">₹</span>
-                                <input type="text" class="form-control item-total-display" value="0.00" readonly>
-                            </div>
-                            <small class="text-muted">Incl. GST: <span class="item-total-gst-display">0.00</span></small><br>
-                            <small class="text-muted">Excl. GST: <span class="item-total-before-gst-display">0.00</span></small>
-                        </div>
-                        <div class="col-md-1 text-center">
-                            <?php // Always allow removal of dynamically added rows or if more than one initial row ?>
-                            <button type="button" class="btn btn-danger btn-sm remove-product-row">X</button>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-            <div class="mt-4 pt-3 border-top">
-                <div class="d-flex justify-content-end mb-2">
-                    <strong>Total Amount (Excl. GST):</strong> <span id="overallAmountBeforeGst">0.00</span>
-                </div>
-                <div class="d-flex justify-content-end mb-2">
-                    <strong>Total GST Amount:</strong> <span id="overallGstAmount">0.00</span>
-                </div>
-                <div class="d-flex justify-content-end mb-2">
-                    <strong>Grand Total:</strong> <span id="overallGrandTotal" class="fs-5 text-primary">0.00</span>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="card mb-4">
-        <div class="card-header">
-            Payment Details (Initial payment cannot be edited here. Add new payments via "Add Payment" option)
-        </div>
-        <div class="card-body">
-            <div class="mb-3">
-                <label for="discount_amount" class="form-label">Discount Amount</label>
-                <div class="input-group">
-                    <span class="input-group-text">₹</span>
-                    <input type="number" step="0.01" class="form-control" id="discount_amount" name="discount_amount"
-                        value="<?= set_value('discount_amount', $sales_order['discount_amount'] ?? '0.00') ?>" min="0">
-                </div>
-                <?php if (session('validation') && session('validation')->hasError('discount_amount')): ?>
-                    <div class="text-danger mt-1">
-                        <?= session('validation')->getError('discount_amount') ?>
-                    </div>
-                <?php endif; ?>
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4>Invoice Summary</h4>
             </div>
-
-            <div class="mb-3">
-                <label class="form-label">Total Paid (Current)</label>
-                <div class="input-group">
-                    <span class="input-group-text">₹</span>
-                    <input type="text" class="form-control" value="<?= number_format((float)($sales_order['amount_paid'] ?? 0), 2) ?>" readonly>
-                </div>
-            </div>
-            
-            <div class="mb-3">
-                <label class="form-label">Calculated Due Amount</label>
-                <div class="input-group">
-                    <span class="input-group-text">₹</span>
-                    <input type="text" class="form-control" id="calculatedDueAmountDisplay" value="0.00" readonly>
-                </div>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Original Due Amount (from last save)</label>
-                <div class="input-group">
-                    <span class="input-group-text">₹</span>
-                    <input type="text" class="form-control" value="<?= number_format((float)($sales_order['due_amount'] ?? 0), 2) ?>" readonly>
-                </div>
-            </div>
-
-            <div class="alert alert-info">
-                Note: To record new payments, please use the "Add Payment" action from the Sales Order list or details page.
-                This form is only for editing the sales order's product details and general info.
+            <div class="card-body">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>Total Amount (Before GST)</td>
+                            <td class="text-end" id="subtotal">0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Total GST</td>
+                            <td class="text-end" id="total-gst">0.00</td>
+                        </tr>
+                        <tr>
+                            <td>**Final Total Amount**</td>
+                            <td class="text-end" id="final-total">**0.00**</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-    </div>
 
-    <button type="submit" class="btn btn-primary">Update Sales Order</button>
-    <a href="<?= base_url('distributor-sales') ?>" class="btn btn-secondary">Cancel</a>
-
-    <?= form_close() ?>
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <a href="<?= base_url('distributor-sales/view/' . $sales_order['id']) ?>" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
 </div>
 
-<?php $this->endSection(); ?>
-
-<?php $this->section('scripts'); ?>
+<!-- JavaScript to handle adding/removing form rows and live calculations -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const productRowsContainer = document.getElementById('productRows');
-        const addProductRowButton = document.getElementById('addProductRow');
-        // Corrected ID to match the input name `discount_amount`
-        const discountInput = document.getElementById('discount_amount'); 
-        const overallAmountBeforeGstDisplay = document.getElementById('overallAmountBeforeGst');
-        const overallGstAmountDisplay = document.getElementById('overallGstAmount');
-        const overallGrandTotalDisplay = document.getElementById('overallGrandTotal');
-
-        // Get the element to display the calculated due amount
-        const calculatedDueAmountDisplay = document.getElementById('calculatedDueAmountDisplay');
-
-        // Pass original amount_paid from PHP to JavaScript
-        const originalAmountPaid = parseFloat(<?= json_encode($sales_order['amount_paid'] ?? 0) ?>) || 0;
-
-        // Function to get product data from PHP into JS
         const products = <?= json_encode($products) ?>;
         const gstRates = <?= json_encode($gst_rates) ?>;
 
-        // Helper to find product and GST rate details
-        function getProductDetails(productId) {
-            return products.find(p => String(p.id) === String(productId));
-        }
+        const productData = products.reduce((acc, product) => {
+            acc[product.id] = product;
+            return acc;
+        }, {});
 
-        function getGstRateDetails(gstRateId) {
-            return gstRates.find(g => String(g.id) === String(gstRateId));
-        }
+        const gstData = gstRates.reduce((acc, gst) => {
+            acc[gst.id] = gst.rate;
+            return acc;
+        }, {});
 
-        // Function to calculate and update the current row's individual totals
-        function calculateRow(row) {
+        const itemsTable = document.getElementById('items-table');
+        const addItemBtn = document.getElementById('add-item-btn');
+
+        function updateRowTotals(row) {
+            const quantityInput = row.querySelector('.item-quantity');
+            const priceInput = row.querySelector('.item-unit-price');
+            const totalInput = row.querySelector('.item-total');
             const productSelect = row.querySelector('.product-select');
-            const quantityInput = row.querySelector('.quantity-input');
-            const gstRateSelect = row.querySelector('.gst-rate-select');
-            const itemTotalDisplay = row.querySelector('.item-total-display');
-            const itemTotalGstDisplay = row.querySelector('.item-total-gst-display');
-            const itemTotalBeforeGstDisplay = row.querySelector('.item-total-before-gst-display');
 
-            const productId = productSelect.value;
             const quantity = parseFloat(quantityInput.value) || 0;
-            const gstRateId = gstRateSelect.value;
+            const price = parseFloat(priceInput.value) || 0;
+            const rowTotal = quantity * price;
 
-            let unitPrice = 0;
-            let gstPercentage = 0;
-
-            if (productId) {
-                const product = getProductDetails(productId);
-                if (product) {
-                    unitPrice = parseFloat(product.selling_price);
-                }
-            }
-
-            if (gstRateId) {
-                const gst = getGstRateDetails(gstRateId);
-                if (gst) {
-                    gstPercentage = parseFloat(gst.rate);
-                }
-            }
-
-            const amountBeforeGst = unitPrice * quantity;
-            const gstAmount = amountBeforeGst * (gstPercentage / 100);
-            const finalTotal = amountBeforeGst + gstAmount;
-
-            itemTotalDisplay.value = finalTotal.toFixed(2);
-            itemTotalGstDisplay.textContent = gstAmount.toFixed(2);
-            itemTotalBeforeGstDisplay.textContent = amountBeforeGst.toFixed(2);
-
-            return {
-                amountBeforeGst: amountBeforeGst,
-                gstAmount: gstAmount,
-                finalTotal: finalTotal
-            };
+            totalInput.value = rowTotal.toFixed(2);
         }
 
-        // Function to calculate and update overall totals
-        function updateOverallTotals() {
+        function updateTotalSummary() {
             let totalAmountBeforeGst = 0;
             let totalGstAmount = 0;
-            let grandTotalBeforeDiscount = 0; // Sum of all itemFinalTotal
 
-            document.querySelectorAll('.product-item').forEach(row => {
-                const rowTotals = calculateRow(row);
-                totalAmountBeforeGst += rowTotals.amountBeforeGst;
-                totalGstAmount += rowTotals.gstAmount;
-                grandTotalBeforeDiscount += rowTotals.finalTotal;
+            itemsTable.querySelectorAll('tbody tr').forEach(row => {
+                const quantity = parseFloat(row.querySelector('.item-quantity').value) || 0;
+                const price = parseFloat(row.querySelector('.item-unit-price').value) || 0;
+                const productId = row.querySelector('.product-select').value;
+
+                if (productId) {
+                    const product = productData[productId];
+                    const gstRate = gstData[product.gst_rate_id] || 0;
+                    
+                    const itemTotal = quantity * price;
+                    const itemGst = (itemTotal * gstRate) / 100;
+                    
+                    totalAmountBeforeGst += itemTotal;
+                    totalGstAmount += itemGst;
+                }
             });
 
-            // Get discount from the input field
-            const discount = parseFloat(discountInput.value) || 0; 
-            const finalGrandTotal = grandTotalBeforeDiscount - discount;
+            const finalTotal = totalAmountBeforeGst + totalGstAmount;
 
-            // Calculate the new due amount
-            const newDueAmount = finalGrandTotal - originalAmountPaid;
-
-            overallAmountBeforeGstDisplay.textContent = totalAmountBeforeGst.toFixed(2);
-            overallGstAmountDisplay.textContent = totalGstAmount.toFixed(2);
-            overallGrandTotalDisplay.textContent = finalGrandTotal.toFixed(2);
-
-            // Update the calculated due amount display
-            calculatedDueAmountDisplay.value = newDueAmount.toFixed(2);
+            document.getElementById('subtotal').innerText = totalAmountBeforeGst.toFixed(2);
+            document.getElementById('total-gst').innerText = totalGstAmount.toFixed(2);
+            document.getElementById('final-total').innerText = finalTotal.toFixed(2);
         }
 
-        // Function to add a new product row (identical to new.php)
-        function addProductRow() {
-            const newRowIndex = productRowsContainer.children.length;
-            const newRow = document.createElement('div');
-            newRow.className = 'row product-item mb-3 gx-2 align-items-center border-bottom pb-2';
-            newRow.innerHTML = `
-            <div class="col-md-4">
-                <label class="form-label">Product <span class="text-danger">*</span></label>
-                <select class="form-control product-select" name="products[${newRowIndex}][product_id]" required>
-                    <option value="">Select Product</option>
-                    <?php foreach ($products as $product): ?>
-                        <option value="<?= esc($product['id']) ?>" data-price="<?= esc($product['selling_price']) ?>">
-                            <?= esc($product['name']) ?> (₹<?= number_format((float)($product['selling_price'] ?? 0), 2) ?>)
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-            <div class="col-md-2">
-                <label class="form-label">Quantity <span class="text-danger">*</span></label>
-                <input type="number" class="form-control quantity-input" name="products[${newRowIndex}][quantity]" min="1" value="1" required>
-            </div>
-            <div class="col-md-2">
-                <label class="form-label">GST Rate <span class="text-danger">*</span></label>
-                <select class="form-control gst-rate-select" name="products[${newRowIndex}][gst_rate_id]" required>
-                    <option value="">Select GST Rate</option>
-                    <?php foreach ($gst_rates as $gst): ?>
-                        <option value="<?= esc($gst['id']) ?>" data-rate="<?= esc($gst['rate']) ?>">
-                            <?= esc($gst['name']) ?> (<?= esc($gst['rate']) ?>%)
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-            <div class="col-md-3">
-                <label class="form-label">Amount</label>
-                <div class="input-group">
-                    <span class="input-group-text">₹</span>
-                    <input type="text" class="form-control item-total-display" value="0.00" readonly>
-                </div>
-                <small class="text-muted">Incl. GST: <span class="item-total-gst-display">0.00</span></small><br>
-                <small class="text-muted">Excl. GST: <span class="item-total-before-gst-display">0.00</span></small>
-            </div>
-            <div class="col-md-1 text-center">
-                <button type="button" class="btn btn-danger btn-sm remove-product-row">X</button>
-            </div>
+        function createProductRow(newIndex = 0) {
+            const newRow = `
+                <td>
+                    <select class="form-control product-select" name="items[${newIndex}][product_id]">
+                        <option value="">Select a Product</option>
+                        <?php foreach ($products as $product_option): ?>
+                            <option value="<?= esc($product_option['id']) ?>" data-gst-rate-id="<?= esc($product_option['gst_rate_id']) ?>" data-unit-price="<?= esc($product_option['unit_price'] ?? 0) ?>">
+                                <?= esc($product_option['name']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </td>
+                <td>
+                    <input type="number" step="0.01" min="0" class="form-control item-quantity" name="items[${newIndex}][quantity]" value="">
+                </td>
+                <td>
+                    <input type="number" step="0.01" min="0" class="form-control item-unit-price" name="items[${newIndex}][unit_price_at_sale]" value="">
+                </td>
+                <td>
+                    <input type="text" class="form-control item-total" readonly value="0.00">
+                </td>
+                <td>
+                    <button type="button" class="btn btn-sm btn-danger remove-item-btn">Remove</button>
+                </td>
             `;
-            productRowsContainer.appendChild(newRow);
-            attachEventListenersToRow(newRow);
-            updateOverallTotals(); // Recalculate totals after adding a new row
+            const tableBody = itemsTable.querySelector('tbody');
+            const newTr = tableBody.insertRow();
+            newTr.innerHTML = newRow;
         }
 
-        // Function to attach event listeners to a given row's inputs/selects
-        function attachEventListenersToRow(row) {
-            const productSelect = row.querySelector('.product-select');
-            const quantityInput = row.querySelector('.quantity-input');
-            const gstRateSelect = row.querySelector('.gst-rate-select');
-            const removeButton = row.querySelector('.remove-product-row');
+        // Event listener for adding new item rows
+        addItemBtn.addEventListener('click', function() {
+            const tableBody = itemsTable.querySelector('tbody');
+            const newIndex = tableBody.rows.length;
+            createProductRow(newIndex);
+        });
 
-            if (productSelect) {
-                productSelect.addEventListener('change', updateOverallTotals);
+        // Event delegation for table changes (select, quantity, price, remove)
+        itemsTable.addEventListener('input', function(e) {
+            const row = e.target.closest('tr');
+            if (e.target.classList.contains('item-quantity') || e.target.classList.contains('item-unit-price')) {
+                updateRowTotals(row);
+                updateTotalSummary();
             }
-            if (quantityInput) {
-                quantityInput.addEventListener('input', updateOverallTotals);
+        });
+        
+        itemsTable.addEventListener('change', function(e) {
+            const row = e.target.closest('tr');
+            if (e.target.classList.contains('product-select')) {
+                const selectedOption = e.target.options[e.target.selectedIndex];
+                const unitPrice = selectedOption.dataset.unitPrice;
+                row.querySelector('.item-unit-price').value = unitPrice;
+                updateRowTotals(row);
+                updateTotalSummary();
             }
-            if (gstRateSelect) {
-                gstRateSelect.addEventListener('change', updateOverallTotals);
-            }
-            if (removeButton) {
-                removeButton.addEventListener('click', function() {
-                    // Ensure at least one row remains
-                    if (productRowsContainer.children.length > 1) {
-                        row.remove();
-                        updateOverallTotals(); // Recalculate totals after removing a row
-                    } else {
-                        alert('A sales order must have at least one product.');
-                    }
-                });
-            }
-        }
+        });
 
-        addProductRowButton.addEventListener('click', addProductRow);
-        discountInput.addEventListener('input', updateOverallTotals); // Listen to discount changes
+        itemsTable.addEventListener('click', function(e) {
+            if (e.target.classList.contains('remove-item-btn')) {
+                const row = e.target.closest('tr');
+                row.remove();
+                updateTotalSummary();
+            }
+        });
 
-        // Attach listeners to existing rows on initial load
-        document.querySelectorAll('.product-item').forEach(attachEventListenersToRow);
+        // Initial calculation on page load
+        updateTotalSummary();
 
-        // Initial calculation when the page loads (important for edit view)
-        updateOverallTotals();
     });
 </script>
+
 <?php $this->endSection(); ?>

@@ -39,7 +39,7 @@ class Distributor extends BaseController
     {
         $data = [
             'title'        => 'Distributors List',
-            'distributors' => $this->distributorModel->orderBy('agency_name', 'ASC')->findAll(),
+            'distributors' => $this->distributorModel->orderBy('created_at', 'DESC')->findAll(),
         ];
         return view('distributors/index', $data);
     }

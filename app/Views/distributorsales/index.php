@@ -6,15 +6,22 @@
 <div class="container mt-4">
     <h2><?= esc($title) ?></h2>
 
-    <?= session()->getFlashdata('success') ? '<div class="alert alert-success">' . session()->getFlashdata('success') . '</div>' : '' ?>
-    <?= session()->getFlashdata('error') ? '<div class="alert alert-danger">' . session()->getFlashdata('error') . '</div>' : '' ?>
+    <?php if (session()->getFlashdata('success')): ?>
+        <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
+    <?php endif; ?>
+    <?php if (session()->getFlashdata('error')): ?>
+        <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
+    <?php endif; ?>
+    <?php if (!empty($error_message)): ?>
+        <div class="alert alert-danger"><?= esc($error_message) ?></div>
+    <?php endif; ?>
 
     <div class="d-flex justify-content-between mb-3">
-        <a href="<?= base_url('distributor-sales/new') ?>" class="btn btn-primary">Create New Sales Order</a>
-        <div class="d-flex">
+        <a href="<?= base_url('distributor-sales/create') ?>" class="btn btn-primary">Create New Sales Order</a>
+        <!-- <div class="d-flex">
             <a href="<?= base_url('distributor-sales/export/excel-index') ?>" class="btn btn-success me-2">Export to Excel</a>
             <a href="<?= base_url('distributor-sales/export/pdf-index') ?>" class="btn btn-danger" target="_blank">Export to PDF</a>
-        </div>
+        </div> -->
     </div>
 
     <?php if (empty($sales_orders)): ?>
@@ -49,7 +56,7 @@
                             <td>₹<?= number_format($order['due_amount'], 2) ?></td>
                             <td><span class="badge bg-<?= ($order['status'] == 'Paid') ? 'success' : (($order['status'] == 'Partially Paid') ? 'warning' : 'danger') ?>"><?= esc($order['status']) ?></span></td>
                             <td>
-                                <a href="<?= base_url('distributor-sales/show/' . $order['id']) ?>" class="btn btn-info btn-sm">View</a>
+                                <a href="<?= base_url('distributor-sales/view/' . $order['id']) ?>" class="btn btn-info btn-sm">View</a>
                                 <a href="<?= base_url('distributor-sales/edit/' . $order['id']) ?>" class="btn btn-warning btn-sm">Edit</a>
                                 <?php if ($order['status'] != 'Paid' && $order['status'] != 'Cancelled'): ?>
                                     <a href="<?= base_url('distributor-sales/add-payment/' . $order['id']) ?>" class="btn btn-success btn-sm">Add Payment</a>
@@ -77,6 +84,3 @@
     }
 </script>
 <?php $this->endSection(); ?>
-
-
- 

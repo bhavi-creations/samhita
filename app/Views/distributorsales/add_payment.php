@@ -47,7 +47,7 @@
         <div class="mb-3">
             <label for="payment_method" class="form-label">Payment Method</label>
             <select class="form-control" id="payment_method" name="payment_method">
-                <option value="">Select Payment Method</option>
+                <option value="">Select Payment Method (Optional)</option>
                 <?php foreach ($paymentMethods as $key => $value): ?>
                     <option value="<?= esc($key) ?>" <?= set_select('payment_method', $key) ?>>
                         <?= esc($value) ?>
@@ -72,7 +72,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Record Payment</button>
-        <a href="<?= base_url('distributor-sales/show/' . $sales_order['id']) ?>" class="btn btn-secondary">Cancel</a>
+        <a href="<?= base_url('distributor-sales/view/' . $sales_order['id']) ?>" class="btn btn-secondary">Cancel</a>
     <?= form_close() ?>
 </div>
 
@@ -81,6 +81,7 @@
 <?php $this->section('scripts'); ?>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // The JavaScript also needs to reference the correct input ID, which is `amount`.
     const amountInput = document.getElementById('amount');
     const originalDueAmountSpan = document.getElementById('originalDueAmount');
     const remainingDueAmountSpan = document.getElementById('remainingDueAmount');

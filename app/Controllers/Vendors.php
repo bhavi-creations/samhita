@@ -8,6 +8,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use App\Models\StockInModel;
 use App\Models\UnitModel;
+use App\Models\StockInProductModel;
 use App\Models\PurchasedProductModel; // Changed from SellingProductModel
 use Dompdf\Dompdf;
 
@@ -16,11 +17,13 @@ class Vendors extends Controller
     protected $vendorModel;
     protected $stockInModel;
     protected $unitModel;
+    protected $stockInProductModel;
     protected $purchasedProductModel; // New property for PurchasedProductModel
 
     public function __construct()
     {
         $this->vendorModel = new VendorModel();
+         $this->stockInProductModel = new StockInProductModel();
         $this->stockInModel = new StockInModel(); // Initialize StockInModel
         $this->unitModel = new UnitModel();       // Initialize UnitModel
         $this->purchasedProductModel = new PurchasedProductModel(); // Initialize PurchasedProductModel
@@ -128,47 +131,56 @@ class Vendors extends Controller
     /**
      * Generates a report of stock-in entries, filtering by active vendors.
      */
-    public function vendorReport()
+    
+      public function vendorReport()
     {
-        // Use initialized models
+        // Fetch all vendors, products, and units for the filter dropdowns
         $data = [];
         $data['vendors'] = $this->vendorModel->findAll();
-        // Fetch products from PurchasedProductModel
         $data['products'] = $this->purchasedProductModel->findAll();
         $data['units'] = $this->unitModel->findAll();
 
-        $vendorId = $this->request->getGet('vendor_id');
+        // Get filter parameters from the URL query string
+        $vendorId  = $this->request->getGet('vendor_id');
         $productId = $this->request->getGet('product_id');
         $startDate = $this->request->getGet('start_date');
-        $endDate = $this->request->getGet('end_date');
+        $endDate   = $this->request->getGet('end_date');
 
-        $query = $this->stockInModel->select('stock_in.*, vendors.name as vendor_name, purchased_products.name as product_name, units.name as unit_name')
+        // Build the query dynamically based on the filter parameters
+        $query = $this->stockInModel
+            ->select('
+                stock_in.id,
+                stock_in.date_received,
+                vendors.name as vendor_name,
+                purchased_products.name as product_name,
+                units.name as unit_name,
+                stock_in_products.quantity,
+                stock_in_products.purchase_price
+            ')
             ->join('vendors', 'vendors.id = stock_in.vendor_id')
-            // Join with purchased_products, not selling_products
-            ->join('purchased_products', 'purchased_products.id = stock_in.product_id')
-            // Join units via purchased_products
+            ->join('stock_in_products', 'stock_in_products.stock_in_id = stock_in.id')
+            ->join('purchased_products', 'purchased_products.id = stock_in_products.product_id')
             ->join('units', 'units.id = purchased_products.unit_id');
 
         if ($vendorId) {
             $query->where('stock_in.vendor_id', $vendorId);
         }
         if ($productId) {
-            $query->where('stock_in.product_id', $productId);
+            $query->where('stock_in_products.product_id', $productId);
         }
         if ($startDate) {
-            $query->where('stock_in.date >=', $startDate);
+            $query->where('stock_in.date_received >=', $startDate);
         }
         if ($endDate) {
-            $query->where('stock_in.date <=', $endDate);
+            $query->where('stock_in.date_received <=', $endDate);
         }
 
+        // Execute the query and get the results
         $data['stock_in_entries'] = $query->findAll();
 
-        echo view('templates/header');
-        echo view('vendors/vendor_report', $data);
-        echo view('templates/footer');
+        // Pass the data to the new dynamic view file
+        return view('vendors/vendor_report', $data);
     }
-
     /**
      * Exports the vendor report to an Excel file, filtering by active vendors.
      */
