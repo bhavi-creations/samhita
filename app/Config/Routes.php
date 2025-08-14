@@ -1,12 +1,12 @@
 <?php
 
 use CodeIgniter\Router\RouteCollection;
-use App\Controllers\MarketingDistribution; 
-use App\Controllers\DistributorSalesController; 
+use App\Controllers\MarketingDistribution;
+use App\Controllers\DistributorSalesController;
 // --- NEW IMPORTS START ---
-use App\Controllers\SellingProducts; 
-use App\Controllers\PurchasedProducts; 
-use App\Controllers\PurchasedConsumption; 
+use App\Controllers\SellingProducts;
+use App\Controllers\PurchasedProducts;
+use App\Controllers\PurchasedConsumption;
 // --- NEW IMPORTS END ---
 
 
@@ -117,7 +117,7 @@ $routes->group('/', ['filter' => 'auth'], function ($routes) {
     $routes->GET('api/purchased-products/details/(:num)', 'PurchasedProducts::getPurchasedProductDetails/$1');
     // --- CHANGE END: API route ---
 
-    
+
 
     // MARKETING PERSONS
     $routes->group('marketing-persons', function ($routes) {
@@ -199,32 +199,32 @@ $routes->group('/', ['filter' => 'auth'], function ($routes) {
         $routes->GET('exportSinglePdf/(:num)', 'Distributor::exportSinglePdf/$1');
     });
 
-// DISTRIBUTOR SALES
-$routes->group('distributor-sales', function ($routes) {
-    // Main Pages
-    $routes->GET('/', 'DistributorSalesController::index', ['as' => 'distributor-sales-list']);
-    $routes->GET('create', 'DistributorSalesController::create', ['as' => 'distributor-sales-create']);
-    $routes->POST('save', 'DistributorSalesController::save', ['as' => 'distributor-sales-save']);
-    $routes->GET('view/(:num)', 'DistributorSalesController::view/$1', ['as' => 'distributor-sales-view']);
-    $routes->GET('edit/(:num)', 'DistributorSalesController::edit/$1', ['as' => 'distributor-sales-edit']);
-    $routes->PUT('update/(:num)', 'DistributorSalesController::update/$1', ['as' => 'distributor-sales-update']);
-    $routes->DELETE('delete/(:num)', 'DistributorSalesController::delete/$1', ['as' => 'distributor-sales-delete']);
-    $routes->GET('sold-stock-overview', 'DistributorSalesController::soldStockOverview', ['as' => 'distributor-sales-sold-stock-overview']);
+    // DISTRIBUTOR SALES
+    $routes->group('distributor-sales', function ($routes) {
+        // Main Pages
+        $routes->GET('/', 'DistributorSalesController::index', ['as' => 'distributor-sales-list']);
+        $routes->GET('create', 'DistributorSalesController::create', ['as' => 'distributor-sales-create']);
+        $routes->POST('save', 'DistributorSalesController::save', ['as' => 'distributor-sales-save']);
+        $routes->GET('view/(:num)', 'DistributorSalesController::view/$1', ['as' => 'distributor-sales-view']);
+        $routes->GET('edit/(:num)', 'DistributorSalesController::edit/$1', ['as' => 'distributor-sales-edit']);
+        $routes->PUT('update/(:num)', 'DistributorSalesController::update/$1', ['as' => 'distributor-sales-update']);
+        $routes->DELETE('delete/(:num)', 'DistributorSalesController::delete/$1', ['as' => 'distributor-sales-delete']);
+        $routes->GET('sold-stock-overview', 'DistributorSalesController::soldStockOverview', ['as' => 'distributor-sales-sold-stock-overview']);
 
-    // Payments
-    $routes->GET('add-payment/(:num)', 'DistributorSalesController::addPayment/$1', ['as' => 'distributor-sales-add-payment']);
-    $routes->POST('save-payment', 'DistributorSalesController::savePayment', ['as' => 'distributor-sales-save-payment']);
+        // Payments
+        $routes->GET('add-payment/(:num)', 'DistributorSalesController::addPayment/$1', ['as' => 'distributor-sales-add-payment']);
+        $routes->POST('save-payment', 'DistributorSalesController::savePayment', ['as' => 'distributor-sales-save-payment']);
 
-    // Export Methods
-    $routes->GET('export/invoice-excel/(:num)', 'DistributorSalesController::exportExcel/$1', ['as' => 'distributor-sales-export-excel']);
-    $routes->GET('export/invoice-pdf/(:num)', 'DistributorSalesController::exportPdf/$1', ['as' => 'distributor-sales-export-pdf']);
-});
+        // Export Methods
+        $routes->GET('export/invoice-excel/(:num)', 'DistributorSalesController::exportExcel/$1', ['as' => 'distributor-sales-export-excel']);
+        $routes->GET('export/invoice-pdf/(:num)', 'DistributorSalesController::exportPdf/$1', ['as' => 'distributor-sales-export-pdf']);
+    });
 
-   // --- NEW ROUTE START: MARKETING SALES REPORT ---
+    // --- NEW ROUTE START: MARKETING SALES REPORT ---
     // This route will handle the display and filtering of sales by marketing person.
     // It maps to the index method of your new MarketingSalesController.
     // The full URL will be: http://your-app-url/marketing-sales
-    $routes->get('marketing-sales', 'MarketingSalesController::index', ['as' => 'marketing-sales-report']);
+    $routes->GET('marketing-sales', 'MarketingSalesController::index', ['as' => 'marketing-sales-report']);
     // --- NEW ROUTE END ---
 
 
@@ -234,4 +234,32 @@ $routes->group('distributor-sales', function ($routes) {
         $routes->POST('company-settings/delete-image/(:any)', 'CompanySettingsController::deleteImage/$1');
     });
 
+
+    $routes->group('e-way-bills', static function ($routes) {
+        // Displays the list of all e-way bills
+        $routes->GET('/', 'EwayBillController::index');
+
+        // Displays the form to generate a new e-way bill for a specific sales order
+        $routes->GET('generate/(:num)', 'EwayBillController::generate/$1');
+
+        // Displays the blank form to create a new e-way bill
+        $routes->GET('create', 'EwayBillController::create');
+
+        // Handles the form submission to save and generate the e-way bill
+        $routes->POST('store', 'EwayBillController::store');
+
+        // Displays the details of a single e-way bill
+        $routes->GET('view/(:num)', 'EwayBillController::view/$1');
+
+        // Displays the form to edit an existing e-way bill
+        $routes->GET('edit/(:num)', 'EwayBillController::edit/$1');
+
+        // Handles the form submission to update an existing e-way bill
+        $routes->PUT('update/(:num)', 'EwayBillController::update/$1');
+
+        // Handles the deletion of a specific e-way bill
+        $routes->DELETE('delete/(:num)', 'EwayBillController::delete/$1');
+        // In app/Config/Routes.php
+        $routes->GET('download-pdf/(:num)', 'EwayBillController::downloadPdf/$1');
+    });
 });

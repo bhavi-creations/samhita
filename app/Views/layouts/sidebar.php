@@ -145,7 +145,7 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                       
+
                         <!-- New Sold Stock Overview Link -->
                         <li class="nav-item">
                             <a class="nav-link <?= url_is('distributor-sales/sold-stock-overview') ? 'active' : '' ?>" href="<?= base_url('distributor-sales/sold-stock-overview') ?>">
@@ -210,6 +210,17 @@
                         <p>Company Settings</p>
                     </a>
                 </li>
+
+
+
+                <!-- Add this li element to your existing ul/nav list in the sidebar -->
+                <li class="nav-item">
+                    <a href="<?= base_url('e-way-bills'); ?>" class="nav-link">
+                        <i class="nav-icon fas fa-file-invoice"></i>
+                        <p>E-way Bills</p>
+                    </a>
+                </li>
+
 
             </ul>
         </nav>
