@@ -760,7 +760,7 @@ class DistributorSalesController extends BaseController
     }
 
 
-    public function exportPdf(int $id)
+     public function exportPdf(int $id)
     {
         // Load models with the correct names
         $salesModel = new DistributorSalesOrderModel();
@@ -810,8 +810,12 @@ class DistributorSalesController extends BaseController
 
 
         // **CORRECT LOGIC FOR GST DETAILS**
-        // Decode the JSON string to get the array of GST rates and their calculated amounts.
-        $overallGstData = json_decode($salesOrder['overall_gst_rate_ids'], true);
+        // Check if the data is a JSON string or an array from the model's casting
+        $overallGstData = $salesOrder['overall_gst_rate_ids'];
+        if (is_string($overallGstData)) {
+            $overallGstData = json_decode($overallGstData, true);
+        }
+
         $gst_rates_details = [];
         if (!empty($overallGstData) && is_array($overallGstData)) {
             // Get all unique GST IDs from the decoded data
@@ -833,6 +837,33 @@ class DistributorSalesController extends BaseController
             }
         }
         
+        unset($item);
+
+        // Fetch only the filenames from the database
+        $companyLogoFilename = $this->companySettingModel->getSetting('company_logo');
+        $companyStampFilename = $this->companySettingModel->getSetting('company_stamp');
+        $companySignatureFilename = $this->companySettingModel->getSetting('company_signature');
+
+        // **CRUCIAL CHANGE:** Convert images to Base64 strings for embedding in PDF
+        $company_logo_data = null;
+        $company_stamp_data = null;
+        $company_signature_data = null;
+
+        $logoPath = $companyLogoFilename ? ROOTPATH . 'public/uploads/company_images/' . $companyLogoFilename : null;
+        if ($logoPath && file_exists($logoPath)) {
+            $company_logo_data = 'data:image/png;base64,' . base64_encode(file_get_contents($logoPath));
+        }
+
+        $stampPath = $companyStampFilename ? ROOTPATH . 'public/uploads/company_images/' . $companyStampFilename : null;
+        if ($stampPath && file_exists($stampPath)) {
+            $company_stamp_data = 'data:image/png;base64,' . base64_encode(file_get_contents($stampPath));
+        }
+
+        $signaturePath = $companySignatureFilename ? ROOTPATH . 'public/uploads/company_images/' . $companySignatureFilename : null;
+        if ($signaturePath && file_exists($signaturePath)) {
+            $company_signature_data = 'data:image/png;base64,' . base64_encode(file_get_contents($signaturePath));
+        }
+
 
         // Prepare data for the view
         $data = [
@@ -841,6 +872,11 @@ class DistributorSalesController extends BaseController
             'sales_order_items' => $salesOrderItems,
             'gst_rates_details' => $gst_rates_details, // Pass the corrected GST data
             'payments' => $payments,
+            'company_logo_data' => $company_logo_data,
+            'company_stamp_data' => $company_stamp_data,
+            'company_signature_data' => $company_signature_data,
+
+            // Pass the Base64 data to the view
             'company_logo_data' => $company_logo_data,
             'company_stamp_data' => $company_stamp_data,
             'company_signature_data' => $company_signature_data,
@@ -869,10 +905,7 @@ class DistributorSalesController extends BaseController
         $dompdf->stream('Invoice_' . $salesOrder['invoice_number'] . '.pdf', ['Attachment' => 1]);
     }
 
-    /**
-     * Corrected method to export a sales order as an Excel file.
-     * This version uses the pre-calculated totals stored in the database.
-     */
+  
     public function exportExcel(int $id)
     {
         // Load models with the correct names
@@ -910,8 +943,12 @@ class DistributorSalesController extends BaseController
         }
 
         // **CORRECT LOGIC FOR GST DETAILS**
-        // Decode the JSON string to get the array of GST rates and their calculated amounts.
-        $overallGstData = json_decode($salesOrder['overall_gst_rate_ids'], true);
+        // Check if the data is a JSON string or an array from the model's casting
+        $overallGstData = $salesOrder['overall_gst_rate_ids'];
+        if (is_string($overallGstData)) {
+            $overallGstData = json_decode($overallGstData, true);
+        }
+
         $gst_rates_details = [];
         if (!empty($overallGstData) && is_array($overallGstData)) {
             $gstIds = array_column($overallGstData, 'gst_rate_id');
