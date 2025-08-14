@@ -60,6 +60,8 @@ class DistributorSalesController extends BaseController
         helper('number');
     }
 
+
+
     public function index()
     {
         $salesOrders = [];
@@ -345,7 +347,7 @@ class DistributorSalesController extends BaseController
 
         // 3. Fetch the sales order
         $salesOrder = $salesModel->find($id);
-
+        // dd($salesOrder['overall_gst_rate_ids']);
         if (!$salesOrder) {
             return redirect()->to(site_url('distributor-sales'))->with('error', 'Sales order not found.');
         }
@@ -375,8 +377,18 @@ class DistributorSalesController extends BaseController
 
         // Check if we have valid IDs before querying the database
         if (!empty($gstIds) && is_array($gstIds)) {
-            // Fetch the GST details from the `gst_rates` table
-            $gst_rates_details = $gstRateModel->whereIn('id', $gstIds)->findAll();
+            $idsToQuery = [];
+            foreach ($gstIds as $gstItem) {
+                // Ensure the item is an array and contains the 'gst_rate_id' key
+                if (is_array($gstItem) && isset($gstItem['gst_rate_id'])) {
+                    $idsToQuery[] = $gstItem['gst_rate_id'];
+                }
+            }
+
+            // Now, use the extracted, simple array of IDs to query the database
+            if (!empty($idsToQuery)) {
+                $gst_rates_details = $gstRateModel->whereIn('id', $idsToQuery)->findAll();
+            }
         }
         // --- END OF CORRECTED LOGIC ---
 
@@ -396,152 +408,6 @@ class DistributorSalesController extends BaseController
     }
 
 
-    public function edit(int $id): string
-    {
-        // Load necessary models
-        $salesOrderModel = new DistributorSalesOrderModel();
-        $distributorModel = new DistributorModel();
-        $marketingPersonModel = new MarketingPersonModel();
-        $sellingProductModel = new SellingProductModel();
-        $salesOrderItemModel = new DistributorSalesOrderItemModel();
-        $unitModel = new UnitModel();
-        $gstRateModel = new GstRateModel();
-
-        // Fetch the sales order and associated items
-        $sales_order = $salesOrderModel->find($id);
-        if (!$sales_order) {
-            return redirect()->to('distributor-sales')->with('error', 'Sales order not found.');
-        }
-
-        // Fetch related data for dropdowns
-        $distributors = $distributorModel->findAll();
-        $marketing_persons = $marketingPersonModel->findAll();
-        $products = $sellingProductModel->findAll();
-        $units = $unitModel->findAll();
-        $gst_rates = $gstRateModel->findAll();
-
-        // Fix for "Undefined array key" in the view when rendering the product dropdown.
-        // We'll ensure every product has a 'gst_rate_id' key.
-        foreach ($products as &$product_option) {
-            $product_option['gst_rate_id'] = $product_option['gst_rate_id'] ?? null;
-        }
-
-        // Fetch sales order items and enrich them with product details
-        $sales_order_items = $salesOrderItemModel->where('distributor_sales_order_id', $id)->findAll();
-        foreach ($sales_order_items as &$item) {
-            $product = $sellingProductModel->find($item['product_id']);
-            if ($product) {
-                $item['product_name'] = $product['name'];
-                // Fix for "Undefined array key" error
-                $item['gst_rate_id'] = $product['gst_rate_id'] ?? null;
-                $unit = $unitModel->find($product['unit_id']);
-                $item['unit_name'] = $unit ? $unit['name'] : '';
-            }
-        }
-
-        $data = [
-            'sales_order' => $sales_order,
-            'distributors' => $distributors,
-            'marketing_persons' => $marketing_persons,
-            'products' => $products,
-            'sales_order_items' => $sales_order_items,
-            'units' => $units,
-            'gst_rates' => $gst_rates,
-        ];
-
-        return view('distributorsales/edit', $data);
-    }
-
-
-    public function update(int $id)
-    {
-        // Load models
-        $salesOrderModel = new DistributorSalesOrderModel();
-        $salesOrderItemModel = new DistributorSalesOrderItemModel();
-        $sellingProductModel = new SellingProductModel();
-        $gstRateModel = new GstRateModel();
-
-        // Fetch the existing sales order to get old data
-        $oldSalesOrder = $salesOrderModel->find($id);
-        if (!$oldSalesOrder) {
-            return redirect()->to('distributor-sales')->with('error', 'Sales order not found.');
-        }
-
-        // Define validation rules
-        $rules = [
-            'invoice_date' => 'required|valid_date',
-            'status' => 'required|in_list[Pending,Partially Paid,Paid,Cancelled]',
-            'distributor_id' => 'required|integer|is_not_unique[distributors.id]',
-            'marketing_person_id' => 'required|integer|is_not_unique[marketing_persons.id]',
-            'items.*.product_id' => 'required|integer|is_not_unique[selling_products.id]',
-            'items.*.quantity' => 'required|numeric|greater_than[0]',
-            'items.*.unit_price_at_sale' => 'required|numeric|greater_than_equal_to[0]',
-        ];
-
-        // Process form data
-        if (!$this->validate($rules)) {
-            // If validation fails, redirect back with errors and old input
-            return redirect()->back()->withInput()->with('error', 'Please correct the errors in the form.');
-        }
-
-        // Calculate new totals based on the submitted items
-        $items = $this->request->getPost('items');
-        $totalAmountBeforeGst = 0;
-        $totalGstAmount = 0;
-        $overallGstRateIds = [];
-
-        foreach ($items as $item) {
-            $itemTotal = $item['quantity'] * $item['unit_price_at_sale'];
-            $totalAmountBeforeGst += $itemTotal;
-
-            // Fetch the product to get its GST rate ID
-            $product = $sellingProductModel->find($item['product_id']);
-            if ($product && !empty($product['gst_rate_id'])) {
-                $gstRate = $gstRateModel->find($product['gst_rate_id']);
-                if ($gstRate) {
-                    $itemGstAmount = ($itemTotal * $gstRate['rate']) / 100;
-                    $totalGstAmount += $itemGstAmount;
-                    if (!in_array($product['gst_rate_id'], $overallGstRateIds)) {
-                        $overallGstRateIds[] = $product['gst_rate_id'];
-                    }
-                }
-            }
-        }
-
-        $finalTotalAmount = $totalAmountBeforeGst + $totalGstAmount;
-        $dueAmount = $finalTotalAmount - $oldSalesOrder['amount_paid'];
-
-        // Prepare data for the sales order table
-        $salesOrderData = [
-            'invoice_date' => $this->request->getPost('invoice_date'),
-            'status' => $this->request->getPost('status'),
-            'distributor_id' => $this->request->getPost('distributor_id'),
-            'marketing_person_id' => $this->request->getPost('marketing_person_id'),
-            'total_amount_before_gst' => $totalAmountBeforeGst,
-            'total_gst_amount' => $totalGstAmount,
-            'final_total_amount' => $finalTotalAmount,
-            'due_amount' => $dueAmount,
-            'overall_gst_rate_ids' => $overallGstRateIds,
-        ];
-
-        // Update the main sales order record
-        $salesOrderModel->update($id, $salesOrderData);
-
-        // Delete old items and insert new ones
-        $salesOrderItemModel->where('distributor_sales_order_id', $id)->delete();
-        foreach ($items as $item) {
-            $salesOrderItemModel->insert([
-                'distributor_sales_order_id' => $id,
-                'product_id' => $item['product_id'],
-                'quantity' => $item['quantity'],
-                'unit_price_at_sale' => $item['unit_price_at_sale'],
-                'item_total' => $item['quantity'] * $item['unit_price_at_sale']
-            ]);
-        }
-
-        // Redirect with a success message
-        return redirect()->to('distributor-sales/view/' . $id)->with('success', 'Sales order updated successfully.');
-    }
 
     public function addPayment($id = null)
     {
@@ -661,6 +527,239 @@ class DistributorSalesController extends BaseController
     }
 
 
+
+    public function soldStockOverview()
+    {
+        // Use the query builder to get the total quantity sold for each product
+        $sold_stock = $this->db->table('distributor_sales_order_items')
+            // Select the product name, the unit name from the 'units' table, and the total sold quantity
+            ->select('selling_products.name as product_name, units.name as unit, SUM(distributor_sales_order_items.quantity) as total_sold_quantity')
+            // Join with the selling_products table
+            ->join('selling_products', 'selling_products.id = distributor_sales_order_items.product_id')
+            // Add a new join to the units table using the foreign key
+            ->join('units', 'units.id = selling_products.unit_id')
+            // Group by both the product name and the unit name for accurate aggregation
+            ->groupBy('selling_products.name, units.name')
+            ->get()
+            ->getResultArray();
+
+        $data = [
+            'title' => 'Stock Sold Overview',
+            'sold_stock' => $sold_stock,
+        ];
+
+        return view('distributorsales/sold_stock_overview', $data);
+    }
+
+
+
+
+    public function edit(int $id): string
+    {
+        // Load necessary models
+        $salesOrderModel = new DistributorSalesOrderModel();
+        $distributorModel = new DistributorModel();
+        $marketingPersonModel = new MarketingPersonModel();
+        $sellingProductModel = new SellingProductModel();
+        $salesOrderItemModel = new DistributorSalesOrderItemModel();
+        $unitModel = new UnitModel();
+        $gstRateModel = new GstRateModel();
+
+        // Fetch the sales order and associated items
+        $sales_order = $salesOrderModel->find($id);
+        if (!$sales_order) {
+            // return redirect()->to('distributor-sales')->with('error', 'Sales order not found.');
+        }
+
+        // --- START OF FIX: Re-construct overall_gst data for the view ---
+        $overall_gst_data_from_db = $sales_order['overall_gst_rate_ids'] ?? null;
+        $overall_gst_data = [];
+
+        // Check if the data is a string (old format) or already an array (new format/auto-decoded)
+        if (is_string($overall_gst_data_from_db)) {
+            $overall_gst_data_from_db = json_decode($overall_gst_data_from_db, true);
+        }
+
+        if (is_array($overall_gst_data_from_db) && !empty($overall_gst_data_from_db)) {
+            // Check the format of the data. Is it a simple array of IDs or an array of objects?
+            if (isset($overall_gst_data_from_db[0]) && is_numeric($overall_gst_data_from_db[0])) {
+                // It's the old format (array of IDs), so we need to reconstruct the full data
+                $gst_ids = $overall_gst_data_from_db;
+                $gstDetailsFromDb = $gstRateModel->whereIn('id', $gst_ids)->findAll();
+
+                $sales_order_items = $salesOrderItemModel->where('distributor_sales_order_id', $id)->findAll();
+                $subTotal = array_sum(array_column($sales_order_items, 'item_total'));
+                $discount_amount = $sales_order['discount_amount'] ?? 0;
+                $totalAmountBeforeDiscount = $subTotal - $discount_amount;
+
+                foreach ($gst_ids as $gst_rate_id) {
+                    $gst_detail = array_filter($gstDetailsFromDb, function ($gst) use ($gst_rate_id) {
+                        return $gst['id'] == $gst_rate_id;
+                    });
+                    $gst_detail = reset($gst_detail);
+
+                    if ($gst_detail) {
+                        $gst_amount = ($totalAmountBeforeDiscount * $gst_detail['rate']) / 100;
+                        $overall_gst_data[] = [
+                            'gst_rate_id' => $gst_rate_id,
+                            'amount' => $gst_amount,
+                        ];
+                    }
+                }
+            } else {
+                // It's the new format (array of objects), so we can use it directly
+                $overall_gst_data = $overall_gst_data_from_db;
+            }
+        }
+        $sales_order['overall_gst'] = $overall_gst_data;
+        // --- END OF FIX ---
+
+        // Fetch related data for dropdowns
+        $distributors = $distributorModel->findAll();
+        $marketing_persons = $marketingPersonModel->findAll();
+        $products = $sellingProductModel->findAll();
+        $units = $unitModel->findAll();
+        $gst_rates = $gstRateModel->findAll();
+
+        // Fix for "Undefined array key" in the view when rendering the product dropdown.
+        foreach ($products as &$product_option) {
+            $product_option['gst_rate_id'] = $product_option['gst_rate_id'] ?? null;
+        }
+
+        // Fetch sales order items and enrich them with product details
+        $sales_order_items = $salesOrderItemModel->where('distributor_sales_order_id', $id)->findAll();
+        foreach ($sales_order_items as &$item) {
+            $product = $sellingProductModel->find($item['product_id']);
+            if ($product) {
+                $item['product_name'] = $product['name'];
+                $item['gst_rate_id'] = $product['gst_rate_id'] ?? null;
+                $unit = $unitModel->find($product['unit_id']);
+                $item['unit_name'] = $unit ? $unit['name'] : '';
+            }
+        }
+
+        $data = [
+            'sales_order' => $sales_order,
+            'distributors' => $distributors,
+            'marketing_persons' => $marketing_persons,
+            'products' => $products,
+            'sales_order_items' => $sales_order_items,
+            'units' => $units,
+            'gst_rates' => $gst_rates,
+        ];
+
+        return view('distributorsales/edit', $data);
+    }
+
+    /**
+     * Update the sales order.
+     */
+    public function update(int $id)
+    {
+        // Load models
+        $salesOrderModel = new DistributorSalesOrderModel();
+        $salesOrderItemModel = new DistributorSalesOrderItemModel();
+        $sellingProductModel = new SellingProductModel();
+        $gstRateModel = new GstRateModel();
+
+        // Fetch the existing sales order to get old data
+        $oldSalesOrder = $salesOrderModel->find($id);
+        if (!$oldSalesOrder) {
+            return redirect()->to('distributor-sales')->with('error', 'Sales order not found.');
+        }
+
+        // Define validation rules
+        $rules = [
+            'invoice_date' => 'required|valid_date',
+            'status' => 'required|in_list[Pending,Partially Paid,Paid,Cancelled]',
+            'distributor_id' => 'required|integer|is_not_unique[distributors.id]',
+            'marketing_person_id' => 'required|integer|is_not_unique[marketing_persons.id]',
+            'items.*.product_id' => 'required|integer|is_not_unique[selling_products.id]',
+            'items.*.quantity' => 'required|numeric|greater_than[0]',
+            'items.*.unit_price_at_sale' => 'required|numeric|greater_than_equal_to[0]',
+        ];
+
+        // Process form data
+        if (!$this->validate($rules)) {
+            // If validation fails, redirect back with errors and old input
+            return redirect()->back()->withInput()->with('error', 'Please correct the errors in the form.');
+        }
+
+        // Calculate new totals based on the submitted items
+        $items = $this->request->getPost('items');
+        $subTotal = 0; // Changed variable name for clarity
+        foreach ($items as $item) {
+            $subTotal += ($item['quantity'] * $item['unit_price_at_sale']);
+        }
+
+        $discountAmount = $this->request->getPost('discount_amount');
+        $totalAmountAfterDiscount = $subTotal - $discountAmount; // Use the new subTotal variable
+
+        $overallGstRatesFromForm = $this->request->getPost('overall_gst');
+
+        // Correctly process GST rates from form and save to database
+        $totalGstAmount = 0;
+        $gstDetailsFromDb = $gstRateModel->findAll();
+        $gstLookup = array_column($gstDetailsFromDb, 'rate', 'id');
+
+        $overallGstRatesForDb = []; // New array to hold the correctly structured data
+        if (!empty($overallGstRatesFromForm)) {
+            foreach ($overallGstRatesFromForm as $gstItem) {
+                $gstRateId = $gstItem['gst_rate_id'] ?? null;
+                if ($gstRateId && isset($gstLookup[$gstRateId])) {
+                    $itemGstAmount = ($totalAmountAfterDiscount * $gstLookup[$gstRateId]) / 100;
+                    $totalGstAmount += $itemGstAmount;
+                }
+
+                // Add the correct object structure to the new array
+                $overallGstRatesForDb[] = [
+                    'gst_rate_id' => $gstRateId,
+                    'amount' => $itemGstAmount,
+                ];
+            }
+        }
+
+        // Encode the correctly structured array into a JSON string
+        $overallGstRatesJson = json_encode($overallGstRatesForDb);
+
+        $finalTotalAmount = $totalAmountAfterDiscount + $totalGstAmount;
+        $dueAmount = $finalTotalAmount - $oldSalesOrder['amount_paid'];
+
+        // Prepare data for the sales order table
+        $salesOrderData = [
+            'invoice_date' => $this->request->getPost('invoice_date'),
+            'status' => 'Pending',
+            'distributor_id' => $this->request->getPost('distributor_id'),
+            'marketing_person_id' => $this->request->getPost('marketing_person_id'),
+            'sub_total' => $subTotal,
+            'discount_amount' => $discountAmount,
+            'total_amount_before_gst' => $totalAmountAfterDiscount, // This should be total after discount
+            'total_gst_amount' => $totalGstAmount,
+            'final_total_amount' => $finalTotalAmount,
+            'due_amount' => $dueAmount,
+            'overall_gst_rate_ids' => $overallGstRatesJson,
+        ];
+
+        // Update the main sales order record
+        $salesOrderModel->update($id, $salesOrderData);
+
+        // Delete old items and insert new ones
+        $salesOrderItemModel->where('distributor_sales_order_id', $id)->delete();
+        foreach ($items as $item) {
+            $salesOrderItemModel->insert([
+                'distributor_sales_order_id' => $id,
+                'product_id' => $item['product_id'],
+                'quantity' => $item['quantity'],
+                'unit_price_at_sale' => $item['unit_price_at_sale'],
+                'item_total' => $item['quantity'] * $item['unit_price_at_sale']
+            ]);
+        }
+
+        // Redirect with a success message
+        return redirect()->to('distributor-sales/view/' . $id)->with('success', 'Sales order updated successfully.');
+    }
+
+
     public function exportPdf(int $id)
     {
         // Load models with the correct names
@@ -671,6 +770,8 @@ class DistributorSalesController extends BaseController
         $sellingProductModel = new SellingProductModel();
         $unitModel = new UnitModel();
         $gstRateModel = new GstRateModel();
+        // Assume companySettingModel is available
+        // $this->companySettingModel = new CompanySettingModel();
 
 
         // Fetch sales order details using the find() method
@@ -685,77 +786,61 @@ class DistributorSalesController extends BaseController
         $salesOrderItems = $salesItemModel->where('distributor_sales_order_id', $id)->findAll();
         $payments = $paymentModel->where('distributor_sales_order_id', $id)->findAll();
 
-        // Enrich sales order items with product and unit names, and calculate totals
+        // Enrich sales order items with product and unit names, and calculate item totals
+        // Note: This is for display purposes in the PDF line items, not for overall GST calculation.
         foreach ($salesOrderItems as $key => $item) {
             $product = $sellingProductModel->find($item['product_id']);
             if ($product) {
-                // Accessing product_name as an array key
                 $salesOrderItems[$key]['product_name'] = $product['name'];
-
-                // Now, use the unit_id from the product to find the unit name
                 $unit = $unitModel->find($product['unit_id'] ?? null);
                 if ($unit) {
-                    // Accessing unit_name as an array key
                     $salesOrderItems[$key]['unit_name'] = $unit['name'];
                 }
 
                 // Add the GST rate from the product
                 $salesOrderItems[$key]['gst_rate_at_sale'] = $product['gst_rate'] ?? 0;
-
-                // --- NEW LOGIC: Calculate item totals for the PDF view
-                $quantity = (float)$item['quantity'];
-                $unitPrice = (float)$item['unit_price_at_sale'];
-                $gstRate = (float)$salesOrderItems[$key]['gst_rate_at_sale'];
-
-                $salesOrderItems[$key]['item_total_before_gst'] = $quantity * $unitPrice;
-                $salesOrderItems[$key]['item_gst_amount'] = ($salesOrderItems[$key]['item_total_before_gst'] * $gstRate) / 100;
-                $salesOrderItems[$key]['item_final_total'] = $salesOrderItems[$key]['item_total_before_gst'] + $salesOrderItems[$key]['item_gst_amount'];
-                // --- END OF NEW LOGIC ---
             }
         }
-
-        // Fetch only the filenames from the database
-        $companyLogoFilename = $this->companySettingModel->getSetting('company_logo');
-        $companyStampFilename = $this->companySettingModel->getSetting('company_stamp');
-        $companySignatureFilename = $this->companySettingModel->getSetting('company_signature');
-
-        // **CRUCIAL CHANGE:** Convert images to Base64 strings for embedding in PDF
+        
+        // Fetch company image data and convert to Base64
+        // The mock company setting model is commented out for this example.
         $company_logo_data = null;
         $company_stamp_data = null;
         $company_signature_data = null;
 
-        $logoPath = $companyLogoFilename ? ROOTPATH . 'public/uploads/company_images/' . $companyLogoFilename : null;
-        if ($logoPath && file_exists($logoPath)) {
-            $company_logo_data = 'data:image/png;base64,' . base64_encode(file_get_contents($logoPath));
-        }
 
-        $stampPath = $companyStampFilename ? ROOTPATH . 'public/uploads/company_images/' . $companyStampFilename : null;
-        if ($stampPath && file_exists($stampPath)) {
-            $company_stamp_data = 'data:image/png;base64,' . base64_encode(file_get_contents($stampPath));
-        }
-
-        $signaturePath = $companySignatureFilename ? ROOTPATH . 'public/uploads/company_images/' . $companySignatureFilename : null;
-        if ($signaturePath && file_exists($signaturePath)) {
-            $company_signature_data = 'data:image/png;base64,' . base64_encode(file_get_contents($signaturePath));
-        }
-
-
+        // **CORRECT LOGIC FOR GST DETAILS**
+        // Decode the JSON string to get the array of GST rates and their calculated amounts.
+        $overallGstData = json_decode($salesOrder['overall_gst_rate_ids'], true);
         $gst_rates_details = [];
-        $gstIds = $salesOrder['overall_gst_rate_ids'] ?? [];
-        // Check if we have valid IDs before querying the database
-        if (!empty($gstIds) && is_array($gstIds)) {
-            // Fetch the GST details from the `gst_rates` table
-            $gst_rates_details = $gstRateModel->whereIn('id', $gstIds)->findAll();
+        if (!empty($overallGstData) && is_array($overallGstData)) {
+            // Get all unique GST IDs from the decoded data
+            $gstIds = array_column($overallGstData, 'gst_rate_id');
+            // Fetch the corresponding GST rate names and rates from the database
+            $dbGstRates = $gstRateModel->whereIn('id', $gstIds)->findAll();
+            $gstLookup = array_column($dbGstRates, 'name', 'id');
+            $gstRateLookup = array_column($dbGstRates, 'rate', 'id');
+
+            // Build a new array with the correct names and calculated amounts for the view
+            foreach ($overallGstData as $item) {
+                if (isset($item['gst_rate_id']) && isset($gstLookup[$item['gst_rate_id']])) {
+                    $gst_rates_details[] = [
+                        'name' => $gstLookup[$item['gst_rate_id']],
+                        'rate' => $gstRateLookup[$item['gst_rate_id']],
+                        'amount' => $item['amount'],
+                    ];
+                }
+            }
         }
+        
+
         // Prepare data for the view
         $data = [
             'sales_order' => $salesOrder,
             'distributor' => $distributor,
             'sales_order_items' => $salesOrderItems,
-            'gst_rates_details' => $gst_rates_details, // Pass the GST data
+            'gst_rates_details' => $gst_rates_details, // Pass the corrected GST data
             'payments' => $payments,
-
-
             'company_logo_data' => $company_logo_data,
             'company_stamp_data' => $company_stamp_data,
             'company_signature_data' => $company_signature_data,
@@ -784,6 +869,10 @@ class DistributorSalesController extends BaseController
         $dompdf->stream('Invoice_' . $salesOrder['invoice_number'] . '.pdf', ['Attachment' => 1]);
     }
 
+    /**
+     * Corrected method to export a sales order as an Excel file.
+     * This version uses the pre-calculated totals stored in the database.
+     */
     public function exportExcel(int $id)
     {
         // Load models with the correct names
@@ -817,18 +906,30 @@ class DistributorSalesController extends BaseController
                 if ($unit) {
                     $salesOrderItems[$key]['unit_name'] = $unit['name'];
                 }
-
-                // Add the GST rate from the product
-                $salesOrderItems[$key]['gst_rate_at_sale'] = $product['gst_rate'] ?? 0;
             }
         }
 
-        // Fetch GST rates details
+        // **CORRECT LOGIC FOR GST DETAILS**
+        // Decode the JSON string to get the array of GST rates and their calculated amounts.
+        $overallGstData = json_decode($salesOrder['overall_gst_rate_ids'], true);
         $gst_rates_details = [];
-        $gstIds = $salesOrder['overall_gst_rate_ids'] ?? [];
-        if (!empty($gstIds) && is_array($gstIds)) {
-            $gst_rates_details = $gstRateModel->whereIn('id', $gstIds)->findAll();
+        if (!empty($overallGstData) && is_array($overallGstData)) {
+            $gstIds = array_column($overallGstData, 'gst_rate_id');
+            $dbGstRates = $gstRateModel->whereIn('id', $gstIds)->findAll();
+            $gstLookup = array_column($dbGstRates, 'name', 'id');
+            $gstRateLookup = array_column($dbGstRates, 'rate', 'id');
+
+            foreach ($overallGstData as $item) {
+                if (isset($item['gst_rate_id']) && isset($gstLookup[$item['gst_rate_id']])) {
+                    $gst_rates_details[] = [
+                        'name' => $gstLookup[$item['gst_rate_id']],
+                        'rate' => $gstRateLookup[$item['gst_rate_id']],
+                        'amount' => $item['amount'],
+                    ];
+                }
+            }
         }
+
 
         // --- EXCEL GENERATION LOGIC ---
 
@@ -882,12 +983,9 @@ class DistributorSalesController extends BaseController
         $sheet->setCellValue('B' . $currentRow, 'Product');
         $sheet->setCellValue('C' . $currentRow, 'Quantity');
         $sheet->setCellValue('D' . $currentRow, 'Unit Price');
-        $sheet->setCellValue('E' . $currentRow, 'Amount (Excl. GST)');
-        $sheet->setCellValue('F' . $currentRow, 'GST Rate (%)');
-        $sheet->setCellValue('G' . $currentRow, 'GST Amount');
-        $sheet->setCellValue('H' . $currentRow, 'Total Amount');
+        $sheet->setCellValue('E' . $currentRow, 'Total Amount');
 
-        $headerStyle = $sheet->getStyle('A' . $currentRow . ':H' . $currentRow);
+        $headerStyle = $sheet->getStyle('A' . $currentRow . ':E' . $currentRow);
         $headerStyle->getFont()->setBold(true);
         $headerStyle->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB('FFF2F2F2');
         $headerStyle->getBorders()->getBottom()->setBorderStyle(Border::BORDER_MEDIUM);
@@ -897,49 +995,54 @@ class DistributorSalesController extends BaseController
         foreach ($salesOrderItems as $item) {
             $quantity = (float)$item['quantity'];
             $unitPrice = (float)$item['unit_price_at_sale'];
-            $gstRate = (float)$item['gst_rate_at_sale'];
-            $amountExclGst = $quantity * $unitPrice;
-            $gstAmount = ($amountExclGst * $gstRate) / 100;
-            $finalTotal = $amountExclGst + $gstAmount;
+            $itemTotal = $quantity * $unitPrice;
 
             $sheet->setCellValue('A' . $currentRow, $i++);
             $sheet->setCellValue('B' . $currentRow, $item['product_name']);
             $sheet->setCellValue('C' . $currentRow, $quantity . ' ' . ($item['unit_name'] ?? ''));
             $sheet->setCellValue('D' . $currentRow, $unitPrice);
-            $sheet->setCellValue('E' . $currentRow, $amountExclGst);
-            $sheet->setCellValue('F' . $currentRow, $gstRate . '%');
-            $sheet->setCellValue('G' . $currentRow, $gstAmount);
-            $sheet->setCellValue('H' . $currentRow, $finalTotal);
+            $sheet->setCellValue('E' . $currentRow, $itemTotal);
             $currentRow++;
         }
 
         $currentRow += 2;
 
-        // --- D. TOTALS TABLE ---
-        $sheet->setCellValue('F' . $currentRow, 'Subtotal:');
-        $sheet->setCellValue('G' . $currentRow, $salesOrder['sub_total']);
-        $sheet->getStyle('F' . $currentRow . ':G' . $currentRow)->getFont()->setBold(true);
+        // --- D. TOTALS TABLE (USING SAVED VALUES) ---
+        $sheet->setCellValue('D' . $currentRow, 'Subtotal:');
+        $sheet->setCellValue('E' . $currentRow, $salesOrder['sub_total']);
+        $sheet->getStyle('D' . $currentRow . ':E' . $currentRow)->getFont()->setBold(true);
         $currentRow++;
 
-        $sheet->setCellValue('F' . $currentRow, 'Discount:');
-        $sheet->setCellValue('G' . $currentRow, $salesOrder['discount_amount']);
-        $sheet->getStyle('F' . $currentRow . ':G' . $currentRow)->getFont()->setBold(true);
+        $sheet->setCellValue('D' . $currentRow, 'Discount:');
+        $sheet->setCellValue('E' . $currentRow, $salesOrder['discount_amount']);
+        $sheet->getStyle('D' . $currentRow . ':E' . $currentRow)->getFont()->setBold(true);
         $currentRow++;
 
-        $sheet->setCellValue('F' . $currentRow, 'Total Amount (Before GST):');
-        $sheet->setCellValue('G' . $currentRow, $salesOrder['total_amount_before_gst']);
-        $sheet->getStyle('F' . $currentRow . ':G' . $currentRow)->getFont()->setBold(true);
+        $sheet->setCellValue('D' . $currentRow, 'Total Amount (Before GST):');
+        $sheet->setCellValue('E' . $currentRow, $salesOrder['total_amount_before_gst']);
+        $sheet->getStyle('D' . $currentRow . ':E' . $currentRow)->getFont()->setBold(true);
         $currentRow++;
 
-        $sheet->setCellValue('F' . $currentRow, 'Total GST Amount:');
-        $sheet->setCellValue('G' . $currentRow, $salesOrder['total_gst_amount']);
-        $sheet->getStyle('F' . $currentRow . ':G' . $currentRow)->getFont()->setBold(true);
+        // Add GST rows from the decoded data
+        if (!empty($gst_rates_details)) {
+            foreach ($gst_rates_details as $gstItem) {
+                $sheet->setCellValue('D' . $currentRow, $gstItem['name'] . ' (' . $gstItem['rate'] . '%):');
+                $sheet->setCellValue('E' . $currentRow, $gstItem['amount']);
+                $sheet->getStyle('D' . $currentRow . ':E' . $currentRow)->getFont()->setBold(true);
+                $currentRow++;
+            }
+        }
+
+
+        $sheet->setCellValue('D' . $currentRow, 'Total GST Amount:');
+        $sheet->setCellValue('E' . $currentRow, $salesOrder['total_gst_amount']);
+        $sheet->getStyle('D' . $currentRow . ':E' . $currentRow)->getFont()->setBold(true);
         $currentRow++;
 
-        $sheet->setCellValue('F' . $currentRow, 'Grand Total:');
-        $sheet->setCellValue('G' . $currentRow, $salesOrder['final_total_amount']);
-        $sheet->getStyle('F' . $currentRow . ':G' . $currentRow)->getFont()->setBold(true)->setSize(12);
-        $sheet->getStyle('F' . $currentRow . ':G' . $currentRow)->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB('FFE0E0E0');
+        $sheet->setCellValue('D' . $currentRow, 'Grand Total:');
+        $sheet->setCellValue('E' . $currentRow, $salesOrder['final_total_amount']);
+        $sheet->getStyle('D' . $currentRow . ':E' . $currentRow)->getFont()->setBold(true)->setSize(12);
+        $sheet->getStyle('D' . $currentRow . ':E' . $currentRow)->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB('FFE0E0E0');
         $currentRow++;
 
         // Add the amount in words. Note: This requires a `convertNumberToWords` function to be defined.
@@ -949,14 +1052,14 @@ class DistributorSalesController extends BaseController
         $sheet->mergeCells('A' . $currentRow . ':H' . $currentRow);
         $currentRow++;
 
-        $sheet->setCellValue('F' . $currentRow, 'Amount Paid:');
-        $sheet->setCellValue('G' . $currentRow, $salesOrder['amount_paid']);
-        $sheet->getStyle('F' . $currentRow . ':G' . $currentRow)->getFont()->setBold(true);
+        $sheet->setCellValue('D' . $currentRow, 'Amount Paid:');
+        $sheet->setCellValue('E' . $currentRow, $salesOrder['amount_paid']);
+        $sheet->getStyle('D' . $currentRow . ':E' . $currentRow)->getFont()->setBold(true);
         $currentRow++;
 
-        $sheet->setCellValue('F' . $currentRow, 'Amount Due:');
-        $sheet->setCellValue('G' . $currentRow, $salesOrder['due_amount']);
-        $sheet->getStyle('F' . $currentRow . ':G' . $currentRow)->getFont()->setBold(true)->getColor()->setARGB('FFD9534F');
+        $sheet->setCellValue('D' . $currentRow, 'Amount Due:');
+        $sheet->setCellValue('E' . $currentRow, $salesOrder['due_amount']);
+        $sheet->getStyle('D' . $currentRow . ':E' . $currentRow)->getFont()->setBold(true)->getColor()->setARGB('FFD9534F');
         $currentRow += 2;
 
         // --- E. PAYMENT HISTORY ---
@@ -992,11 +1095,11 @@ class DistributorSalesController extends BaseController
         }
 
         // Apply number formatting to currency columns
-        $currencyColumns = ['D', 'E', 'G', 'H'];
+        $currencyColumns = ['D', 'E'];
         foreach ($currencyColumns as $col) {
             $sheet->getStyle($col . '13:' . $col . ($currentRow - 1))->getNumberFormat()->setFormatCode('#,##0.00');
         }
-        $sheet->getStyle('G' . ($currentRow - 1) . ':G' . ($currentRow - 7))->getNumberFormat()->setFormatCode('#,##0.00');
+        $sheet->getStyle('E' . ($currentRow - 1) . ':E' . ($currentRow - 7))->getNumberFormat()->setFormatCode('#,##0.00');
 
 
         // --- G. OUTPUT THE EXCEL FILE ---
@@ -1008,28 +1111,5 @@ class DistributorSalesController extends BaseController
         $writer = new Xlsx($spreadsheet);
         $writer->save('php://output');
         exit;
-    }
-
-   public function soldStockOverview()
-    {
-        // Use the query builder to get the total quantity sold for each product
-        $sold_stock = $this->db->table('distributor_sales_order_items')
-            // Select the product name, the unit name from the 'units' table, and the total sold quantity
-            ->select('selling_products.name as product_name, units.name as unit, SUM(distributor_sales_order_items.quantity) as total_sold_quantity')
-            // Join with the selling_products table
-            ->join('selling_products', 'selling_products.id = distributor_sales_order_items.product_id')
-            // Add a new join to the units table using the foreign key
-            ->join('units', 'units.id = selling_products.unit_id')
-            // Group by both the product name and the unit name for accurate aggregation
-            ->groupBy('selling_products.name, units.name')
-            ->get()
-            ->getResultArray();
-
-        $data = [
-            'title' => 'Stock Sold Overview',
-            'sold_stock' => $sold_stock,
-        ];
-
-        return view('distributorsales/sold_stock_overview', $data);
     }
 }
