@@ -25,3 +25,10 @@ DEBUG - 2025-08-16 04:08:18 --> Session: Class initialized using 'CodeIgniter\Se
 DEBUG - 2025-08-16 04:08:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 DEBUG - 2025-08-16 04:08:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 DEBUG - 2025-08-16 04:08:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-16 04:52:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-16 04:52:25 --> Auth::attemptLogin - Attempting login for: admin
+DEBUG - 2025-08-16 04:52:25 --> Auth::attemptLogin - User found. Hashed password from DB: $2y$10$Sh/3KsbkbQ12FXx.ZBngVOi1ZOTuKa4swBJBgjtIhvZ7HhXQ.Dh3W
+DEBUG - 2025-08-16 04:52:25 --> Auth::attemptLogin - Plaintext password from form (for verification): password123
+DEBUG - 2025-08-16 04:52:25 --> Auth::attemptLogin - User admin successfully logged in.
+DEBUG - 2025-08-16 04:52:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-16 04:52:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
