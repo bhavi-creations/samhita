@@ -58,6 +58,11 @@
                                 <?php endforeach; ?>
                             </select>
                         </div>
+                        <div class="col-md-6 form-group">
+                            <label for="invoice_date">Invoice Date</label>
+                            <input type="date" name="invoice_date" id="invoice_date" class="form-control" required
+                                value="<?= old('invoice_date', date('Y-m-d')) ?>">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -177,6 +182,7 @@
                                 <label for="payment_type">Payment Type</label>
                                 <select name="payment_type" id="payment_type" class="form-control">
                                     <option value="">Select Payment Type</option>
+                                    <option value="Credit" <?= (old('payment_type') == 'Credit') ? 'selected' : '' ?>>Credit</option>
                                     <option value="Cash" <?= (old('payment_type') == 'Cash') ? 'selected' : '' ?>>Cash</option>
                                     <option value="Bank Transfer" <?= (old('payment_type') == 'Bank Transfer') ? 'selected' : '' ?>>Bank Transfer</option>
                                     <option value="UPI" <?= (old('payment_type') == 'UPI') ? 'selected' : '' ?>>UPI</option>
@@ -213,6 +219,8 @@
         const initialPaymentAmountInput = document.getElementById('initial_payment_amount');
         const pricingTierSelect = document.getElementById('pricing_tier');
         const overallGstFieldContainer = document.getElementById('overall_gst_field_container');
+        const paymentTypeSelect = document.getElementById('payment_type');
+        const transactionIdInput = document.getElementById('transaction_id');
         const form = document.querySelector('form');
 
         // New elements for remaining balance
@@ -268,15 +276,24 @@
         }
 
         function togglePaymentFieldsRequired() {
-            const paymentTypeInput = document.getElementById('payment_type');
-            const transactionIdInput = document.getElementById('transaction_id');
+            const paymentType = paymentTypeSelect.value;
             const initialPaymentAmount = parseFloat(initialPaymentAmountInput.value) || 0;
-            if (initialPaymentAmount > 0) {
-                paymentTypeInput.required = true;
-            } else {
-                paymentTypeInput.required = false;
-                paymentTypeInput.value = '';
+            
+            // If payment type is 'Credit', reset initial payment to 0
+            if (paymentType === 'Credit') {
+                initialPaymentAmountInput.value = '0.00';
                 transactionIdInput.value = '';
+                initialPaymentAmountInput.disabled = true;
+                transactionIdInput.disabled = true;
+            } else {
+                initialPaymentAmountInput.disabled = false;
+                transactionIdInput.disabled = false;
+            }
+
+            if (initialPaymentAmount > 0 && paymentType !== 'Credit') {
+                paymentTypeSelect.required = true;
+            } else {
+                paymentTypeSelect.required = false;
             }
         }
 
@@ -475,6 +492,9 @@
             });
             updateAllTotals();
         });
+        
+        // Listen for change on the payment type to handle "Credit" option
+        paymentTypeSelect.addEventListener('change', togglePaymentFieldsRequired);
 
         try {
             if (window.jQuery && $.fn.select2) {

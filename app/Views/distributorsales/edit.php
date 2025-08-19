@@ -5,9 +5,7 @@
 <div class="container mt-4">
     <h2>Edit Sales Order: <?= esc($sales_order['invoice_number']) ?></h2>
 
- <?= session()->getFlashdata('error') ? '<div class="alert alert-danger">' . session()->getFlashdata('error') . '</div>' : '' ?>
- <?= service('validation')->listErrors() ? '<div class="alert alert-danger">' . service('validation')->listErrors() . '</div>' : '' ?>
-
+   
     <form action="<?= base_url('distributor-sales/update/' . $sales_order['id']) ?>" method="post">
         <?= csrf_field() ?>
         <input type="hidden" name="_method" value="PUT"> <!-- Method spoofing for PUT request -->
@@ -174,8 +172,6 @@
             </div>
         </div>
 
-
-
         <!-- Totals and Payment Details Card -->
         <div class="card mb-4">
             <div class="card-header">
@@ -202,32 +198,28 @@
                                         // The `old()` function provides a fallback in case a form validation fails.
                                         $selectedGstId = old("overall_gst.{$index}.gst_rate_id", $gst['gst_rate_id'] ?? null);
                                         $gstAmountValue = old("overall_gst.{$index}.amount", $gst['amount'] ?? 0);
-                                ?>
+                                        ?>
                                         <div class="input-group mb-2 overall-gst-item">
                                             <select class="form-control overall-gst-select" name="overall_gst[<?= $index ?>][gst_rate_id]">
                                                 <option value="">Select a GST Rate</option>
                                                 <?php foreach ($gst_rates as $gst_option): ?>
                                                     <option value="<?= esc($gst_option['id']) ?>"
-                                                        data-rate="<?= esc($gst_option['rate']) ?>"
-                                                        <?= ($selectedGstId == $gst_option['id']) ? 'selected' : '' ?>>
+                                                            data-rate="<?= esc($gst_option['rate']) ?>"
+                                                            <?= ($selectedGstId == $gst_option['id']) ? 'selected' : '' ?>>
                                                         <?= esc($gst_option['name']) ?> (<?= esc($gst_option['rate']) ?>%)
                                                     </option>
                                                 <?php endforeach; ?>
                                             </select>
-                                            <input type="number" name="overall_gst[<?= $index ?>][amount]" class="form-control overall-gst-amount" readonly
-                                                value="<?= esc($gstAmountValue) ?>">
+                                            <input type="number" name="overall_gst[<?= $index ?>][amount]" class="form-control overall-gst-amount" readonly value="<?= esc($gstAmountValue) ?>">
                                             <div class="input-group-append">
                                                 <button type="button" class="btn btn-danger remove-overall-gst-btn">Remove</button>
                                             </div>
                                         </div>
-                                <?php
-                                    endforeach;
-                                endif;
-                                ?>
+                                    <?php endforeach;
+                                endif; ?>
                             </div>
                             <button type="button" class="btn btn-info btn-sm mt-2" id="addOverallGstButton">Add GST Rate</button>
                         </div>
-
                     </div>
                     <div class="col-md-6">
                         <table class="table">
@@ -253,7 +245,7 @@
                                     <td class="text-end" id="finalTotal">0.00</td>
                                 </tr>
                                 <tr class="font-weight-bold">
-                                    <td>Amount Payment</td>
+                                    <td>Amount Paid</td>
                                     <td class="text-end" id="initialPaymentDisplay">0.00</td>
                                 </tr>
                                 <tr class="font-weight-bold">
@@ -267,63 +259,117 @@
 
                 <div class="row mt-4">
                     <div class="col-md-6 form-group">
+                        <!-- New: Payment Type Dropdown -->
+                        <label for="payment_type">Payment Type</label>
+                        <?php
+                        // Check if a payment record exists to determine the initial payment type
+                        $paymentType = 'Cash'; // Default
+                        $transactionId = '';
+                        if (isset($payments) && !empty($payments)) {
+                            // Find the first payment and use its type.
+                            $paymentType = $payments[0]['payment_method'];
+                            $transactionId = $payments[0]['transaction_id'] ?? '';
+                        } elseif ($sales_order['amount_paid'] == 0 && $sales_order['due_amount'] > 0) {
+                            $paymentType = 'Credit'; // This order was likely created with a credit type
+                        }
+                        ?>
+                        <select name="payment_type" id="payment_type" class="form-control">
+                            <option value="Cash" <?= ($paymentType == 'Cash') ? 'selected' : '' ?>>Cash</option>
+                            <option value="Online" <?= ($paymentType == 'Online') ? 'selected' : '' ?>>Online</option>
+                            <option value="Cheque" <?= ($paymentType == 'Cheque') ? 'selected' : '' ?>>Cheque</option>
+                            <option value="Credit" <?= ($paymentType == 'Credit') ? 'selected' : '' ?>>Credit</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 form-group" id="initial-payment-field-group" style="display: <?= ($paymentType == 'Credit') ? 'none' : 'block' ?>;">
                         <label for="amount_paid">Initial Payment</label>
                         <input type="number" name="amount_paid" id="amount_paid" class="form-control" step="0.01"
-                            value="<?= old('amount_paid', esc($sales_order['amount_paid'] ?? 0)) ?>">
+                               value="<?= old('amount_paid', esc($sales_order['amount_paid'] ?? 0)) ?>">
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="payment_type">Payment Type</label>
-                            <select name="payment_type" id="payment_type" class="form-control">
-                                <option value="">Select Payment Type</option>
-                                <option value="Cash" <?= (old('payment_type', $sales_order['payment_type'] ?? '') == 'Cash') ? 'selected' : '' ?>>Cash</option>
-                                <option value="Bank Transfer" <?= (old('payment_type', $sales_order['payment_type'] ?? '') == 'Bank Transfer') ? 'selected' : '' ?>>Bank Transfer</option>
-                                <option value="UPI" <?= (old('payment_type', $sales_order['payment_type'] ?? '') == 'UPI') ? 'selected' : '' ?>>UPI</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="transaction_id">Transaction ID</label>
-                            <input type="text" name="transaction_id" id="transaction_id" class="form-control"
-                                value="<?= old('transaction_id', esc($sales_order['transaction_id'] ?? '')) ?>">
-                        </div>
+                    <div class="col-md-6 form-group" id="transaction-id-field-group" style="display: <?= ($paymentType == 'Credit' || $paymentType == 'Cash') ? 'none' : 'block' ?>;">
+                        <label for="transaction_id">Transaction ID</label>
+                        <input type="text" name="transaction_id" id="transaction_id" class="form-control"
+                               value="<?= esc($transactionId) ?>">
                     </div>
+                </div>
+
+                <div class="form-group mb-3 mt-4">
+                    <label for="notes">Notes</label>
+                    <textarea name="notes" id="notes" class="form-control" rows="3"><?= old('notes', esc($sales_order['notes'] ?? '')) ?></textarea>
                 </div>
             </div>
         </div>
 
-        <div class="d-flex justify-content-between">
-            <button type="submit" class="btn btn-primary">Save Changes</button>
-            <a href="<?= base_url('distributor-sales/view/' . $sales_order['id']) ?>" class="btn btn-secondary">Cancel</a>
-        </div>
+        <button type="submit" class="btn btn-primary">Update Sales Order</button>
+        <a href="<?= base_url('distributor-sales') ?>" class="btn btn-secondary">Cancel</a>
     </form>
 </div>
 
-<!-- JavaScript to handle adding/removing form rows and live calculations -->
+<!-- Reusable row template for adding new items -->
+<div id="item-template" style="display:none;">
+    <tr>
+        <td>
+            <select class="form-control product-select" name="items[__index__][product_id]">
+                <option value="">Select a Product</option>
+                <?php foreach ($products as $product_option): ?>
+                    <option value="<?= esc($product_option['id']) ?>"
+                            data-gst-rate-id="<?= esc($product_option['gst_rate_id'] ?? '') ?>"
+                            data-dealer-price="<?= esc($product_option['dealer_price'] ?? 0) ?>"
+                            data-farmer-price="<?= esc($product_option['farmer_price'] ?? 0) ?>">
+                        <?= esc($product_option['name']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </td>
+        <td>
+            <input type="number" step="0.01" min="0" class="form-control item-quantity" name="items[__index__][quantity]">
+        </td>
+        <td>
+            <input type="number" step="0.01" min="0" class="form-control item-unit-price" name="items[__index__][unit_price_at_sale]">
+        </td>
+        <td>
+            <input type="text" class="form-control item-total" readonly value="0.00">
+        </td>
+        <td>
+            <button type="button" class="btn btn-sm btn-danger remove-item-btn">Remove</button>
+        </td>
+    </tr>
+</div>
+
+<!-- Reusable template for adding new GST rates -->
+<div id="overall-gst-template" style="display:none;">
+    <div class="input-group mb-2 overall-gst-item">
+        <select class="form-control overall-gst-select" name="overall_gst[__index__][gst_rate_id]">
+            <option value="">Select a GST Rate</option>
+            <?php foreach ($gst_rates as $gst_option): ?>
+                <option value="<?= esc($gst_option['id']) ?>" data-rate="<?= esc($gst_option['rate']) ?>">
+                    <?= esc($gst_option['name']) ?> (<?= esc($gst_option['rate']) ?>%)
+                </option>
+            <?php endforeach; ?>
+        </select>
+        <input type="number" name="overall_gst[__index__][amount]" class="form-control overall-gst-amount" readonly value="0.00">
+        <div class="input-group-append">
+            <button type="button" class="btn btn-danger remove-overall-gst-btn">Remove</button>
+        </div>
+    </div>
+</div>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Parse and map data for easy access
-        const products = <?= json_encode($products) ?>;
-        const gstRates = <?= json_encode($gst_rates) ?>;
-
-        const productData = products.reduce((acc, product) => {
-            acc[product.id] = product;
-            return acc;
-        }, {});
-
-        const gstData = gstRates.reduce((acc, gst) => {
-            acc[gst.id] = parseFloat(gst.rate);
-            return acc;
-        }, {});
-
-        const pricingTierSelect = document.getElementById('pricing_tier');
+        // Find all the necessary elements
+        const form = document.querySelector('form');
         const itemsTable = document.getElementById('items-table');
-        const addItemBtn = document.getElementById('add-item-btn');
+        const overallGstContainer = document.getElementById('overall_gst_field_container');
         const overallDiscountInput = document.getElementById('discount_amount');
+        const paymentTypeSelect = document.getElementById('payment_type');
+        const initialPaymentFieldGroup = document.getElementById('initial-payment-field-group');
+        const transactionIdFieldGroup = document.getElementById('transaction-id-field-group');
         const initialPaymentInput = document.getElementById('amount_paid');
         const addOverallGstButton = document.getElementById('addOverallGstButton');
-        const overallGstContainer = document.getElementById('overall_gst_field_container');
 
-        // Function to update a single row's total
+        /**
+         * Function to update a single row's total.
+         * @param {Element} row
+         */
         function updateRowTotals(row) {
             const quantityInput = row.querySelector('.item-quantity');
             const priceInput = row.querySelector('.item-unit-price');
@@ -331,13 +377,13 @@
 
             const quantity = parseFloat(quantityInput.value) || 0;
             const price = parseFloat(priceInput.value) || 0;
-            const rowTotal = quantity * price;
 
+            const rowTotal = quantity * price;
             totalInput.value = rowTotal.toFixed(2);
         }
 
         /**
-         * UPDATED: Recalculates all totals based on the correct order of operations.
+         * Recalculates all totals based on the correct order of operations.
          * 1. Calculate sub-total from all items.
          * 2. Apply the overall discount to get the Total Amount (Before GST).
          * 3. Calculate overall GST based on the Total Amount (Before GST).
@@ -360,26 +406,26 @@
             overallGstContainer.querySelectorAll('.overall-gst-item').forEach(gstItem => {
                 const selectElement = gstItem.querySelector('.overall-gst-select');
                 const amountInput = gstItem.querySelector('.overall-gst-amount');
-
                 const selectedOption = selectElement.options[selectElement.selectedIndex];
                 const gstRate = parseFloat(selectedOption.dataset.rate) || 0;
-
+                
                 // Calculate GST on the totalAmountBeforeGst
                 const gstOnSubtotal = totalAmountBeforeGst * (gstRate / 100);
                 amountInput.value = gstOnSubtotal.toFixed(2);
-
                 totalGstAmount += gstOnSubtotal;
             });
 
             // 4. Calculate the final total.
             const finalTotal = totalAmountBeforeGst + totalGstAmount;
-            const initialPayment = parseFloat(initialPaymentInput.value) || 0;
+            
+            // Get initial payment, but check if payment type is 'Credit'. If so, it's 0.
+            const initialPayment = (paymentTypeSelect.value === 'Credit') ? 0 : (parseFloat(initialPaymentInput.value) || 0);
+
             const remainingBalance = finalTotal - initialPayment;
 
             // Update display elements
             document.getElementById('subTotal').innerText = subTotal.toFixed(2);
             document.getElementById('discountAmount').innerText = overallDiscount.toFixed(2);
-            // This is the new line to update the "Total Amount (Before GST)" field
             document.getElementById('totalBeforeGst').innerText = totalAmountBeforeGst.toFixed(2);
             document.getElementById('gstAmount').innerText = totalGstAmount.toFixed(2);
             document.getElementById('finalTotal').innerText = finalTotal.toFixed(2);
@@ -387,43 +433,123 @@
             document.getElementById('remainingBalanceDisplay').innerText = remainingBalance.toFixed(2);
         }
 
-        // The rest of the functions (createProductRow, reindexRows, createOverallGstRow, reindexOverallGst) remain the same.
-        function createProductRow(newIndex) {
-            const productsHtml = products.map(product => `
-                <option value="${product.id}"
-                    data-gst-rate-id="${product.gst_rate_id ?? ''}"
-                    data-dealer-price="${product.dealer_price ?? 0}"
-                    data-farmer-price="${product.farmer_price ?? 0}">
-                    ${product.name}
-                </option>
-            `).join('');
+        /**
+         * Toggles the visibility of payment fields based on the selected payment type.
+         */
+        function togglePaymentFields() {
+            const paymentType = paymentTypeSelect.value;
+            const isCredit = paymentType === 'Credit';
+            const isCash = paymentType === 'Cash';
 
-            const newRowHtml = `
-                <td>
-                    <select class="form-control product-select" name="items[${newIndex}][product_id]">
-                        <option value="">Select a Product</option>
-                        ${productsHtml}
-                    </select>
-                </td>
-                <td>
-                    <input type="number" step="0.01" min="0" class="form-control item-quantity" name="items[${newIndex}][quantity]" value="0">
-                </td>
-                <td>
-                    <input type="number" step="0.01" min="0" class="form-control item-unit-price" name="items[${newIndex}][unit_price_at_sale]" value="0.00">
-                </td>
-                <td>
-                    <input type="text" class="form-control item-total" readonly value="0.00">
-                </td>
-                <td>
-                    <button type="button" class="btn btn-sm btn-danger remove-item-btn">Remove</button>
-                </td>
-            `;
-            const tableBody = itemsTable.querySelector('tbody');
-            const newTr = document.createElement('tr');
-            newTr.innerHTML = newRowHtml;
-            tableBody.appendChild(newTr);
+            if (isCredit) {
+                initialPaymentFieldGroup.style.display = 'none';
+                transactionIdFieldGroup.style.display = 'none';
+                initialPaymentInput.value = '0'; // Set value to 0 for credit
+            } else if (isCash) {
+                initialPaymentFieldGroup.style.display = 'block';
+                transactionIdFieldGroup.style.display = 'none';
+            } else { // Online or Cheque
+                initialPaymentFieldGroup.style.display = 'block';
+                transactionIdFieldGroup.style.display = 'block';
+            }
+            updateTotalSummary(); // Recalculate totals after changing payment type
         }
 
+        /**
+         * Handles change events for product, quantity, and price inputs.
+         * @param {Event} e
+         */
+        function handleInputOrChangeEvent(e) {
+            const target = e.target;
+            const row = target.closest('tr');
+            if (!row) return;
+
+            // Handle product select change
+            if (target.classList.contains('product-select')) {
+                const selectedOption = target.options[target.selectedIndex];
+                const priceInput = row.querySelector('.item-unit-price');
+                const pricingTierSelect = document.getElementById('pricing_tier');
+                const selectedTier = pricingTierSelect.value;
+                const newPrice = selectedOption.dataset[selectedTier + 'Price'];
+
+                if (selectedOption.value && newPrice !== undefined) {
+                    priceInput.value = parseFloat(newPrice).toFixed(2);
+                } else {
+                    priceInput.value = '0.00';
+                }
+            }
+            updateRowTotals(row);
+            updateTotalSummary();
+        }
+
+        /**
+         * Adds a new item row to the table.
+         */
+        function addItemRow() {
+            const template = document.getElementById('item-template');
+            const newRow = template.content.cloneNode(true).querySelector('tr');
+            const currentIndex = itemsTable.querySelectorAll('tbody tr').length;
+
+            newRow.innerHTML = newRow.innerHTML.replace(/__index__/g, currentIndex);
+            itemsTable.querySelector('tbody').appendChild(newRow);
+
+            updateTotalSummary();
+        }
+
+        /**
+         * Adds a new overall GST row.
+         */
+        function addOverallGstRow() {
+            const template = document.getElementById('overall-gst-template');
+            const newRow = template.content.cloneNode(true).querySelector('div');
+            const currentIndex = overallGstContainer.querySelectorAll('.overall-gst-item').length;
+
+            newRow.innerHTML = newRow.innerHTML.replace(/__index__/g, currentIndex);
+            overallGstContainer.appendChild(newRow);
+
+            updateTotalSummary();
+        }
+
+        // --- Event Listeners ---
+        
+        // Listen for changes on the payment type dropdown
+        paymentTypeSelect.addEventListener('change', togglePaymentFields);
+
+        // Listen for changes to product, quantity, unit price, overall discount, and initial payment
+        form.addEventListener('change', function(e) {
+            const target = e.target;
+
+            if (target.classList.contains('product-select') || target.classList.contains('item-quantity') || target.classList.contains('item-unit-price')) {
+                handleInputOrChangeEvent(e);
+            } else if (target.id === 'discount_amount' || target.id === 'amount_paid' || target.classList.contains('overall-gst-select')) {
+                updateTotalSummary();
+            }
+        });
+
+        // Listen for clicks on the "Add Item" button
+        document.getElementById('add-item-btn').addEventListener('click', addItemRow);
+
+        // Listen for clicks on the "Add GST Rate" button
+        addOverallGstButton.addEventListener('click', addOverallGstRow);
+
+        // Listen for clicks on the "Remove Item" or "Remove GST Rate" buttons
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('remove-item-btn')) {
+                const row = e.target.closest('tr');
+                if (itemsTable.querySelectorAll('tbody tr').length > 1) {
+                    row.remove();
+                    reindexRows();
+                    updateTotalSummary();
+                } else {
+                    alert("Sales order must contain at least one product item.");
+                }
+            } else if (e.target.classList.contains('remove-overall-gst-btn')) {
+                e.target.closest('.overall-gst-item').remove();
+                updateTotalSummary();
+            }
+        });
+        
+        // Re-index rows after removing an item
         function reindexRows() {
             itemsTable.querySelectorAll('tbody tr').forEach((row, index) => {
                 row.querySelectorAll('[name^="items["]').forEach(element => {
@@ -432,110 +558,10 @@
                 });
             });
         }
-
-        function createOverallGstRow(newIndex, gstRateId = '', amount = 0) {
-            const gstOptions = gstRates.map(gst => `
-                <option value="${gst.id}" data-rate="${gst.rate}" ${gst.id == gstRateId ? 'selected' : ''}>
-                    ${gst.name} (${gst.rate}%)
-                </option>
-            `).join('');
-
-            const newGstRow = document.createElement('div');
-            newGstRow.classList.add('input-group', 'mb-2', 'overall-gst-item');
-            newGstRow.innerHTML = `
-                <select class="form-control overall-gst-select" name="overall_gst[${newIndex}][gst_rate_id]">
-                    <option value="">Select a GST Rate</option>
-                    ${gstOptions}
-                </select>
-                <input type="number" name="overall_gst[${newIndex}][amount]" class="form-control overall-gst-amount" readonly value="${amount.toFixed(2)}">
-                <div class="input-group-append">
-                    <button type="button" class="btn btn-danger remove-overall-gst-btn">Remove</button>
-                </div>
-            `;
-            overallGstContainer.appendChild(newGstRow);
-        }
-
-        function reindexOverallGst() {
-            overallGstContainer.querySelectorAll('.overall-gst-item').forEach((row, index) => {
-                row.querySelectorAll('[name^="overall_gst["]').forEach(element => {
-                    const newName = element.name.replace(/\[\d+\]/, `[${index}]`);
-                    element.name = newName;
-                });
-            });
-        }
-
-        addItemBtn.addEventListener('click', function() {
-            const newIndex = itemsTable.querySelector('tbody').rows.length;
-            createProductRow(newIndex);
-        });
-
-        addOverallGstButton.addEventListener('click', function() {
-            const newIndex = overallGstContainer.querySelectorAll('.overall-gst-item').length;
-            createOverallGstRow(newIndex);
-            updateTotalSummary();
-        });
-
-        pricingTierSelect.addEventListener('change', function() {
-            const selectedTier = pricingTierSelect.value;
-            itemsTable.querySelectorAll('tbody tr').forEach(row => {
-                const productSelect = row.querySelector('.product-select');
-                const selectedOption = productSelect.options[productSelect.selectedIndex];
-                if (selectedOption.value) {
-                    const priceInput = row.querySelector('.item-unit-price');
-                    const newPrice = selectedOption.dataset[selectedTier + 'Price'];
-
-                    if (newPrice !== undefined) {
-                        priceInput.value = parseFloat(newPrice).toFixed(2);
-                    } else {
-                        priceInput.value = '0.00';
-                    }
-                }
-                updateRowTotals(row);
-            });
-            updateTotalSummary();
-        });
-
-        document.addEventListener('input', function(e) {
-            const target = e.target;
-
-            if (target.closest('#items-table') && (target.classList.contains('product-select') || target.classList.contains('item-quantity') || target.classList.contains('item-unit-price'))) {
-                const row = target.closest('tr');
-                if (target.classList.contains('product-select')) {
-                    const selectedOption = target.options[target.selectedIndex];
-                    const priceInput = row.querySelector('.item-unit-price');
-                    const selectedTier = pricingTierSelect.value;
-                    const newPrice = selectedOption.dataset[selectedTier + 'Price'];
-
-                    if (selectedOption.value && newPrice !== undefined) {
-                        priceInput.value = parseFloat(newPrice).toFixed(2);
-                    } else {
-                        priceInput.value = '0.00';
-                    }
-                }
-                updateRowTotals(row);
-                updateTotalSummary();
-            }
-
-            if (target === overallDiscountInput || target === initialPaymentInput || target.closest('#overall_gst_field_container')) {
-                updateTotalSummary();
-            }
-        });
-
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('remove-item-btn')) {
-                const row = e.target.closest('tr');
-                row.remove();
-                reindexRows();
-                updateTotalSummary();
-            }
-            if (e.target.classList.contains('remove-overall-gst-btn')) {
-                e.target.closest('.overall-gst-item').remove();
-                reindexOverallGst();
-                updateTotalSummary();
-            }
-        });
-
+        
+        // Initial setup on page load
         updateTotalSummary();
+        togglePaymentFields();
     });
 </script>
 
