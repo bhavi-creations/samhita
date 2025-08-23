@@ -405,7 +405,7 @@
                         <tr>
                             <th>GST Name</th>
                             <th class="text-right">Rate (%)</th>
-                            <th class="text-right">Amount</th>
+                             
                         </tr>
                     </thead>
                     <tbody>
@@ -414,7 +414,7 @@
                         <tr>
                             <td><?= esc($gstRate['name']) ?></td>
                             <td class="text-right"><?= esc($gstRate['rate']) ?>%</td>
-                            <td class="text-right">₹<?= number_format($gstRate['amount'], 2) ?></td>
+                            
                         </tr>
                         <?php endforeach; ?>
                         <?php else: ?>

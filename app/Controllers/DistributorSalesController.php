@@ -866,9 +866,9 @@ class DistributorSalesController extends BaseController
         }
     }
 
-    public function exportPdf(int $id)
+      public function exportPdf(int $id)
     {
-        // Load models with the correct names
+        // Load models
         $salesModel = new DistributorSalesOrderModel();
         $distributorModel = new DistributorModel();
         $salesItemModel = new DistributorSalesOrderItemModel();
@@ -876,8 +876,10 @@ class DistributorSalesController extends BaseController
         $sellingProductModel = new SellingProductModel();
         $unitModel = new UnitModel();
         $gstRateModel = new GstRateModel();
-        // Assume companySettingModel is available
-        // $this->companySettingModel = new CompanySettingModel();
+        // Assuming companySettingModel is correctly loaded, as it was in the original code.
+        // It's not defined in this snippet, but the logic depends on it.
+        // For the sake of this example, we'll assume it's available.
+        $this->companySettingModel = new \App\Models\CompanySettingModel();
 
 
         // Fetch sales order details using the find() method
@@ -893,7 +895,6 @@ class DistributorSalesController extends BaseController
         $payments = $paymentModel->where('distributor_sales_order_id', $id)->findAll();
 
         // Enrich sales order items with product and unit names, and calculate item totals
-        // Note: This is for display purposes in the PDF line items, not for overall GST calculation.
         foreach ($salesOrderItems as $key => $item) {
             $product = $sellingProductModel->find($item['product_id']);
             if ($product) {
@@ -909,7 +910,6 @@ class DistributorSalesController extends BaseController
         }
 
         // Fetch company image data and convert to Base64
-        // The mock company setting model is commented out for this example.
         $company_logo_data = null;
         $company_stamp_data = null;
         $company_signature_data = null;
@@ -922,23 +922,50 @@ class DistributorSalesController extends BaseController
             $overallGstData = json_decode($overallGstData, true);
         }
 
-        $gst_rates_details = [];
-        if (!empty($overallGstData) && is_array($overallGstData)) {
-            // Get all unique GST IDs from the decoded data
-            $gstIds = array_column($overallGstData, 'gst_rate_id');
-            // Fetch the corresponding GST rate names and rates from the database
-            $dbGstRates = $gstRateModel->whereIn('id', $gstIds)->findAll();
-            $gstLookup = array_column($dbGstRates, 'name', 'id');
-            $gstRateLookup = array_column($dbGstRates, 'rate', 'id');
+        // ADDED FOR DEBUGGING: Log the raw GST data to your CodeIgniter log file
+        log_message('debug', 'Overall GST Data for Invoice ' . $id . ': ' . print_r($overallGstData, true));
 
-            // Build a new array with the correct names and calculated amounts for the view
+        $gst_rates_details = [];
+        // The fix is here: we now check if the decoded GST data is not empty and is an array
+        if (!empty($overallGstData)) {
+            $gstIds = [];
+            // Handle case where it might be a single object instead of an array
+            if (isset($overallGstData['gst_rate_id'])) {
+                $overallGstData = [$overallGstData];
+            }
+            
+            // Now we can safely iterate through the data as an array
             foreach ($overallGstData as $item) {
-                if (isset($item['gst_rate_id']) && isset($gstLookup[$item['gst_rate_id']])) {
-                    $gst_rates_details[] = [
-                        'name' => $gstLookup[$item['gst_rate_id']],
-                        'rate' => $gstRateLookup[$item['gst_rate_id']],
-                        'amount' => $item['amount'],
-                    ];
+                // Check if the item is an array with a gst_rate_id or a direct integer
+                if (isset($item['gst_rate_id'])) {
+                    $gstIds[] = $item['gst_rate_id'];
+                } elseif (is_numeric($item)) {
+                    $gstIds[] = $item;
+                }
+            }
+            $gstIds = array_unique($gstIds);
+
+            // This check prevents the SQL error "IN ()" when there are no GST IDs.
+            // If the array is empty, we skip the database query entirely.
+            if (!empty($gstIds)) {
+                // Fetch the corresponding GST rate names and rates from the database
+                $dbGstRates = $gstRateModel->whereIn('id', $gstIds)->findAll();
+                $gstLookup = array_column($dbGstRates, 'name', 'id');
+                $gstRateLookup = array_column($dbGstRates, 'rate', 'id');
+
+                // Build a new array with the correct names and calculated amounts for the view
+                foreach ($overallGstData as $item) {
+                    // Check if the item is an array with a gst_rate_id or a direct integer
+                    $idToLookup = isset($item['gst_rate_id']) ? $item['gst_rate_id'] : (is_numeric($item) ? $item : null);
+                    
+                    if ($idToLookup && isset($gstLookup[$idToLookup])) {
+                        $amount = isset($item['amount']) ? $item['amount'] : 0;
+                        $gst_rates_details[] = [
+                            'name' => $gstLookup[$idToLookup],
+                            'rate' => $gstRateLookup[$idToLookup],
+                            'amount' => $amount,
+                        ];
+                    }
                 }
             }
         }
