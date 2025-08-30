@@ -228,18 +228,18 @@
 
 
 
-         /*
+        /*
          * Totals and GST Section
          */
         .totals-section {
             width: 100%;
             margin-top: 20px;
         }
-        
+
         .totals-table-container {
             float: right;
             width: 50%;
-            
+
         }
 
         .gst-table-container {
@@ -249,38 +249,42 @@
 
         .sub-tables-container {
             width: 100%;
-            float: left; /* Use float to align them */
+            float: left;
+            /* Use float to align them */
         }
-        
-        .totals-table, .gst-table {
+
+        .totals-table,
+        .gst-table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
         }
 
-        .totals-table td, .gst-table td {
+        .totals-table td,
+        .gst-table td {
             padding: 8px 10px;
             border: 1px solid #ddd;
         }
-        
+
         .totals-table .label {
             font-weight: bold;
             text-align: right;
             background-color: #f9f9f9;
             width: 60%;
         }
-        
+
         .totals-table .amount {
             text-align: right;
             background-color: #f9f9f9;
         }
-        
+
         .final-total {
             font-size: 14pt;
             background-color: #dbeaff !important;
         }
-        
-        .final-total .label, .final-total .amount {
+
+        .final-total .label,
+        .final-total .amount {
             font-weight: bold;
             color: #004d99;
         }
@@ -325,6 +329,12 @@
         <p>Kakinada-533003</p>
         <p>GSTIN: 37AQFPB2946M1ZN</p>
         <p>Phone: 9848549349 , 9491822559</p>
+        <p><strong>Bank Details:</strong></p>
+        <p><strong>A/c Holder :</strong>Samhita soil solutions </p>
+        <p><strong>Bank Name :</strong>Union Bank of India </p>
+        <p><strong>Branch :</strong>Thimmapuram </p>
+        <p><strong>A/c no.:</strong> 035325010000006 </p>
+        <p><strong>IFSC :</strong>UBIN0903531 </p>
     </div>
 
     <div class="customer-info">
@@ -396,70 +406,70 @@
     </table>
 
 
-        <div class="totals-section clearfix">
-            <!-- GST DETAILS (Left side) -->
-            <div class="gst-table-container">
-                <h3>GST Details:</h3>
-                <table class="gst-table">
-                    <thead>
-                        <tr>
-                            <th>GST Name</th>
-                            <th class="text-right">Rate (%)</th>
-                             
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if (!empty($gst_rates_details)): ?>
+    <div class="totals-section clearfix">
+        <!-- GST DETAILS (Left side) -->
+        <div class="gst-table-container">
+            <h3>GST Details:</h3>
+            <table class="gst-table">
+                <thead>
+                    <tr>
+                        <th>GST Name</th>
+                        <th class="text-right">Rate (%)</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (!empty($gst_rates_details)): ?>
                         <?php foreach ($gst_rates_details as $gstRate): ?>
-                        <tr>
-                            <td><?= esc($gstRate['name']) ?></td>
-                            <td class="text-right"><?= esc($gstRate['rate']) ?>%</td>
-                            
-                        </tr>
+                            <tr>
+                                <td><?= esc($gstRate['name']) ?></td>
+                                <td class="text-right"><?= esc($gstRate['rate']) ?>%</td>
+
+                            </tr>
                         <?php endforeach; ?>
-                        <?php else: ?>
+                    <?php else: ?>
                         <tr>
                             <td colspan="3">No GST details found.</td>
                         </tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- MAIN TOTALS (Right side) -->
-            <div class="totals-table-container">
-                <table class="totals-table">
-                    <tr>
-                        <td class="label">Subtotal:</td>
-                        <td class="amount">₹<?= number_format($sales_order['sub_total'], 2) ?></td>
-                    </tr>
-                    <tr>
-                        <td class="label">Discount:</td>
-                        <td class="amount">₹<?= number_format($sales_order['discount_amount'], 2) ?></td>
-                    </tr>
-                    <tr>
-                        <td class="label">Total Amount (Before GST):</td>
-                        <td class="amount">₹<?= number_format($sales_order['total_amount_before_gst'], 2) ?></td>
-                    </tr>
-                    <tr>
-                        <td class="label">Total GST Amount:</td>
-                        <td class="amount">₹<?= number_format($sales_order['total_gst_amount'], 2) ?></td>
-                    </tr>
-                    <tr class="final-total">
-                        <td class="label">Grand Total:</td>
-                        <td class="amount">₹<?= number_format($sales_order['final_total_amount'], 2) ?></td>
-                    </tr>
-                    <tr>
-                        <td class="label">Amount Paid:</td>
-                        <td class="amount">₹<?= number_format($sales_order['amount_paid'], 2) ?></td>
-                    </tr>
-                    <tr>
-                        <td class="label">Amount Due:</td>
-                        <td class="amount">₹<?= number_format($sales_order['due_amount'], 2) ?></td>
-                    </tr>
-                </table>
-            </div>
+                    <?php endif; ?>
+                </tbody>
+            </table>
         </div>
+
+        <!-- MAIN TOTALS (Right side) -->
+        <div class="totals-table-container">
+            <table class="totals-table">
+                <tr>
+                    <td class="label">Subtotal:</td>
+                    <td class="amount">₹<?= number_format($sales_order['sub_total'], 2) ?></td>
+                </tr>
+                <tr>
+                    <td class="label">Discount:</td>
+                    <td class="amount">₹<?= number_format($sales_order['discount_amount'], 2) ?></td>
+                </tr>
+                <tr>
+                    <td class="label">Total Amount (Before GST):</td>
+                    <td class="amount">₹<?= number_format($sales_order['total_amount_before_gst'], 2) ?></td>
+                </tr>
+                <tr>
+                    <td class="label">Total GST Amount:</td>
+                    <td class="amount">₹<?= number_format($sales_order['total_gst_amount'], 2) ?></td>
+                </tr>
+                <tr class="final-total">
+                    <td class="label">Grand Total:</td>
+                    <td class="amount">₹<?= number_format($sales_order['final_total_amount'], 2) ?></td>
+                </tr>
+                <tr>
+                    <td class="label">Amount Paid:</td>
+                    <td class="amount">₹<?= number_format($sales_order['amount_paid'], 2) ?></td>
+                </tr>
+                <tr>
+                    <td class="label">Amount Due:</td>
+                    <td class="amount">₹<?= number_format($sales_order['due_amount'], 2) ?></td>
+                </tr>
+            </table>
+        </div>
+    </div>
 
 
     <div class="amount-words">
